@@ -26,7 +26,8 @@ This project is an **Intelligent Virtual Assistant** developed to solve the comp
 - **Authentication:** [Authlib](https://docs.authlib.org/) (Google & LINE Login), [PyOTP](https://github.com/pyauth/pyotp) (2FA)
 
 ### AI / LLM
-- **Orchestration:** [Gemini 2.0 Flash](https://deepmind.google/technologies/gemini/) (Tool Calling & Logic)
+- **Orchestration:** [Gemini 2.5 Flash](https://deepmind.google/technologies/gemini/) (Tool Calling & Logic)
+- **Guard Model:** [Gemini 2.0 Flash](https://deepmind.google/technologies/gemini/) (Fast Classification)
 - **RAG Engine:** [Open WebUI](https://openwebui.com/) integration for Vector DB management
 - **Evaluation:** [Ragas](https://docs.ragas.io/), [LangChain](https://www.langchain.com/)
 
@@ -137,11 +138,5 @@ One of the project's most robust features is the `scripts/` directory, which con
 
 ---
 
-## 📧 Contact
 Developed as part of an initiative to modernize customer self-service through AI.
-- **Author:** [Your Name/Team]
-- **Project Type:** Professional Internship / Portfolio Showcase
-- **Status:** Production-Ready MVP
-/Team]
-- **Project Type:** Professional Internship / Portfolio Showcase
-- **Status:** Production-Ready MVP
+
