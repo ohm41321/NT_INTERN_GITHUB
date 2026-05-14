@@ -134,8 +134,6 @@
 ├── templates/              # หน้าเว็บ Jinja2 Frontend Templates
 ├── static/                 # ไฟล์ CSS/JS และรูปภาพ Assets
 └── Datasets/               # ข้อมูลต้นฉบับสำหรับทำ RAG (Excel/PDF)
-```��าพ Assets
-└── Datasets/               # ข้อมูลต้นฉบับสำหรับทำ RAG (Excel/PDF)
 ```
 
-Developed as part of an initiative to modernize customer self-service through AI.
+โปรเจกต์นี้พัฒนาขึ้นโดยเป็นส่วนหนึ่งของความคิดริเริ่มในการยกระดับบริการลูกค้าด้วย AI
