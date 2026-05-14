@@ -32,7 +32,8 @@ This project is an **Intelligent Virtual Assistant** developed to solve the comp
 
 ### Frontend
 - **Engine:** [Jinja2 Templates](https://jinja.palletsprojects.com/)
-- **UI:** Vanilla HTML5, CSS3 (Custom Themes), JavaScript (Asynchronous UI/SSE)
+- **UI:** [Tailwind CSS](https://tailwindcss.com/) (via CDN), Vanilla HTML5, JavaScript (Asynchronous UI/SSE)
+- **Customization:** Custom CSS Themes & Interactive UI components
 
 ---
 
@@ -41,8 +42,8 @@ This project is an **Intelligent Virtual Assistant** developed to solve the comp
 The system follows a modular, service-oriented architecture:
 
 1.  **Request Layer:** FastAPI handles incoming web/API requests.
-2.  **Logic Layer (Guard Model):** A lightweight classifier checks if the query relates to NT promotions.
-3.  **Orchestration Layer:** Gemini 2.0 Flash analyzes the intent and decides whether to call `search_home_internet` or `search_mobile_internet` tools.
+2.  **Logic Layer (Guard Model):** Uses Gemini 2.0 Flash to check if the query relates to NT promotions.
+3.  **Orchestration Layer:** Gemini 2.5 Flash analyzes the intent and decides whether to call `search_home_internet` or `search_mobile_internet` tools.
 4.  **RAG Layer:** Open WebUI retrieves relevant context from the vector database.
 5.  **Data Layer:** PostgreSQL stores user sessions, chat history, feedback, and reviews.
 
@@ -139,5 +140,8 @@ One of the project's most robust features is the `scripts/` directory, which con
 ## 📧 Contact
 Developed as part of an initiative to modernize customer self-service through AI.
 - **Author:** [Your Name/Team]
+- **Project Type:** Professional Internship / Portfolio Showcase
+- **Status:** Production-Ready MVP
+/Team]
 - **Project Type:** Professional Internship / Portfolio Showcase
 - **Status:** Production-Ready MVP
