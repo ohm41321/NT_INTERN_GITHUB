@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        // Configure marked.js to open links in a new tab and handle them correctly.
+        const renderer = new marked.Renderer();
+        const originalLinkRenderer = renderer.link;
+        renderer.link = (href, title, text) => {
+            const html = originalLinkRenderer.call(renderer, href, title, text);
+            return html.replace(/^<a /, '<a target="_blank" rel="noopener noreferrer" ');
+        };
+        marked.setOptions({
+            renderer: renderer,
+            breaks: true // Enable GFM line breaks
+        });
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@tailwindcss/typography@0.5.2/dist/typography.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
+</head>
+
+<body style="background-color: var(--bg-primary); color: var(--text-primary);">
+    <!-- Audio elements for sound effects -->
+    <audio id="send-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_23c3cce9d8.mp3"
+        preload="auto"></audio>
+    <audio id="receive-sound" src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c970153a23.mp3"
+        preload="auto"></audio>
+
+    <div id="app-container" class="relative flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <!-- แทนที่ส่วน sidebar HTML -->
+        <aside id="sidebar" class="w-64 h-screen flex-shrink-0 flex flex-col p-4 space-y-4">
+            <div class="flex items-center justify-center">
+
+                <button id="sidebarClose" class="lg:hidden text-gray-400 hover:text-white text-align-right ml-auto">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <button id="newChatButton"
+                class="w-full bg-yellow-500/90 hover:bg-yellow-500 text-white font-semibold py-2 px-4 rounded-lg flex items-center justify-center transition-colors">
+                <i class="fas fa-plus mr-2"></i> New Chat
+            </button>
+            <div class="flex-grow overflow-y-auto -mr-2 pr-2">
+                <h3 class="text-sm font-semibold text-gray-400 mb-2 px-2">Recently Chat</h3>
+                <ul id="chatSessionsList" class="space-y-1"></ul>
+            </div>
+            <div class="border-t border-gray-700 mt-auto pt-2">
+                <div class="px-2 space-y-2">
+                    <a href="/"
+                        class="flex items-center text-gray-300 hover:text-white hover:bg-gray-700 p-2 rounded-md transition-colors">
+                        <i class="fas fa-home w-5 text-center mr-3"></i> Home
+                    </a>
+                    <button id="feedback-button" type="button"
+                        class="w-full flex items-center text-gray-300 hover:text-white hover:bg-gray-700 p-2 rounded-md transition-colors">
+                        <i class="fas fa-comment-dots w-5 text-center mr-3"></i> เสนอ/เเจ้งปัญหา
+                    </button>
+                </div>
+
+                <!-- User Dropdown Menu -->
+                <div class="p-2">
+                    <div class="relative" id="user-menu-container">
+                        <!-- Trigger -->
+                        <button id="user-menu-button"
+                            class="w-full flex items-center justify-between p-2 text-sm font-medium rounded-md text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-yellow-500">
+                            <div class="flex items-center truncate">
+                                <i class="fas fa-user-circle fa-lg mr-3"></i>
+                                <div class="text-left">
+                                    <p class="font-semibold truncate">{{ user.username }}</p>
+                                </div>
+                            </div>
+                            <i id="user-menu-arrow" class="fas fa-chevron-up transition-transform duration-200"></i>
+                        </button>
+
+                        <!-- Dropdown Menu -->
+                        <div id="user-menu-dropdown"
+                            class="absolute bottom-full mb-2 w-full rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 z-50 hidden">
+                            <div class="py-1" role="menu" aria-orientation="vertical">
+                                <div class="px-4 py-3 border-b border-gray-600">
+                                    <p class="text-sm font-semibold text-white" title="{{ user.username }}">{{
+                                        user.username }}</p>
+                                    <p class="text-xs text-gray-400 truncate" title="{{ user.email }}">{{ user.email }}
+                                    </p>
+                                </div>
+                                <div class="py-1">
+                                    <button id="profile-modal-button"
+                                        class="w-full flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
+                                        role="menuitem">
+                                        <i class="fas fa-user-edit w-5 mr-3"></i>Profile
+                                    </button>
+                                    {% if user.is_admin %}
+                                    <a href="/admin/dashboard"
+                                        class="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
+                                        role="menuitem">
+                                        <i class="fas fa-tachometer-alt w-5 mr-3"></i>Dashboard
+                                    </a>
+                                    {% endif %}
+                                </div>
+                                <div class="py-1 border-t border-gray-600">
+                                    <form action="/logout" method="post" class="w-full">
+                                        <button type="submit"
+                                            class="w-full flex items-center px-4 py-2 text-sm text-red-400 hover:bg-gray-700"
+                                            role="menuitem">
+                                            <i class="fas fa-sign-out-alt w-5 mr-3"></i>Logout
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden lg:hidden"></div>
+
+        <!-- Main Chat Area -->
+        <main id="main-content" class="flex-1 flex flex-col transition-all duration-300 ease-in-out"
+            style="background-color: var(--bg-secondary);">
+            <header class="p-4 border-b flex items-center justify-between shadow-sm"
+                style="background-color: var(--header-bg); border-color: var(--header-border);">
+                <div class="flex items-center space-x-4">
+                    <button id="sidebarToggle" class="hover:text-gray-900" style="color: var(--text-secondary);"><i
+                            class="fas fa-bars text-xl"></i></button>
+                    <h1 id="chatTitle" class="text-xl font-semibold truncate" style="color: var(--text-primary);">
+                        เลือกแชทเพื่อเริ่มต้น</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- แทนที่ theme button ใน header -->
+                    <button id="theme-toggle" type="button"
+                        class="relative text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 overflow-hidden group">
+                        <!-- Background ripple effect -->
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-400 dark:from-blue-400 dark:to-purple-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-lg">
+                        </div>
+
+                        <!-- Icon container -->
+                        <div class="relative z-10 flex items-center justify-center">
+                            <i id="sun-icon"
+                                class="fas fa-sun text-xl transition-all duration-300 group-hover:rotate-180"></i>
+                            <i id="moon-icon"
+                                class="fas fa-moon text-xl transition-all duration-300 group-hover:rotate-180 hidden"></i>
+                        </div>
+
+                        <!-- Subtle glow effect -->
+                        <div class="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                            style="box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);"></div>
+                    </button>
+
+                </div>
+            </header>
+
+            <div id="chat-container" class="flex-1 overflow-y-auto p-4 md:p-6 relative">
+                <div id="chatMessages" class="max-w-7xl mx-auto space-y-6">
+                    <!-- Suggestions will be injected here -->
+                </div>
+
+                <div id="suggestion-container" class="absolute inset-0 flex justify-center items-center mt-48">
+                    <div class="max-w-4xl mx-auto space-y-6 text-center justify-center">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mx-10 mb-12">
+
+                            <div onclick="sendMessageFromSuggestion('แนะนำแพ็กเกจอินเทอร์เน็ตหน่อย', true)"
+                                class="suggestion-card">
+                                <h3 class="font-bold text-lg">📦 แนะนำแพ็กเกจ</h3>
+                                <p class="text-sm mt-2">อินเทอร์เน็ตบ้าน / มือถือ</p>
+                            </div>
+
+                            <div onclick="sendMessageFromSuggestion('แพ็กเกจสำหรับเล่นเกมมีอะไรบ้าง', true)"
+                                class="suggestion-card">
+                                <h3 class="font-bold text-lg">🎮 แพ็กเกจสำหรับเล่นเกม</h3>
+                                <p class="text-sm mt-2">ความเร็วสูง, ping ต่ำ</p>
+                            </div>
+
+                            <div onclick="sendMessageFromSuggestion('อยากได้เน็ตบ้านพร้อมกล่องทีวี', true)"
+                                class="suggestion-card">
+                                <h3 class="font-bold text-lg">📺 เน็ตบ้านพร้อมทีวี</h3>
+                                <p class="text-sm mt-2">ดูหนัง ฟังเพลง</p>
+                            </div>
+
+                            <div onclick="sendMessageFromSuggestion('โปรโมชั่นล่าสุดมีอะไรบ้าง', true)"
+                                class="suggestion-card">
+                                <h3 class="font-bold text-lg">🔥 โปรโมชั่นล่าสุด</h3>
+                                <p class="text-sm mt-2">อัปเดตใหม่</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <button id="scroll-to-bottom" title="กลับไปล่าสุด">
+                    <i class="fas fa-arrow-down"></i>
+                </button>
+            </div>
+
+            <div class="p-4 border-t" style="background-color: var(--header-bg); border-color: var(--header-border);">
+                <div class="max-w-7xl mx-auto">
+                    <div id="input-bar-container" class="flex items-center p-2 rounded-full transition-all duration-300"
+                        style="background-color: var(--input-bg); box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                        <textarea id="messageInput" placeholder="Typing here..." rows="1"
+                            class="flex-1 bg-transparent border-none outline-none resize-none overflow-hidden p-2"
+                            style="color: var(--input-text);"></textarea>
+                        <button id="sendButton"
+                            class="ml-2 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+                            style="background-color: var(--button-bg); color: var(--button-text);">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div id="alert-container" class="hidden fixed bottom-5 right-5 z-50"></div>
+
+
+
+        <!-- Custom Delete Confirmation Modal -->
+        <div id="custom-delete-modal" class="fixed inset-0 z-[9999] flex items-center justify-center hidden"
+            style="background-color: rgba(0,0,0,0.5);">
+            <div class="p-6 rounded-lg shadow-xl w-full max-w-sm m-4" style="background-color: var(--bg-secondary);">
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                        <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg leading-6 font-medium mt-5" style="color: var(--text-primary);">ลบบทสนทนา</h3>
+                    <div class="mt-2 px-7 py-3">
+                        <p class="text-sm" style="color: var(--text-secondary);">คุณแน่ใจหรือไม่ว่าต้องการลบแชทนี้?
+                            การกระทำนี้ไม่สามารถย้อนกลับได้</p>
+                    </div>
+                    <div class="mt-4 flex justify-center space-x-4">
+                        <button id="cancel-delete-btn" class="py-2 px-4 rounded-md text-sm font-medium"
+                            style="background-color: var(--input-border); color: #000000;">ยกเลิก</button>
+                        <button id="confirm-delete-btn"
+                            class="py-2 px-4 bg-red-600 text-white rounded-md text-sm font-medium">ยืนยันการลบ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Feedback Modal -->
+    <div id="feedback-modal" class="fixed inset-0 z-[9999] flex items-center justify-center hidden"
+        style="background-color: rgba(0,0,0,0.5);">
+        <div class="p-6 rounded-lg shadow-xl w-full max-w-md m-4" style="background-color: var(--bg-secondary);">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold" style="color: var(--text-primary);">เสนอแนะ / แจ้งปัญหา</h3>
+                <button id="close-feedback-modal-btn"
+                    class="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">&times;</button>
+            </div>
+            <form id="feedbackForm">
+                <div class="mb-4">
+                    <label for="feedback-type" class="block text-sm font-medium mb-2"
+                        style="color: var(--text-secondary);">ประเภท</label>
+                    <select id="feedback-type" name="feedback_type"
+                        class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                        style="background-color: var(--input-bg); color: var(--input-text); border-color: var(--input-border);">
+                        <option value="suggestion">ข้อเสนอแนะ</option>
+                        <option value="bug_report">แจ้งปัญหา (Bug)</option>
+                        <option value="other">อื่นๆ</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="feedback-message" class="block text-sm font-medium mb-2"
+                        style="color: var(--text-secondary);">ข้อความ</label>
+                    <textarea id="feedback-message" name="message"
+                        class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                        style="background-color: var(--input-bg); color: var(--input-text); border-color: var(--input-border);"
+                        rows="5" placeholder="กรุณาอธิบายรายละเอียด..." required></textarea>
+                </div>
+                <div class="mt-6 flex justify-end space-x-4">
+                    <button id="cancel-feedback-btn" type="button" class="py-2 px-4 rounded-md text-sm font-medium"
+                        style="background-color: var(--input-border); color: #000000;">ยกเลิก</button>
+                    <button type="submit"
+                        class="py-2 px-4 bg-yellow-500 text-white rounded-md text-sm font-medium">ส่งข้อมูล</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Model Description Tooltip -->
+    <div id="model-description-tooltip"></div>
+    <script src="/static/js/index.js"></script>
+    <script>
+        // User Menu Dropdown Logic
+        const userMenuButton = document.getElementById('user-menu-button');
+        const userMenuDropdown = document.getElementById('user-menu-dropdown');
+        const userMenuArrow = document.getElementById('user-menu-arrow');
+        const userMenuContainer = document.getElementById('user-menu-container');
+
+        if (userMenuButton && userMenuDropdown && userMenuArrow && userMenuContainer) {
+            userMenuButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                const isHidden = userMenuDropdown.classList.contains('hidden');
+                if (isHidden) {
+                    userMenuDropdown.classList.remove('hidden');
+                    userMenuArrow.classList.remove('fa-chevron-up');
+                    userMenuArrow.classList.add('fa-chevron-down');
+                } else {
+                    userMenuDropdown.classList.add('hidden');
+                    userMenuArrow.classList.add('fa-chevron-up');
+                    userMenuArrow.classList.remove('fa-chevron-down');
+                }
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!userMenuContainer.contains(event.target)) {
+                    userMenuDropdown.classList.add('hidden');
+                    userMenuArrow.classList.add('fa-chevron-up');
+                    userMenuArrow.classList.remove('fa-chevron-down');
+                }
+            });
+        }
+    </script>
+    <div id="profile-modal-container"></div>
+    <script>
+        // --- Profile Modal Logic ---
+        async function openProfileModal() {
+            const container = document.getElementById('profile-modal-container');
+
+            // Fetch modal content if not already loaded
+            if (container.innerHTML.trim() === '') {
+                try {
+                    const response = await fetch('/profile-modal'); // Fetch from the new endpoint
+                    if (!response.ok) throw new Error(`Failed to load profile modal template. Status: ${response.status}`);
+
+                    // The backend will render the template with user data
+                    container.innerHTML = await response.text();
+                } catch (error) {
+                    console.error('Error loading profile modal:', error);
+                    showAlert('Could not open profile settings.', 'error');
+                    return;
+                }
+            }
+
+            const modal = document.getElementById('profile-modal');
+            const modalContent = document.getElementById('profile-modal-content');
+            const closeBtn = document.getElementById('close-profile-modal-btn');
+
+            // Show the modal
+            if (modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    if (modalContent) modalContent.classList.add('show');
+                }, 10);
+            }
+
+            const closeModal = () => {
+                if (modalContent) modalContent.classList.remove('show');
+                setTimeout(() => {
+                    if (modal) modal.classList.add('hidden');
+                }, 300);
+            };
+
+            if (closeBtn) closeBtn.onclick = closeModal;
+            if (modal) modal.onclick = (e) => {
+                if (e.target === modal) closeModal();
+            };
+
+            // Tab switching
+            const tabs = modal.querySelectorAll('.profile-tab-button');
+            const panes = modal.querySelectorAll('.profile-tab-pane');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    panes.forEach(p => p.classList.add('hidden'));
+                    const pane = document.getElementById(`${tab.dataset.tab}-tab-content`);
+                    if (pane) pane.classList.remove('hidden');
+                });
+            });
+
+            // Password change form
+            const passwordForm = document.getElementById('changePasswordForm');
+            if (passwordForm) {
+                passwordForm.onsubmit = async (e) => {
+                    e.preventDefault();
+                    const formData = new FormData(passwordForm);
+                    const submitButton = passwordForm.querySelector('button[type="submit"]');
+                    if (submitButton) submitButton.disabled = true;
+
+                    try {
+                        const response = await fetch('/change-password', {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json' // Important for backend
+                            },
+                            body: new URLSearchParams(formData)
+                        });
+
+                        const result = await response.json();
+
+                        if (response.ok) {
+                            showAlert(result.message || 'Password updated successfully!', 'success');
+                            passwordForm.reset();
+                        } else {
+                            throw new Error(result.error || 'An unknown error occurred.');
+                        }
+                    } catch (error) {
+                        showAlert(error.message, 'error');
+                    } finally {
+                        if (submitButton) submitButton.disabled = false;
+                    }
+                };
+            }
+
+            // 2FA Forms - These will cause a page reload, which is acceptable for now.
+            // For a full SPA experience, these would also be converted to fetch requests.
+        }
+
+        document.addEventListener('click', function (event) {
+            const profileButton = event.target.closest('#profile-modal-button');
+            if (profileButton) {
+                openProfileModal();
+            }
+        });
+
+    </script>
+</body>
+
+</html>

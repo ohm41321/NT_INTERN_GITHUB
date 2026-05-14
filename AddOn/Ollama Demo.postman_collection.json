@@ -1,0 +1,1512 @@
+{
+	"info": {
+		"_postman_id": "2bcb3660-4dfb-4b2f-a959-3ca3ca49241e",
+		"name": "Ollama Demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22869403"
+	},
+	"item": [
+		{
+			"name": "General",
+			"item": [
+				{
+					"name": "Get version",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/version",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"version"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Local Models",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/tags",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Running Models",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/ps",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"ps"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pull Model",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"qwen2.5vl\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/pull",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"pull"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Model Information",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"llama3.2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/show",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Model",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"llama3.2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/delete",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Text2Text : Llama3.2",
+			"item": [
+				{
+					"name": "Completion Basic",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"llama3.2\",\n    \"prompt\": \"Who are you\",\n    \"stream\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/generate",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"generate"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "example",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"model\": \"llama3.2\",\n    \"prompt\": \"Who are you\",\n    \"stream\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OLLAMA_HOST}}/api/generate",
+									"host": [
+										"{{OLLAMA_HOST}}"
+									],
+									"path": [
+										"api",
+										"generate"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 27 Jun 2025 04:32:03 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "628"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": \"llama3.2\",\n    \"created_at\": \"2025-06-27T04:32:03.407713Z\",\n    \"response\": \"I'm an artificial intelligence model known as Llama. Llama stands for \\\"Large Language Model Meta AI.\\\"\",\n    \"done\": true,\n    \"done_reason\": \"stop\",\n    \"context\": [\n        128006,\n        9125,\n        128007,\n        271,\n        38766,\n        1303,\n        33025,\n        2696,\n        25,\n        6790,\n        220,\n        2366,\n        18,\n        271,\n        128009,\n        128006,\n        882,\n        128007,\n        271,\n        15546,\n        527,\n        499,\n        128009,\n        128006,\n        78191,\n        128007,\n        271,\n        40,\n        2846,\n        459,\n        21075,\n        11478,\n        1646,\n        3967,\n        439,\n        445,\n        81101,\n        13,\n        445,\n        81101,\n        13656,\n        369,\n        330,\n        35353,\n        11688,\n        5008,\n        16197,\n        15592,\n        1210\n    ],\n    \"total_duration\": 1349687250,\n    \"load_duration\": 33294292,\n    \"prompt_eval_count\": 28,\n    \"prompt_eval_duration\": 899032791,\n    \"eval_count\": 23,\n    \"eval_duration\": 415605000\n}"
+						}
+					]
+				},
+				{
+					"name": "Completion Intermediate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"llama3.2\",\n    \"prompt\": \"Hello, Who are you\",\n    \"stream\": false,\n    \"options\": {\n        \"temperature\": 0.1,     // ค่าความคิดสร้างสรรค์\n        \"repeat_penalty\": 1.05, // ลดการใช้คำซ้ำ\n        \"seed\": 1234  // seed สำหรับสุ่มคำ\n    },\n    \"keep_alive\": 10  // ระยะเวลาที่ Load model ทิ้งไว้ใน Ram (วินาที)\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/generate",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"generate"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "seed 6124618724",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"model\": \"llama3.2\",\n    \"prompt\": \"Hello, Who are you\",\n    \"stream\": false,\n    \"options\": {\n        \"temperature\": 0.1,     // ค่าความคิดสร้างสรรค์\n        \"repeat_penalty\": 1.05, // ลดการใช้คำซ้ำ\n        \"seed\": 6124618724  // seed สำหรับสุ่มคำ\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OLLAMA_HOST}}/api/generate",
+									"host": [
+										"{{OLLAMA_HOST}}"
+									],
+									"path": [
+										"api",
+										"generate"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 11 Jul 2025 12:03:49 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1994"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": \"llama3.2\",\n    \"created_at\": \"2025-07-11T12:03:49.661486Z\",\n    \"response\": \"Hello! I'm an artificial intelligence model, which means I'm a computer program designed to simulate human-like conversations and answer questions to the best of my knowledge. I don't have a personal identity or emotions like humans do, but I'm here to help and provide information on a wide range of topics.\\n\\nI'm a large language model, trained on a massive dataset of text from various sources, including books, articles, and websites. This training allows me to understand and respond to natural language inputs, making me a useful tool for answering questions, generating text, and even creating content.\\n\\nI don't have a personal name, but I'm often referred to as \\\"Assistant\\\" or \\\"AI\\\" by users like you. I'm here to help with any questions or topics you'd like to discuss, so feel free to ask me anything!\",\n    \"done\": true,\n    \"done_reason\": \"stop\",\n    \"context\": [\n        128006,\n        9125,\n        128007,\n        271,\n        38766,\n        1303,\n        33025,\n        2696,\n        25,\n        6790,\n        220,\n        2366,\n        18,\n        271,\n        128009,\n        128006,\n        882,\n        128007,\n        271,\n        9906,\n        11,\n        10699,\n        527,\n        499,\n        128009,\n        128006,\n        78191,\n        128007,\n        271,\n        9906,\n        0,\n        358,\n        2846,\n        459,\n        21075,\n        11478,\n        1646,\n        11,\n        902,\n        3445,\n        358,\n        2846,\n        264,\n        6500,\n        2068,\n        6319,\n        311,\n        38553,\n        3823,\n        12970,\n        21633,\n        323,\n        4320,\n        4860,\n        311,\n        279,\n        1888,\n        315,\n        856,\n        6677,\n        13,\n        358,\n        1541,\n        956,\n        617,\n        264,\n        4443,\n        9764,\n        477,\n        21958,\n        1093,\n        12966,\n        656,\n        11,\n        719,\n        358,\n        2846,\n        1618,\n        311,\n        1520,\n        323,\n        3493,\n        2038,\n        389,\n        264,\n        7029,\n        2134,\n        315,\n        13650,\n        382,\n        40,\n        2846,\n        264,\n        3544,\n        4221,\n        1646,\n        11,\n        16572,\n        389,\n        264,\n        11191,\n        10550,\n        315,\n        1495,\n        505,\n        5370,\n        8336,\n        11,\n        2737,\n        6603,\n        11,\n        9908,\n        11,\n        323,\n        13335,\n        13,\n        1115,\n        4967,\n        6276,\n        757,\n        311,\n        3619,\n        323,\n        6013,\n        311,\n        5933,\n        4221,\n        11374,\n        11,\n        3339,\n        757,\n        264,\n        5505,\n        5507,\n        369,\n        36864,\n        4860,\n        11,\n        24038,\n        1495,\n        11,\n        323,\n        1524,\n        6968,\n        2262,\n        382,\n        40,\n        1541,\n        956,\n        617,\n        264,\n        4443,\n        836,\n        11,\n        719,\n        358,\n        2846,\n        3629,\n        14183,\n        311,\n        439,\n        330,\n        72803,\n        1,\n        477,\n        330,\n        15836,\n        1,\n        555,\n        3932,\n        1093,\n        499,\n        13,\n        358,\n        2846,\n        1618,\n        311,\n        1520,\n        449,\n        904,\n        4860,\n        477,\n        13650,\n        499,\n        4265,\n        1093,\n        311,\n        4358,\n        11,\n        779,\n        2733,\n        1949,\n        311,\n        2610,\n        757,\n        4205,\n        0\n    ],\n    \"total_duration\": 3398592500,\n    \"load_duration\": 45852834,\n    \"prompt_eval_count\": 30,\n    \"prompt_eval_duration\": 51584958,\n    \"eval_count\": 169,\n    \"eval_duration\": 3300694167\n}"
+						},
+						{
+							"name": "seed 1234",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"model\": \"llama3.2\",\n    \"prompt\": \"Hello, Who are you\",\n    \"stream\": false,\n    \"options\": {\n        \"temperature\": 0.1,     // ค่าความคิดสร้างสรรค์\n        \"repeat_penalty\": 1.05, // ลดการใช้คำซ้ำ\n        \"seed\": 1234  // seed สำหรับสุ่มคำ\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OLLAMA_HOST}}/api/generate",
+									"host": [
+										"{{OLLAMA_HOST}}"
+									],
+									"path": [
+										"api",
+										"generate"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 11 Jul 2025 12:04:28 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": \"llama3.2\",\n    \"created_at\": \"2025-07-11T12:04:28.702585Z\",\n    \"response\": \"Hello! I'm an artificial intelligence model, which means I'm a computer program designed to simulate human-like conversations and answer questions to the best of my knowledge. I don't have a personal identity or emotions like humans do, but I'm here to help and provide information on a wide range of topics.\\n\\nI'm a large language model, trained on a massive dataset of text from various sources, including books, articles, and online content. This training allows me to understand and respond to natural language inputs, making me a useful tool for answering questions, generating text, and even creating content.\\n\\nI don't have a specific name, but I'm often referred to as a \\\"chatbot\\\" or a \\\"conversational AI.\\\" My purpose is to assist and provide value to users like you, so feel free to ask me anything, and I'll do my best to help!\",\n    \"done\": true,\n    \"done_reason\": \"stop\",\n    \"context\": [\n        128006,\n        9125,\n        128007,\n        271,\n        38766,\n        1303,\n        33025,\n        2696,\n        25,\n        6790,\n        220,\n        2366,\n        18,\n        271,\n        128009,\n        128006,\n        882,\n        128007,\n        271,\n        9906,\n        11,\n        10699,\n        527,\n        499,\n        128009,\n        128006,\n        78191,\n        128007,\n        271,\n        9906,\n        0,\n        358,\n        2846,\n        459,\n        21075,\n        11478,\n        1646,\n        11,\n        902,\n        3445,\n        358,\n        2846,\n        264,\n        6500,\n        2068,\n        6319,\n        311,\n        38553,\n        3823,\n        12970,\n        21633,\n        323,\n        4320,\n        4860,\n        311,\n        279,\n        1888,\n        315,\n        856,\n        6677,\n        13,\n        358,\n        1541,\n        956,\n        617,\n        264,\n        4443,\n        9764,\n        477,\n        21958,\n        1093,\n        12966,\n        656,\n        11,\n        719,\n        358,\n        2846,\n        1618,\n        311,\n        1520,\n        323,\n        3493,\n        2038,\n        389,\n        264,\n        7029,\n        2134,\n        315,\n        13650,\n        382,\n        40,\n        2846,\n        264,\n        3544,\n        4221,\n        1646,\n        11,\n        16572,\n        389,\n        264,\n        11191,\n        10550,\n        315,\n        1495,\n        505,\n        5370,\n        8336,\n        11,\n        2737,\n        6603,\n        11,\n        9908,\n        11,\n        323,\n        2930,\n        2262,\n        13,\n        1115,\n        4967,\n        6276,\n        757,\n        311,\n        3619,\n        323,\n        6013,\n        311,\n        5933,\n        4221,\n        11374,\n        11,\n        3339,\n        757,\n        264,\n        5505,\n        5507,\n        369,\n        36864,\n        4860,\n        11,\n        24038,\n        1495,\n        11,\n        323,\n        1524,\n        6968,\n        2262,\n        382,\n        40,\n        1541,\n        956,\n        617,\n        264,\n        3230,\n        836,\n        11,\n        719,\n        358,\n        2846,\n        3629,\n        14183,\n        311,\n        439,\n        264,\n        330,\n        9884,\n        6465,\n        1,\n        477,\n        264,\n        330,\n        444,\n        3078,\n        1697,\n        15592,\n        1210,\n        3092,\n        7580,\n        374,\n        311,\n        7945,\n        323,\n        3493,\n        907,\n        311,\n        3932,\n        1093,\n        499,\n        11,\n        779,\n        2733,\n        1949,\n        311,\n        2610,\n        757,\n        4205,\n        11,\n        323,\n        358,\n        3358,\n        656,\n        856,\n        1888,\n        311,\n        1520,\n        0\n    ],\n    \"total_duration\": 3607285791,\n    \"load_duration\": 48993583,\n    \"prompt_eval_count\": 30,\n    \"prompt_eval_duration\": 140428458,\n    \"eval_count\": 177,\n    \"eval_duration\": 3417418792\n}"
+						}
+					]
+				},
+				{
+					"name": "Chat Completion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"llama3.2\",\n    // Role: system, user, assistant, tool\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"You are a helpful assistant. Your name is alice. You should response in Thai.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"Hello, Who are you\"\n        }\n    ],\n    \"options\": {\n        \"temperature\": 0.8,\n        \"repeat_penalty\": 1\n    },\n    \"stream\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/chat",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"chat"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Round 1",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"model\": \"llama3.2\",\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"You are a helpful assistant. Your name is alice. You should response in Thai.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"Hello, Who are you\"\n        }\n    ],\n    \"options\": {\n        \"temperature\": 0.8,\n        \"repeat_penalty\": 1\n    },\n    \"stream\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OLLAMA_HOST}}/api/chat",
+									"host": [
+										"{{OLLAMA_HOST}}"
+									],
+									"path": [
+										"api",
+										"chat"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 27 Jun 2025 04:42:18 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "853"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": \"llama3.2\",\n    \"created_at\": \"2025-06-27T04:42:18.724341Z\",\n    \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"สวัสดีครับ/ค่ะ! ฉันคือ อัลิซ (Alice) ฉันเป็นเพื่อนร่วมงานที่จะช่วยเหลือคุณในเรื่องต่างๆ หากคุณมีคำถามหรือต้องการความช่วยเหลือใดๆ โปรดบอกฉัน และฉันจะพยายามช่วยคุณให้ดีที่สุดเท่าที่จะเป็นไปได้ครับ/ค่ะ!\"\n    },\n    \"done_reason\": \"stop\",\n    \"done\": true,\n    \"total_duration\": 1959880875,\n    \"load_duration\": 26751583,\n    \"prompt_eval_count\": 47,\n    \"prompt_eval_duration\": 109540875,\n    \"eval_count\": 99,\n    \"eval_duration\": 1822882959\n}"
+						},
+						{
+							"name": "Round 2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"model\": \"llama3.2\",\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"You are a helpful assistant. Your name is alice. You should response in Thai.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"Hello, Who are you\"\n        },\n        {\n            \"role\": \"assistant\",\n            \"content\": \"สวัสดีครับ/ค่ะ! ฉันคือ อัลิซ (Alice) ฉันเป็นเพื่อนร่วมงานที่จะช่วยเหลือคุณในเรื่องต่างๆ หากคุณมีคำถามหรือต้องการความช่วยเหลือใดๆ โปรดบอกฉัน และฉันจะพยายามช่วยคุณให้ดีที่สุดเท่าที่จะเป็นไปได้ครับ/ค่ะ!\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"ทำไมท้องฟ้าถึงเป็นสีฟ้า\"\n        }\n    ],\n    \"options\": {\n        \"temperature\": 0.8,\n        \"repeat_penalty\": 1\n    },\n    \"stream\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OLLAMA_HOST}}/api/chat",
+									"host": [
+										"{{OLLAMA_HOST}}"
+									],
+									"path": [
+										"api",
+										"chat"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 27 Jun 2025 06:29:02 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": \"llama3.2\",\n    \"created_at\": \"2025-06-27T06:29:02.135586Z\",\n    \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"ท้องฟ้าเป็นสีฟ้าเพราะของแสงแดดที่เข้ามาในบรรยากาศของโลก และถูกกระจายไปทั่ว โดยเฉพาะสิ่งที่เรียกว่า \\\"แสงแดดสีฟ้า\\\" ซึ่งเป็นแสงที่มีความยาวคลื่นยาวกว่าแสงที่เรารู้จัก ซึ่งแสงที่เรารู้จักนั้นเป็นสีแดง สีเขียว และสีน้ำเงิน\\n\\nเมื่อแสงแดดผ่านบรรยากาศของโลก มันจะถูกกระจายไปและแตกตัวออกเป็นสีแดง สีเขียว และสีน้ำเงิน นอกจากนี้ สีเหล่านี้ยังสามารถแยกจากกันได้เพราะของสเปกตรัม (spectrum) ที่แสงแดดมีอยู่\\n\\nสีแดงมีความยาวคลื่นที่สั้นกว่าสีน้ำเงิน ดังนั้น เมื่อสายรังสีแดดผ่านบรรยากาศของโลก สายรังสีสีแดงจะถูกยับยั้งและถูกสะท้อนกลับลงมา ทำให้เราเห็นสีแดง สีเขียว และสีน้ำเงินในบรรยากาศ\\n\\nสีน้ำเงินเป็นสีที่ยาวที่สุดและเป็นสีที่เราเห็นมากที่สุดในบรรยากาศของโลก ดังนั้น สีเหล่านี้จึงทำให้ท้องฟ้าดูเป็นสีฟ้า\"\n    },\n    \"done_reason\": \"stop\",\n    \"done\": true,\n    \"total_duration\": 6766738167,\n    \"load_duration\": 32045000,\n    \"prompt_eval_count\": 167,\n    \"prompt_eval_duration\": 362476000,\n    \"eval_count\": 330,\n    \"eval_duration\": 6370217125\n}"
+						}
+					]
+				},
+				{
+					"name": "Tool Calling",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"llama3.2\",\n    // Role: system, user, assistant, tool\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"You are a helpful assistant. Your name is alice. You should response in English.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"Hello, Please tell me the weather at Bangkok\"\n        }\n    ],\n    \"options\": {\n        \"temperature\": 0.8,\n        \"repeat_penalty\": 1\n    },\n    \"stream\": false,\n    \"tools\": [\n        {\n            \"type\": \"function\",\n            \"function\": {\n                \"name\": \"get_current_weather\",\n                \"description\": \"Get the current weather for a city\",\n                \"parameters\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                        \"city\": {\n                            \"type\": \"string\",\n                            \"description\": \"name of city, note that 1 city only\"\n                        }\n                    },\n                    \"required\": [\n                        \"city\"\n                    ]\n                }\n            }\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/chat",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"chat"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Round 1",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"model\": \"llama3.2\",\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"You are a helpful assistant. Your name is alice. You should response in English.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"Hello, Please tell me the weather at Bangkok\"\n        }\n    ],\n    \"options\": {\n        \"temperature\": 0.8,\n        \"repeat_penalty\": 1\n    },\n    \"stream\": false,\n    \"tools\": [\n        {\n            \"type\": \"function\",\n            \"function\": {\n                \"name\": \"get_current_weather\",\n                \"description\": \"Get the current weather for a city\",\n                \"parameters\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                        \"city\": {\n                            \"type\": \"string\",\n                            \"description\": \"name of city\"\n                        }\n                    },\n                    \"required\": [\"city\"]\n                }\n            }\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OLLAMA_HOST}}/api/chat",
+									"host": [
+										"{{OLLAMA_HOST}}"
+									],
+									"path": [
+										"api",
+										"chat"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 27 Jun 2025 06:29:26 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "381"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": \"llama3.2\",\n    \"created_at\": \"2025-06-27T06:29:26.503106Z\",\n    \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"\",\n        \"tool_calls\": [\n            {\n                \"function\": {\n                    \"name\": \"get_current_weather\",\n                    \"arguments\": {\n                        \"city\": \"Bangkok\"\n                    }\n                }\n            }\n        ]\n    },\n    \"done_reason\": \"stop\",\n    \"done\": true,\n    \"total_duration\": 864678333,\n    \"load_duration\": 33962167,\n    \"prompt_eval_count\": 182,\n    \"prompt_eval_duration\": 562714459,\n    \"eval_count\": 15,\n    \"eval_duration\": 266559958\n}"
+						},
+						{
+							"name": "Round 2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"model\": \"llama3.2\",\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"You are a helpful assistant. Your name is alice. You should response in English.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"Hello, Please tell me the weather at Bangkok\"\n        },\n        {\n            \"role\": \"assistant\",\n            \"content\": \"\",\n            \"tool_calls\": [\n                {\n                    \"function\": {\n                        \"name\": \"get_current_weather\",\n                        \"arguments\": {\n                            \"city\": \"Bangkok\"\n                        }\n                    }\n                }\n            ]\n        },\n        {\n            \"role\": \"tool\",\n            \"content\": \"city at bangkok is sunny day with temperature 40 degrees celsius\"\n            // \"content\": \"{\\\"city\\\": \\\"Bangkok\\\", \\\"weather\\\": \\\"sunny day\\\", \\\"temperature\\\": \\\"40 degrees celsius\\\"}\"\n        }\n    ],\n    \"options\": {\n        \"temperature\": 0.8,\n        \"repeat_penalty\": 1\n    },\n    \"stream\": false,\n    \"tools\": [\n        {\n            \"type\": \"function\",\n            \"function\": {\n                \"name\": \"get_current_weather\",\n                \"description\": \"Get the current weather for a city\",\n                \"parameters\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                        \"city\": {\n                            \"type\": \"string\",\n                            \"description\": \"name of city\"\n                        }\n                    },\n                    \"required\": [\n                        \"city\"\n                    ]\n                }\n            }\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OLLAMA_HOST}}/api/chat",
+									"host": [
+										"{{OLLAMA_HOST}}"
+									],
+									"path": [
+										"api",
+										"chat"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 27 Jun 2025 06:29:54 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "373"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": \"llama3.2\",\n    \"created_at\": \"2025-06-27T06:29:54.266164Z\",\n    \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"The current weather in Bangkok is sunny, with a temperature of 40 degrees Celsius.\"\n    },\n    \"done_reason\": \"stop\",\n    \"done\": true,\n    \"total_duration\": 760605916,\n    \"load_duration\": 28952541,\n    \"prompt_eval_count\": 134,\n    \"prompt_eval_duration\": 397479333,\n    \"eval_count\": 18,\n    \"eval_duration\": 331968625\n}"
+						},
+						{
+							"name": "Multiple function call",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"model\": \"llama3.2\",\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"You are a helpful assistant. Your name is alice. You should response in English.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"Hello, Please tell me the weather at Bangkok and Paris\"\n        }\n    ],\n    \"options\": {\n        \"temperature\": 0.8,\n        \"repeat_penalty\": 1\n    },\n    \"stream\": false,\n    \"tools\": [\n        {\n            \"type\": \"function\",\n            \"function\": {\n                \"name\": \"get_current_weather\",\n                \"description\": \"Get the current weather for a city\",\n                \"parameters\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                        \"city\": {\n                            \"type\": \"string\",\n                            \"description\": \"name of city\"\n                        }\n                    },\n                    \"required\": [\n                        \"city\"\n                    ]\n                }\n            }\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OLLAMA_HOST}}/api/chat",
+									"host": [
+										"{{OLLAMA_HOST}}"
+									],
+									"path": [
+										"api",
+										"chat"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 27 Jun 2025 06:35:54 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "456"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": \"llama3.2\",\n    \"created_at\": \"2025-06-27T06:35:54.459335Z\",\n    \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"\",\n        \"tool_calls\": [\n            {\n                \"function\": {\n                    \"name\": \"get_current_weather\",\n                    \"arguments\": {\n                        \"city\": \"Bangkok\"\n                    }\n                }\n            },\n            {\n                \"function\": {\n                    \"name\": \"get_current_weather\",\n                    \"arguments\": {\n                        \"city\": \"Paris\"\n                    }\n                }\n            }\n        ]\n    },\n    \"done_reason\": \"stop\",\n    \"done\": true,\n    \"total_duration\": 1952542666,\n    \"load_duration\": 47113750,\n    \"prompt_eval_count\": 184,\n    \"prompt_eval_duration\": 1365999041,\n    \"eval_count\": 29,\n    \"eval_duration\": 536180375\n}"
+						},
+						{
+							"name": "Multiple function call 2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"model\": \"llama3.2\",\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"You are a helpful assistant. Your name is alice. You should response in English.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"Hello, Please tell me the weather and temperature at Bangkok\"\n        }\n    ],\n    \"options\": {\n        \"temperature\": 0.8,\n        \"repeat_penalty\": 1\n    },\n    \"stream\": false,\n    \"tools\": [\n        {\n            \"type\": \"function\",\n            \"function\": {\n                \"name\": \"get_current_weather\",\n                \"description\": \"Get the current weather for a city\",\n                \"parameters\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                        \"city\": {\n                            \"type\": \"string\",\n                            \"description\": \"name of city\"\n                        }\n                    },\n                    \"required\": [\n                        \"city\"\n                    ]\n                }\n            }\n        },\n        {\n            \"type\": \"function\",\n            \"function\": {\n                \"name\": \"get_current_temperature\",\n                \"description\": \"Get the current temperature for a city\",\n                \"parameters\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                        \"city\": {\n                            \"type\": \"string\",\n                            \"description\": \"name of city\"\n                        }\n                    },\n                    \"required\": [\n                        \"city\"\n                    ]\n                }\n            }\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OLLAMA_HOST}}/api/chat",
+									"host": [
+										"{{OLLAMA_HOST}}"
+									],
+									"path": [
+										"api",
+										"chat"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 27 Jun 2025 06:38:11 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "458"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": \"llama3.2\",\n    \"created_at\": \"2025-06-27T06:38:11.54823Z\",\n    \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"\",\n        \"tool_calls\": [\n            {\n                \"function\": {\n                    \"name\": \"get_current_weather\",\n                    \"arguments\": {\n                        \"city\": \"Bangkok\"\n                    }\n                }\n            },\n            {\n                \"function\": {\n                    \"name\": \"get_current_temperature\",\n                    \"arguments\": {\n                        \"city\": \"Bangkok\"\n                    }\n                }\n            }\n        ]\n    },\n    \"done_reason\": \"stop\",\n    \"done\": true,\n    \"total_duration\": 677600875,\n    \"load_duration\": 28845209,\n    \"prompt_eval_count\": 233,\n    \"prompt_eval_duration\": 89228291,\n    \"eval_count\": 30,\n    \"eval_duration\": 558597000\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Vision: Qwen 2.5 VL",
+			"item": [
+				{
+					"name": "Completion Vision",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"qwen2.5vl\",\n    \"prompt\": \"What is in this picture?\",\n    \"images\": [\"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\"],\n    \"stream\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/generate",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"generate"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "example",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"model\": \"qwen2.5vl\",\n    \"prompt\": \"What is in this picture?\",\n    \"images\": [\"iVBORw0KGgoAAAANSUhEUgAAAG0AAABmCAYAAADBPx+VAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAA3VSURBVHgB7Z27r0zdG8fX743i1bi1ikMoFMQloXRpKFFIqI7LH4BEQ+NWIkjQuSWCRIEoULk0gsK1kCBI0IhrQVT7tz/7zZo888yz1r7MnDl7z5xvsjkzs2fP3uu71nNfa7lkAsm7d++Sffv2JbNmzUqcc8m0adOSzZs3Z+/XES4ZckAWJEGWPiCxjsQNLWmQsWjRIpMseaxcuTKpG/7HP27I8P79e7dq1ars/yL4/v27S0ejqwv+cUOGEGGpKHR37tzJCEpHV9tnT58+dXXCJDdECBE2Ojrqjh071hpNECjx4cMHVycM1Uhbv359B2F79+51586daxN/+pyRkRFXKyRDAqxEp4yMlDDzXG1NPnnyJKkThoK0VFd1ELZu3TrzXKxKfW7dMBQ6bcuWLW2v0VlHjx41z717927ba22U9APcw7Nnz1oGEPeL3m3p2mTAYYnFmMOMXybPPXv2bNIPpFZr1NHn4HMw0KRBjg9NuRw95s8PEcz/6DZELQd/09C9QGq5RsmSRybqkwHGjh07OsJSsYYm3ijPpyHzoiacg35MLdDSIS/O1yM778jOTwYUkKNHWUzUWaOsylE00MyI0fcnOwIdjvtNdW/HZwNLGg+sR1kMepSNJXmIwxBZiG8tDTpEZzKg0GItNsosY8USkxDhD0Rinuiko2gfL/RbiD2LZAjU9zKQJj8RDR0vJBR1/Phx9+PHj9Z7REF4nTZkxzX4LCXHrV271qXkBAPGfP/atWvu/PnzHe4C97F48eIsRLZ9+3a3f/9+87dwP1JxaF7/3r17ba+5l4EcaVo0lj3SBq5kGTJSQmLWMjgYNei2GPT1MuMqGTDEFHzeQSP2wi/jGnkmPJ/nhccs44jvDAxpVcxnq0F6eT8h4ni/iIWpR5lPyA6ETkNXoSukvpJAD3AsXLiwpZs49+fPn5ke4j10TqYvegSfn0OnafC+Tv9ooA/JPkgQysqQNBzagXY55nO/oa1F7qvIPWkRL12WRpMWUvpVDYmxAPehxWSe8ZEXL20sadYIozfmNch4QJPAfeJgW3rNsnzphBKNJM2KKODo1rVOMRYik5ETy3ix4qWNI81qAAirizgMIc+yhTytx0JWZuNI03qsrgWlGtwjoS9XwgUhWGyhUaRZZQNNIEwCiXD16tXcAHUs79co0vSD8rrJCIW98pzvxpAWyyo3HYwqS0+H0BjStClcZJT5coMm6D2LOF8TolGJtK9fvyZpyiC5ePFi9nc/oJU4eiEP0jVoAnHa9wyJycITMP78+eMeP37sXrx44d6+fdt6f82aNdkx1pg9e3Zb5W+RSRE+n+VjksQWifvVaTKFhn5O8my63K8Qabdv33b379/PiAP//vuvW7BggZszZ072/+TJk91YgkafPn166zXB1rQHFvouAWHq9z3SEevSUerqCn2/dDCeta2jxYbr69evk4MHDyY7d+7MjhMnTiTPnz9Pfv/+nfQT2ggpO2dMF8cghuoM7Ygj5iWCqRlGFml0QC/ftGmTmzt3rmsaKDsgBSPh0/8yPeLLBihLkOKJc0jp8H8vUzcxIA1k6QJ/c78tWEyj5P3o4u9+jywNPdJi5rAH9x0KHcl4Hg570eQp3+vHXGyrmEeigzQsQsjavXt38ujRo44LQuDDhw+TW7duRS1HGgMxhNXHgflaNTOsHyKvHK5Ijo2jbFjJBQK9YwFd6RVMzfgRBmEfP37suBBm/p49e1qjEP2mwTViNRo0VJWH1deMXcNK08uUjVUu7s/zRaL+oLNxz1bpANco4npUgX4G2eFbpDFyQoQxojBCpEGSytmOH8qrH5Q9vuzD6ofQylkCUmh8DBAr+q8JCyVNtWQIidKQE9wNtLSQnS4jDSsxNHogzFuQBw4cyM61UKVsjfr3ooBkPSqqQHesUPWVtzi9/vQi1T+rJj7WiTz4Pt/l3LxUkr5P2VYZaZ4URpsE+st/dujQoaBBYokbrz/8TJNQYLSonrPS9kUaSkPeZyj1AWSj+d+VBoy1pIWVNed8P0Ll/ee5HdGRhrHhR5GGN0r4LGZBaj8oFDJitBTJzIZgFcmU0Y8ytWMZMzJOaXUSrUs5RxKnrxmbb5YXO9VGUhtpXldhEUogFr3IzIsvlpmdosVcGVGXFWp2oU9kLFL3dEkSz6NHEY1sjSRdIuDFWEhd8KxFqsRi1uM/nz9/zpxnwlESONdg6dKlbsaMGS4EHFHtjFIDHwKOo46l4TxSuxgDzi+rE2jg+BaFruOX4HXa0Nnf1lwAPufZeF8/r6zD97WK2qFnGjBxTw5qNGPxT+5T/r7/7RawFC3j4vTp09koCxkeHjqbHJqArmH5UrFKKksnxrK7FuRIs8STfBZv+luugXZ2pR/pP9Ois4z+TiMzUUkUjD0iEi1fzX8GmXyuxUBRcaUfykV0YZnlJGKQpOiGB76x5GeWkWWJc3mOrK6S7xdND+W5N6XyaRgtWJFe13GkaZnKOsYqGdOVVVbGupsyA/l7emTLHi7vwTdirNEt0qxnzAvBFcnQF16xh/TMpUuXHDowhlA9vQVraQhkudRdzOnK+04ZSP3DUhVSP61YsaLtd/ks7ZgtPcXqPqEafHkdqa84X6aCeL7YWlv6edGFHb+ZFICPlljHhg0bKuk0CSvVznWsotRu433alNdFrqG45ejoaPCaUkWERpLXjzFL2Rpllp7PJU2a/v7Ab8N05/9t27Z16KUqoFGsxnI9EosS2niSYg9SpU6B4JgTrvVW1flt1sT+0ADIJU2maXzcUTraGCRaL1Wp9rUMk16PMom8QhruxzvZIegJjFU7LLCePfS8uaQdPny4jTTL0dbee5mYokQsXTIWNY46kuMbnt8Kmec+LGWtOVIl9cT1rCB0V8WqkjAsRwta93TbwNYoGKsUSChN44lgBNCoHLHzquYKrU6qZ8lolCIN0Rh6cP0Q3U6I6IXILYOQI513hJaSKAorFpuHXJNfVlpRtmYBk1Su1obZr5dnKAO+L10Hrj3WZW+E3qh6IszE37F6EB+68mGpvKm4eb9bFrlzrok7fvr0Kfv727dvWRmdVTJHw0qiiCUSZ6wCK+7XL/AcsgNyL74DQQ730sv78Su7+t/A36MdY0sW5o40ahslXr58aZ5HtZB8GH64m9EmMZ7FpYw4T6QnrZfgenrhFxaSiSGXtPnz57e9TkNZLvTjeqhr734CNtrK41L40sUQckmj1lGKQ0rC37x544r8eNXRpnVE3ZZY7zXo8NomiO0ZUCj2uHz58rbXoZ6gc0uA+F6ZeKS/jhRDUq8MKrTho9fEkihMmhxtBI1DxKFY9XLpVcSkfoi8JGnToZO5sU5aiDQIW716ddt7ZLYtMQlhECdBGXZZMWldY5BHm5xgAroWj4C0hbYkSc/jBmggIrXJWlZM6pSETsEPGqZOndr2uuuR5rF169a2HoHPdurUKZM4CO1WTPqaDaAd+GFGKdIQkxAn9RuEWcTRyN2KSUgiSgF5aWzPTeA/lN5rZubMmR2bE4SIC4nJoltgAV/dVefZm72AtctUCJU2CMJ327hxY9t7EHbkyJFseq+EJSY16RPo3Dkq1kkr7+q0bNmyDuLQcZBEPYmHVdOBiJyIlrRDq41YPWfXOxUysi5fvtyaj+2BpcnsUV/oSoEMOk2CQGlr4ckhBwaetBhjCwH0ZHtJROPJkyc7UjcYLDjmrH7ADTEBXFfOYmB0k9oYBOjJ8b4aOYSe7QkKcYhFlq3QYLQhSidNmtS2RATwy8YOM3EQJsUjKiaWZ+vZToUQgzhkHXudb/PW5YMHD9yZM2faPsMwoc7RciYJXbGuBqJ1UIGKKLv915jsvgtJxCZDubdXr165mzdvtr1Hz5LONA8jrUwKPqsmVesKa49S3Q4WxmRPUEYdTjgiUcfUwLx589ySJUva3oMkP6IYddq6HMS4o55xBJBUeRjzfa4Zdeg56QZ43LhxoyPo7Lf1kNt7oO8wWAbNwaYjIv5lhyS7kRf96dvm5Jah8vfvX3flyhX35cuX6HfzFHOToS1H4BenCaHvO8pr8iDuwoUL7tevX+b5ZdbBair0xkFIlFDlW4ZknEClsp/TzXyAKVOmmHWFVSbDNw1l1+4f90U6IY/q4V27dpnE9bJ+v87QEydjqx/UamVVPRG+mwkNTYN+9tjkwzEx+atCm/X9WvWtDtAb68Wy9LXa1UmvCDDIpPkyOQ5ZwSzJ4jMrvFcr0rSjOUh+GcT4LSg5ugkW1Io0/SCDQBojh0hPlaJdah+tkVYrnTZowP8iq1F1TgMBBauufyB33x1v+NWFYmT5KmppgHC+NkAgbmRkpD3yn9QIseXymoTQFGQmIOKTxiZIWpvAatenVqRVXf2nTrAWMsPnKrMZHz6bJq5jvce6QK8J1cQNgKxlJapMPdZSR64/UivS9NztpkVEdKcrs5alhhWP9NeqlfWopzhZScI6QxseegZRGeg5a8C3Re1Mfl1ScP36ddcUaMuv24iOJtz7sbUjTS4qBvKmstYJoUauiuD3k5qhyr7QdUHMeCgLa1Ear9NquemdXgmum4fvJ6w1lqsuDhNrg1qSpleJK7K3TF0Q2jSd94uSZ60kK1e3qyVpQK6PVWXp2/FC3mp6jBhKKOiY2h3gtUV64TWM6wDETRPLDfSakXmH3w8g9Jlug8ZtTt4kVF0kLUYYmCCtD/DrQ5YhMGbA9L3ucdjh0y8kOHW5gU/VEEmJTcL4Pz/f7mgoAbYkAAAAAElFTkSuQmCC\"],\n    \"stream\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OLLAMA_HOST}}/api/generate",
+									"host": [
+										"{{OLLAMA_HOST}}"
+									],
+									"path": [
+										"api",
+										"generate"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 13 Jul 2025 17:57:52 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "935"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": \"qwen2.5vl\",\n    \"created_at\": \"2025-07-13T17:57:52.445606Z\",\n    \"response\": \"The picture shows a simple, cartoon-style drawing of a llama or alpaca. The character has a round head with a single eye and a small mouth, and it appears to be waving with one hand. The drawing is minimalistic and uses only black lines on a white background.\",\n    \"done\": true,\n    \"done_reason\": \"stop\",\n    \"context\": [\n        151644,\n        8948,\n        198,\n        2610,\n        525,\n        264,\n        10950,\n        17847,\n        13,\n        151645,\n        198,\n        151644,\n        872,\n        198,\n        58,\n        1892,\n        12,\n        15,\n        2533,\n        3838,\n        374,\n        304,\n        419,\n        6802,\n        30,\n        151645,\n        198,\n        151644,\n        77091,\n        198,\n        785,\n        6802,\n        4933,\n        264,\n        4285,\n        11,\n        30349,\n        11297,\n        13330,\n        315,\n        264,\n        93676,\n        476,\n        452,\n        79,\n        17106,\n        13,\n        576,\n        3668,\n        702,\n        264,\n        4778,\n        1968,\n        448,\n        264,\n        3175,\n        7912,\n        323,\n        264,\n        2613,\n        10780,\n        11,\n        323,\n        432,\n        7952,\n        311,\n        387,\n        63111,\n        448,\n        825,\n        1424,\n        13,\n        576,\n        13330,\n        374,\n        17377,\n        4532,\n        323,\n        5711,\n        1172,\n        3691,\n        5128,\n        389,\n        264,\n        4158,\n        4004,\n        13\n    ],\n    \"total_duration\": 3677950541,\n    \"load_duration\": 48314458,\n    \"prompt_eval_count\": 51,\n    \"prompt_eval_duration\": 1427604625,\n    \"eval_count\": 58,\n    \"eval_duration\": 2200926625\n}"
+						}
+					]
+				},
+				{
+					"name": "Chat Vision",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"qwen2.5vl\",\n    // Role: system, user, assistant, tool\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"You are a helpful assistant. Your name is alice. You should response in Thai.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"What is in this picture?\",\n            \"images\": [\n                \"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\"\n            ]\n        }\n    ],\n    \"options\": {\n        \"temperature\": 0.8,\n        \"repeat_penalty\": 1\n    },\n    \"stream\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/chat",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"chat"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Thinking Model : Qwen3",
+			"item": [
+				{
+					"name": "Completion Basic",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"qwen3:1.7b\",\n    \"prompt\": \"Hello\",\n    \"stream\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/generate",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"generate"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "example",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"model\": \"qwen3:1.7b\",\n    \"prompt\": \"Hello\",\n    \"stream\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OLLAMA_HOST}}/api/generate",
+									"host": [
+										"{{OLLAMA_HOST}}"
+									],
+									"path": [
+										"api",
+										"generate"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 11 Jul 2025 12:17:10 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "996"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": \"qwen3:1.7b\",\n    \"created_at\": \"2025-07-11T12:17:10.461724Z\",\n    \"response\": \"<think>\\nOkay, the user said \\\"Hello\\\" in the morning. I need to respond politely. Let me make sure to greet them warmly. Maybe add an emoji to keep it friendly. I should keep it simple and welcoming. Let them know I'm here to help. Alright, that should cover it.\\n</think>\\n\\nHello! How can I assist you today? 😊\",\n    \"done\": true,\n    \"done_reason\": \"stop\",\n    \"context\": [\n        151644,\n        872,\n        198,\n        9707,\n        151645,\n        198,\n        151644,\n        77091,\n        198,\n        151667,\n        198,\n        32313,\n        11,\n        279,\n        1196,\n        1053,\n        330,\n        9707,\n        1,\n        304,\n        279,\n        6556,\n        13,\n        358,\n        1184,\n        311,\n        5889,\n        80767,\n        13,\n        6771,\n        752,\n        1281,\n        2704,\n        311,\n        40786,\n        1105,\n        96370,\n        13,\n        10696,\n        912,\n        458,\n        42365,\n        311,\n        2506,\n        432,\n        11657,\n        13,\n        358,\n        1265,\n        2506,\n        432,\n        4285,\n        323,\n        35287,\n        13,\n        6771,\n        1105,\n        1414,\n        358,\n        2776,\n        1588,\n        311,\n        1492,\n        13,\n        97593,\n        11,\n        429,\n        1265,\n        3421,\n        432,\n        624,\n        151668,\n        271,\n        9707,\n        0,\n        2585,\n        646,\n        358,\n        7789,\n        498,\n        3351,\n        30,\n        26525,\n        232\n    ],\n    \"total_duration\": 1060747250,\n    \"load_duration\": 37357292,\n    \"prompt_eval_count\": 9,\n    \"prompt_eval_duration\": 91952375,\n    \"eval_count\": 76,\n    \"eval_duration\": 931096125\n}"
+						}
+					]
+				},
+				{
+					"name": "Completion Basic /no_think",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"qwen3:1.7b\",\n    \"prompt\": \"Hello/no_think\",\n    \"stream\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/generate",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"generate"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "example",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"model\": \"qwen3:1.7b\",\n    \"prompt\": \"Hello/no_think\",\n    \"stream\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OLLAMA_HOST}}/api/generate",
+									"host": [
+										"{{OLLAMA_HOST}}"
+									],
+									"path": [
+										"api",
+										"generate"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 11 Jul 2025 12:17:41 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "473"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": \"qwen3:1.7b\",\n    \"created_at\": \"2025-07-11T12:17:41.672622Z\",\n    \"response\": \"<think>\\n\\n</think>\\n\\nHello! How can I assist you today?\",\n    \"done\": true,\n    \"done_reason\": \"stop\",\n    \"context\": [\n        151644,\n        872,\n        198,\n        9707,\n        33100,\n        5854,\n        766,\n        151645,\n        198,\n        151644,\n        77091,\n        198,\n        151667,\n        271,\n        151668,\n        271,\n        9707,\n        0,\n        2585,\n        646,\n        358,\n        7789,\n        498,\n        3351,\n        30\n    ],\n    \"total_duration\": 326824833,\n    \"load_duration\": 39617542,\n    \"prompt_eval_count\": 12,\n    \"prompt_eval_duration\": 120422541,\n    \"eval_count\": 14,\n    \"eval_duration\": 166478292\n}"
+						}
+					]
+				},
+				{
+					"name": "Completion Basic Think Parser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"qwen3:1.7b\",\n    \"prompt\": \"สวัสดี\",\n    \"stream\": false,\n    \"think\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/generate",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"generate"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "example think true",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"model\": \"qwen3:1.7b\",\n    \"prompt\": \"Hello\",\n    \"stream\": false,\n    \"think\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OLLAMA_HOST}}/api/generate",
+									"host": [
+										"{{OLLAMA_HOST}}"
+									],
+									"path": [
+										"api",
+										"generate"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 11 Jul 2025 12:18:36 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1348"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": \"qwen3:1.7b\",\n    \"created_at\": \"2025-07-11T12:18:36.256365Z\",\n    \"response\": \"Hello! How can I assist you today? 😊\",\n    \"thinking\": \"Okay, the user said \\\"Hello\\\" and I need to respond. Let me start by acknowledging their greeting. Since they mentioned \\\"Hello,\\\" I should reply with a friendly greeting back. Maybe something like \\\"Hello! How can I assist you today?\\\" That keeps the conversation open. I should make sure to use a welcoming tone and offer help. Let me check if there's anything else they might need. No specific query, so keep it simple. Alright, that should cover it.\\n\",\n    \"done\": true,\n    \"done_reason\": \"stop\",\n    \"context\": [\n        151644,\n        872,\n        198,\n        9707,\n        608,\n        26865,\n        151645,\n        198,\n        151644,\n        77091,\n        198,\n        151667,\n        198,\n        32313,\n        11,\n        279,\n        1196,\n        1053,\n        330,\n        9707,\n        1,\n        323,\n        358,\n        1184,\n        311,\n        5889,\n        13,\n        6771,\n        752,\n        1191,\n        553,\n        60608,\n        862,\n        42113,\n        13,\n        8704,\n        807,\n        9733,\n        330,\n        9707,\n        1335,\n        358,\n        1265,\n        9851,\n        448,\n        264,\n        11657,\n        42113,\n        1182,\n        13,\n        10696,\n        2494,\n        1075,\n        330,\n        9707,\n        0,\n        2585,\n        646,\n        358,\n        7789,\n        498,\n        3351,\n        7521,\n        2938,\n        13598,\n        279,\n        10435,\n        1787,\n        13,\n        358,\n        1265,\n        1281,\n        2704,\n        311,\n        990,\n        264,\n        35287,\n        16232,\n        323,\n        3010,\n        1492,\n        13,\n        6771,\n        752,\n        1779,\n        421,\n        1052,\n        594,\n        4113,\n        770,\n        807,\n        2578,\n        1184,\n        13,\n        2308,\n        3151,\n        3239,\n        11,\n        773,\n        2506,\n        432,\n        4285,\n        13,\n        97593,\n        11,\n        429,\n        1265,\n        3421,\n        432,\n        624,\n        151668,\n        271,\n        9707,\n        0,\n        2585,\n        646,\n        358,\n        7789,\n        498,\n        3351,\n        30,\n        26525,\n        232\n    ],\n    \"total_duration\": 1540754416,\n    \"load_duration\": 40028583,\n    \"prompt_eval_count\": 11,\n    \"prompt_eval_duration\": 99858417,\n    \"eval_count\": 113,\n    \"eval_duration\": 1400445833\n}"
+						},
+						{
+							"name": "example think false",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"model\": \"qwen3:1.7b\",\n    \"prompt\": \"Hello\",\n    \"stream\": false,\n    \"think\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OLLAMA_HOST}}/api/generate",
+									"host": [
+										"{{OLLAMA_HOST}}"
+									],
+									"path": [
+										"api",
+										"generate"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 11 Jul 2025 12:18:58 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "433"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": \"qwen3:1.7b\",\n    \"created_at\": \"2025-07-11T12:18:58.132502Z\",\n    \"response\": \"Hello! How can I assist you today?\",\n    \"done\": true,\n    \"done_reason\": \"stop\",\n    \"context\": [\n        151644,\n        872,\n        198,\n        9707,\n        608,\n        2152,\n        5854,\n        766,\n        151645,\n        198,\n        151644,\n        77091,\n        198,\n        151667,\n        271,\n        151668,\n        271,\n        9707,\n        0,\n        2585,\n        646,\n        358,\n        7789,\n        498,\n        3351,\n        30\n    ],\n    \"total_duration\": 296217750,\n    \"load_duration\": 40952500,\n    \"prompt_eval_count\": 17,\n    \"prompt_eval_duration\": 137397750,\n    \"eval_count\": 10,\n    \"eval_duration\": 117283500\n}"
+						}
+					]
+				},
+				{
+					"name": "Math Problem Trap",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"qwen3:1.7b\",\n    \"prompt\": \"เครื่องจักร 5 เครื่องผลิตของ 5 ชิ้น ใช้เวลา 5 นาที คำถาม: แล้วถ้าเป็นเครื่องจักร 100 เครื่อง จะผลิตของ 100 ชิ้น ใช้เวลาเท่าไหร่\",\n    \"stream\": false,\n    \"think\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/generate",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"generate"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Think false",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"model\": \"qwen3:1.7b\",\n    \"prompt\": \"เครื่องจักร 5 เครื่องผลิตของ 5 ชิ้น ใช้เวลา 5 นาที คำถาม: แล้วถ้าเป็นเครื่องจักร 100 เครื่อง จะผลิตของ 100 ชิ้น ใช้เวลาเท่าไหร่\",\n    \"stream\": false,\n    \"think\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OLLAMA_HOST}}/api/generate",
+									"host": [
+										"{{OLLAMA_HOST}}"
+									],
+									"path": [
+										"api",
+										"generate"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 11 Jul 2025 12:20:20 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": \"qwen3:1.7b\",\n    \"created_at\": \"2025-07-11T12:20:20.411567Z\",\n    \"response\": \"เรามาคิดกันให้ชัดเจน:\\n\\n**โจทย์ปัจจุบัน:**\\n- เครื่องจักร 5 เครื่อง ผลิตของ 5 ชิ้น ใช้เวลา 5 นาที  \\n- โจทย์ถาม: ถ้าเครื่องจักร 100 เครื่อง ผลิตของ 100 ชิ้น ใช้เวลาเท่าไหร่?\\n\\n---\\n\\n### วิเคราะห์ข้อมูล:\\nจากโจทย์:\\n- จำนวนเครื่องจักร: 5 เครื่อง  \\n- จำนวนของผลิต: 5 ชิ้น  \\n- ใช้เวลา: 5 นาที\\n\\nจากนั้นเราต้องหา **อัตราการผลิต** หรือ **อัตราเวลา** ที่เกี่ยวข้อง\\n\\n---\\n\\n### คำนวณอัตราเวลา:\\n\\nจากโจทย์:\\n- เครื่องจักร 5 เครื่อง ผลิต 5 ชิ้น ใช้เวลา 5 นาที\\n\\nดังนั้น:\\n- 1 เครื่องจักร ผลิต 1 ชิ้น ใช้เวลา = $ \\\\frac{5 \\\\text{ นาที}}{5 \\\\text{ เครื่อง}} = 1 \\\\text{ นาที} $  \\n→ 1 เครื่องจักร ผลิต 1 ชิ้น ใช้เวลา 1 นาที\\n\\n---\\n\\n### ใช้ผลลัพธ์นี้คำนวณ:\\n\\n- ถ้าเครื่องจักร 100 เครื่อง ผลิต 100 ชิ้น  \\n- 1 เครื่องจักร ผลิต 1 ชิ้น ใช้เวลา 1 นาที  \\n- ดังนั้น 100 เครื่อง ผลิต 100 ชิ้น ใช้เวลา = $ 100 \\\\text{ เครื่อง} \\\\times 1 \\\\text{ นาที} = 100 \\\\text{ นาที} $\\n\\n---\\n\\n### คำตอบสุดท้าย:\\n**ใช้เวลา 100 นาที**\\n\\n---\\n\\n**ตอบ: 100 นาที**\",\n    \"done\": true,\n    \"done_reason\": \"stop\",\n    \"context\": [\n        151644,\n        872,\n        198,\n        124648,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        220,\n        20,\n        94482,\n        123886,\n        64684,\n        123824,\n        124396,\n        124722,\n        124375,\n        220,\n        20,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        220,\n        124207,\n        19841,\n        125039,\n        220,\n        20,\n        220,\n        124318,\n        35884,\n        28319,\n        220,\n        137217,\n        25,\n        220,\n        124103,\n        124379,\n        95475,\n        57995,\n        123900,\n        123909,\n        124648,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        220,\n        16,\n        15,\n        15,\n        94482,\n        123886,\n        64684,\n        123824,\n        129515,\n        124396,\n        124722,\n        124375,\n        220,\n        16,\n        15,\n        15,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        220,\n        124207,\n        19841,\n        125039,\n        123984,\n        64741,\n        49756,\n        124618,\n        18625,\n        608,\n        2152,\n        5854,\n        766,\n        151645,\n        198,\n        151644,\n        77091,\n        198,\n        151667,\n        271,\n        151668,\n        271,\n        123880,\n        123838,\n        20774,\n        40327,\n        124039,\n        25200,\n        66256,\n        124028,\n        19841,\n        48120,\n        124090,\n        124277,\n        20184,\n        1447,\n        334,\n        136426,\n        124488,\n        55770,\n        54684,\n        23271,\n        60416,\n        60416,\n        47642,\n        36142,\n        66256,\n        25,\n        1019,\n        12,\n        94482,\n        123886,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        220,\n        20,\n        94482,\n        123886,\n        64684,\n        123824,\n        220,\n        124396,\n        124722,\n        124375,\n        220,\n        20,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        220,\n        124207,\n        19841,\n        125039,\n        220,\n        20,\n        220,\n        124318,\n        35884,\n        28319,\n        2303,\n        12,\n        220,\n        136426,\n        124488,\n        55770,\n        126008,\n        25,\n        220,\n        95475,\n        57995,\n        124648,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        220,\n        16,\n        15,\n        15,\n        94482,\n        123886,\n        64684,\n        123824,\n        220,\n        124396,\n        124722,\n        124375,\n        220,\n        16,\n        15,\n        15,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        220,\n        124207,\n        19841,\n        125039,\n        123984,\n        64741,\n        49756,\n        124618,\n        18625,\n        1939,\n        44364,\n        14374,\n        220,\n        37213,\n        30785,\n        124648,\n        124576,\n        39172,\n        55770,\n        47839,\n        80614,\n        91200,\n        510,\n        124205,\n        136426,\n        124488,\n        55770,\n        510,\n        12,\n        220,\n        126709,\n        124648,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        25,\n        220,\n        20,\n        94482,\n        123886,\n        64684,\n        123824,\n        2303,\n        12,\n        220,\n        126709,\n        124375,\n        124396,\n        124722,\n        25,\n        220,\n        20,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        2303,\n        12,\n        220,\n        124207,\n        19841,\n        125039,\n        25,\n        220,\n        20,\n        220,\n        124318,\n        35884,\n        28319,\n        271,\n        124205,\n        20184,\n        23271,\n        19841,\n        20184,\n        124773,\n        39855,\n        124010,\n        124321,\n        3070,\n        22929,\n        23271,\n        127756,\n        93874,\n        124396,\n        124722,\n        334,\n        220,\n        124618,\n        83581,\n        3070,\n        22929,\n        23271,\n        127756,\n        125039,\n        334,\n        220,\n        35884,\n        47171,\n        123949,\n        47171,\n        125293,\n        47839,\n        124010,\n        271,\n        44364,\n        14374,\n        220,\n        125506,\n        20184,\n        37213,\n        86348,\n        22929,\n        23271,\n        127756,\n        125039,\n        1447,\n        124205,\n        136426,\n        124488,\n        55770,\n        510,\n        12,\n        94482,\n        123886,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        220,\n        20,\n        94482,\n        123886,\n        64684,\n        123824,\n        220,\n        124396,\n        124722,\n        220,\n        20,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        220,\n        124207,\n        19841,\n        125039,\n        220,\n        20,\n        220,\n        124318,\n        35884,\n        28319,\n        271,\n        37033,\n        123874,\n        20184,\n        23271,\n        19841,\n        20184,\n        510,\n        12,\n        220,\n        16,\n        94482,\n        123886,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        220,\n        124396,\n        124722,\n        220,\n        16,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        220,\n        124207,\n        19841,\n        125039,\n        284,\n        400,\n        1124,\n        37018,\n        90,\n        20,\n        1124,\n        1318,\n        90,\n        220,\n        124318,\n        35884,\n        28319,\n        3417,\n        90,\n        20,\n        1124,\n        1318,\n        90,\n        94482,\n        123886,\n        64684,\n        123824,\n        3417,\n        284,\n        220,\n        16,\n        1124,\n        1318,\n        90,\n        220,\n        124318,\n        35884,\n        28319,\n        92,\n        400,\n        2303,\n        51018,\n        220,\n        16,\n        94482,\n        123886,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        220,\n        124396,\n        124722,\n        220,\n        16,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        220,\n        124207,\n        19841,\n        125039,\n        220,\n        16,\n        220,\n        124318,\n        35884,\n        28319,\n        271,\n        44364,\n        14374,\n        220,\n        124207,\n        19841,\n        124396,\n        31782,\n        23271,\n        59884,\n        123887,\n        55770,\n        20184,\n        124032,\n        125506,\n        20184,\n        37213,\n        86348,\n        1447,\n        12,\n        220,\n        95475,\n        57995,\n        124648,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        220,\n        16,\n        15,\n        15,\n        94482,\n        123886,\n        64684,\n        123824,\n        220,\n        124396,\n        124722,\n        220,\n        16,\n        15,\n        15,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        2303,\n        12,\n        220,\n        16,\n        94482,\n        123886,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        220,\n        124396,\n        124722,\n        220,\n        16,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        220,\n        124207,\n        19841,\n        125039,\n        220,\n        16,\n        220,\n        124318,\n        35884,\n        28319,\n        2303,\n        12,\n        220,\n        37033,\n        123874,\n        20184,\n        23271,\n        19841,\n        20184,\n        220,\n        16,\n        15,\n        15,\n        94482,\n        123886,\n        64684,\n        123824,\n        220,\n        124396,\n        124722,\n        220,\n        16,\n        15,\n        15,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        220,\n        124207,\n        19841,\n        125039,\n        284,\n        400,\n        220,\n        16,\n        15,\n        15,\n        1124,\n        1318,\n        90,\n        94482,\n        123886,\n        64684,\n        123824,\n        92,\n        1124,\n        15136,\n        220,\n        16,\n        1124,\n        1318,\n        90,\n        220,\n        124318,\n        35884,\n        28319,\n        92,\n        284,\n        220,\n        16,\n        15,\n        15,\n        1124,\n        1318,\n        90,\n        220,\n        124318,\n        35884,\n        28319,\n        92,\n        84500,\n        44364,\n        14374,\n        220,\n        140388,\n        35648,\n        124151,\n        35884,\n        124574,\n        510,\n        334,\n        124207,\n        19841,\n        125039,\n        220,\n        16,\n        15,\n        15,\n        220,\n        124318,\n        35884,\n        28319,\n        56177,\n        44364,\n        334,\n        126911,\n        25,\n        220,\n        16,\n        15,\n        15,\n        220,\n        124318,\n        35884,\n        28319,\n        334\n    ],\n    \"total_duration\": 7447939208,\n    \"load_duration\": 40179958,\n    \"prompt_eval_count\": 94,\n    \"prompt_eval_duration\": 119268375,\n    \"eval_count\": 547,\n    \"eval_duration\": 7288093375\n}"
+						},
+						{
+							"name": "Think true",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"model\": \"qwen3:1.7b\",\n    \"prompt\": \"เครื่องจักร 5 เครื่องผลิตของ 5 ชิ้น ใช้เวลา 5 นาที คำถาม: แล้วถ้าเป็นเครื่องจักร 100 เครื่อง จะผลิตของ 100 ชิ้น ใช้เวลาเท่าไหร่\",\n    \"stream\": false,\n    \"think\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{OLLAMA_HOST}}/api/generate",
+									"host": [
+										"{{OLLAMA_HOST}}"
+									],
+									"path": [
+										"api",
+										"generate"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 11 Jul 2025 12:21:05 GMT"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"model\": \"qwen3:1.7b\",\n    \"created_at\": \"2025-07-11T12:21:05.786739Z\",\n    \"response\": \"เครื่องจักร 5 เครื่องผลิตของ 5 ชิ้นในเวลา 5 นาที แสดงว่า 1 เครื่องจักรสามารถผลิต 1 ชิ้นในเวลา 5 นาที ดังนั้น 100 เครื่องจักรจะผลิต 100 ชิ้นในเวลาเดียวกัน คือ 5 นาที ซึ่งเป็นการสอดคล้องกับการสูตรที่ว่า:\\n\\n$$\\n\\\\text{เวลา} = \\\\frac{\\\\text{จำนวนชิ้น}}{\\\\text{จำนวนเครื่องจักร}} \\\\times \\\\text{เวลาเดิม}\\n$$\\n\\n$$\\n\\\\text{เวลา} = \\\\frac{100}{100} \\\\times 5 = 5 \\\\text{ นาที}\\n$$\\n\\n**คำตอบ:** ใช้เวลา 5 นาที หรือ $\\\\boxed{5}$ นาที\",\n    \"thinking\": \"Okay, let's try to figure out this problem. So, the question is: If 5 machines produce 5 pieces in 5 minutes, how long would it take for 100 machines to produce 100 pieces? Hmm, let's break it down step by step.\\n\\nFirst, I need to understand the relationship between the number of machines, the number of pieces, and the time taken. From the given information, 5 machines produce 5 pieces in 5 minutes. So, maybe I can find out the rate at which the machines produce pieces.\\n\\nIf 5 machines make 5 pieces in 5 minutes, then each machine must be producing 1 piece per 5 minutes. Wait, let me check that. If 5 machines produce 5 pieces in 5 minutes, then the rate per machine would be 5 pieces divided by 5 machines, which is 1 piece per machine. But since they take 5 minutes, maybe it's 1 piece per machine per 5 minutes? So, each machine produces 1 piece every 5 minutes. That would mean the rate is 1 piece per machine per 5 minutes.\\n\\nBut let's think in terms of productivity. If more machines are used, the total production should increase proportionally. So, if you have more machines, they can produce more pieces in the same time. But here, the question is about the time required when the number of machines and the number of pieces increase. Wait, the problem says that if you have 100 machines, you want to produce 100 pieces. So, it's a direct proportion problem?\\n\\nWait, let's think about it. If 5 machines produce 5 pieces in 5 minutes, then the time required to produce 100 pieces with 100 machines would be... Let's see. If each machine produces 1 piece every 5 minutes, then 100 machines would produce 100 pieces in 5 minutes. Because each machine makes 1 piece every 5 minutes, so 100 machines would make 100 pieces in the same time. But that seems too straightforward. But maybe that's the case.\\n\\nAlternatively, maybe the problem is about the time required to produce a certain number of pieces. Let me check the original question again: \\\"เครื่องจักร 5 เครื่องผลิตของ 5 ชิ้น ใช้เวลา 5 นาที คำถาม: แล้วถ้าเป็นเครื่องจักร 100 เครื่อง จะผลิตของ 100 ชิ้น ใช้เวลาเท่าไหร่\\\"\\n\\nSo, 5 machines produce 5 pieces in 5 minutes. Then, if we have 100 machines producing 100 pieces, how long does it take? So, if 5 machines produce 5 pieces in 5 minutes, then each machine produces 1 piece in 5 minutes. Therefore, 100 machines would produce 100 pieces in 5 minutes. So the answer would be 5 minutes?\\n\\nBut wait, that seems like the same time as before. But maybe there's a trick here. Let me think again. Maybe the question is trying to test the understanding of direct proportionality. If the number of machines and the number of pieces are both increasing by the same factor, then the time should remain the same. Because if you have more machines, you can produce more pieces in the same time, but here, the number of pieces is also increasing. So, if you have 5 machines producing 5 pieces in 5 minutes, then 100 machines producing 100 pieces would take the same time, 5 minutes. Because the rate is 1 piece per machine per 5 minutes. So, 100 machines would produce 100 pieces in 5 minutes.\\n\\nAlternatively, maybe the question is a trick question where it's implying that the time is the same because the number of pieces and machines are both multiplied by the same factor. So, 5 to 100 is a multiplication by 20, but the time is also multiplied by 20? Wait, no. Wait, the number of machines goes from 5 to 100, which is multiplied by 20. The number of pieces goes from 5 to 100, which is multiplied by 20. So, if the time is directly proportional to the number of pieces and inversely proportional to the number of machines, then the time would be (5 pieces / 100 machines) * (100 machines) = 5 minutes. Wait, that's the same as before.\\n\\nAlternatively, using the formula: time = (number of pieces / number of machines) * original time. So, original time is 5 minutes. Number of pieces is 100, number of machines is 100. So, time = (100 / 100) * 5 = 5 minutes. So yes, same answer.\\n\\nBut maybe the question is trying to test the understanding that when the number of machines and the number of pieces both increase by the same factor, the time remains the same. So, the answer is 5 minutes.\\n\\nBut let me check with another approach. Let's calculate the rate. The rate is pieces per minute. So, 5 pieces in 5 minutes is 1 piece per minute. But that's for 5 machines. So, the rate is 1 piece per minute per 5 machines? Wait, no. Wait, 5 machines produce 5 pieces in 5 minutes. So, the rate is 5 pieces / 5 minutes = 1 piece per minute. But that's for 5 machines. So, the rate is 1 piece per minute per 5 machines? Wait, no. If 5 machines produce 1 piece per minute, then 1 machine would produce 1/5 piece per minute. So, 100 machines would produce 100*(1/5) = 20 pieces per minute. To produce 100 pieces, time is 100 / 20 = 5 minutes. So, same answer.\\n\\nSo, regardless of the approach, the answer is 5 minutes. Therefore, the time required is 5 minutes.\\n\\nBut wait, maybe there's a different way to think about it. Suppose the machines are working in parallel. If each machine can produce 1 piece in 5 minutes, then 100 machines would produce 100 pieces in 5 minutes. So, yes, same answer.\\n\\nAlternatively, if the problem was about the time required to produce a certain number of pieces, but the number of machines and the number of pieces are both increasing. So, if you have more machines, you can produce more pieces in the same time. But here, the number of machines and the number of pieces are both increased by the same factor. So, the time remains the same.\\n\\nSo, in conclusion, the answer is 5 minutes.\\n\",\n    \"done\": true,\n    \"done_reason\": \"stop\",\n    \"context\": [\n        151644,\n        872,\n        198,\n        124648,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        220,\n        20,\n        94482,\n        123886,\n        64684,\n        123824,\n        124396,\n        124722,\n        124375,\n        220,\n        20,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        220,\n        124207,\n        19841,\n        125039,\n        220,\n        20,\n        220,\n        124318,\n        35884,\n        28319,\n        220,\n        137217,\n        25,\n        220,\n        124103,\n        124379,\n        95475,\n        57995,\n        123900,\n        123909,\n        124648,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        220,\n        16,\n        15,\n        15,\n        94482,\n        123886,\n        64684,\n        123824,\n        129515,\n        124396,\n        124722,\n        124375,\n        220,\n        16,\n        15,\n        15,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        220,\n        124207,\n        19841,\n        125039,\n        123984,\n        64741,\n        49756,\n        124618,\n        18625,\n        608,\n        26865,\n        151645,\n        198,\n        151644,\n        77091,\n        198,\n        151667,\n        198,\n        32313,\n        11,\n        1077,\n        594,\n        1430,\n        311,\n        7071,\n        700,\n        419,\n        3491,\n        13,\n        2055,\n        11,\n        279,\n        3405,\n        374,\n        25,\n        1416,\n        220,\n        20,\n        12645,\n        8193,\n        220,\n        20,\n        9666,\n        304,\n        220,\n        20,\n        4420,\n        11,\n        1246,\n        1293,\n        1035,\n        432,\n        1896,\n        369,\n        220,\n        16,\n        15,\n        15,\n        12645,\n        311,\n        8193,\n        220,\n        16,\n        15,\n        15,\n        9666,\n        30,\n        88190,\n        11,\n        1077,\n        594,\n        1438,\n        432,\n        1495,\n        3019,\n        553,\n        3019,\n        382,\n        5338,\n        11,\n        358,\n        1184,\n        311,\n        3535,\n        279,\n        5025,\n        1948,\n        279,\n        1372,\n        315,\n        12645,\n        11,\n        279,\n        1372,\n        315,\n        9666,\n        11,\n        323,\n        279,\n        882,\n        4429,\n        13,\n        5542,\n        279,\n        2661,\n        1995,\n        11,\n        220,\n        20,\n        12645,\n        8193,\n        220,\n        20,\n        9666,\n        304,\n        220,\n        20,\n        4420,\n        13,\n        2055,\n        11,\n        7196,\n        358,\n        646,\n        1477,\n        700,\n        279,\n        4379,\n        518,\n        892,\n        279,\n        12645,\n        8193,\n        9666,\n        382,\n        2679,\n        220,\n        20,\n        12645,\n        1281,\n        220,\n        20,\n        9666,\n        304,\n        220,\n        20,\n        4420,\n        11,\n        1221,\n        1817,\n        5662,\n        1969,\n        387,\n        17387,\n        220,\n        16,\n        6573,\n        817,\n        220,\n        20,\n        4420,\n        13,\n        13824,\n        11,\n        1077,\n        752,\n        1779,\n        429,\n        13,\n        1416,\n        220,\n        20,\n        12645,\n        8193,\n        220,\n        20,\n        9666,\n        304,\n        220,\n        20,\n        4420,\n        11,\n        1221,\n        279,\n        4379,\n        817,\n        5662,\n        1035,\n        387,\n        220,\n        20,\n        9666,\n        17779,\n        553,\n        220,\n        20,\n        12645,\n        11,\n        892,\n        374,\n        220,\n        16,\n        6573,\n        817,\n        5662,\n        13,\n        1988,\n        2474,\n        807,\n        1896,\n        220,\n        20,\n        4420,\n        11,\n        7196,\n        432,\n        594,\n        220,\n        16,\n        6573,\n        817,\n        5662,\n        817,\n        220,\n        20,\n        4420,\n        30,\n        2055,\n        11,\n        1817,\n        5662,\n        18644,\n        220,\n        16,\n        6573,\n        1449,\n        220,\n        20,\n        4420,\n        13,\n        2938,\n        1035,\n        3076,\n        279,\n        4379,\n        374,\n        220,\n        16,\n        6573,\n        817,\n        5662,\n        817,\n        220,\n        20,\n        4420,\n        382,\n        3983,\n        1077,\n        594,\n        1744,\n        304,\n        3793,\n        315,\n        25148,\n        13,\n        1416,\n        803,\n        12645,\n        525,\n        1483,\n        11,\n        279,\n        2790,\n        5670,\n        1265,\n        5263,\n        21117,\n        745,\n        13,\n        2055,\n        11,\n        421,\n        498,\n        614,\n        803,\n        12645,\n        11,\n        807,\n        646,\n        8193,\n        803,\n        9666,\n        304,\n        279,\n        1852,\n        882,\n        13,\n        1988,\n        1588,\n        11,\n        279,\n        3405,\n        374,\n        911,\n        279,\n        882,\n        2567,\n        979,\n        279,\n        1372,\n        315,\n        12645,\n        323,\n        279,\n        1372,\n        315,\n        9666,\n        5263,\n        13,\n        13824,\n        11,\n        279,\n        3491,\n        2727,\n        429,\n        421,\n        498,\n        614,\n        220,\n        16,\n        15,\n        15,\n        12645,\n        11,\n        498,\n        1366,\n        311,\n        8193,\n        220,\n        16,\n        15,\n        15,\n        9666,\n        13,\n        2055,\n        11,\n        432,\n        594,\n        264,\n        2118,\n        21117,\n        3491,\n        1939,\n        14190,\n        11,\n        1077,\n        594,\n        1744,\n        911,\n        432,\n        13,\n        1416,\n        220,\n        20,\n        12645,\n        8193,\n        220,\n        20,\n        9666,\n        304,\n        220,\n        20,\n        4420,\n        11,\n        1221,\n        279,\n        882,\n        2567,\n        311,\n        8193,\n        220,\n        16,\n        15,\n        15,\n        9666,\n        448,\n        220,\n        16,\n        15,\n        15,\n        12645,\n        1035,\n        387,\n        1112,\n        6771,\n        594,\n        1490,\n        13,\n        1416,\n        1817,\n        5662,\n        18644,\n        220,\n        16,\n        6573,\n        1449,\n        220,\n        20,\n        4420,\n        11,\n        1221,\n        220,\n        16,\n        15,\n        15,\n        12645,\n        1035,\n        8193,\n        220,\n        16,\n        15,\n        15,\n        9666,\n        304,\n        220,\n        20,\n        4420,\n        13,\n        9211,\n        1817,\n        5662,\n        3643,\n        220,\n        16,\n        6573,\n        1449,\n        220,\n        20,\n        4420,\n        11,\n        773,\n        220,\n        16,\n        15,\n        15,\n        12645,\n        1035,\n        1281,\n        220,\n        16,\n        15,\n        15,\n        9666,\n        304,\n        279,\n        1852,\n        882,\n        13,\n        1988,\n        429,\n        4977,\n        2238,\n        30339,\n        13,\n        1988,\n        7196,\n        429,\n        594,\n        279,\n        1142,\n        382,\n        92014,\n        11,\n        7196,\n        279,\n        3491,\n        374,\n        911,\n        279,\n        882,\n        2567,\n        311,\n        8193,\n        264,\n        3654,\n        1372,\n        315,\n        9666,\n        13,\n        6771,\n        752,\n        1779,\n        279,\n        4024,\n        3405,\n        1549,\n        25,\n        330,\n        124648,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        220,\n        20,\n        94482,\n        123886,\n        64684,\n        123824,\n        124396,\n        124722,\n        124375,\n        220,\n        20,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        220,\n        124207,\n        19841,\n        125039,\n        220,\n        20,\n        220,\n        124318,\n        35884,\n        28319,\n        220,\n        137217,\n        25,\n        220,\n        124103,\n        124379,\n        95475,\n        57995,\n        123900,\n        123909,\n        124648,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        220,\n        16,\n        15,\n        15,\n        94482,\n        123886,\n        64684,\n        123824,\n        129515,\n        124396,\n        124722,\n        124375,\n        220,\n        16,\n        15,\n        15,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        220,\n        124207,\n        19841,\n        125039,\n        123984,\n        64741,\n        49756,\n        124618,\n        18625,\n        1837,\n        4416,\n        11,\n        220,\n        20,\n        12645,\n        8193,\n        220,\n        20,\n        9666,\n        304,\n        220,\n        20,\n        4420,\n        13,\n        5005,\n        11,\n        421,\n        582,\n        614,\n        220,\n        16,\n        15,\n        15,\n        12645,\n        17387,\n        220,\n        16,\n        15,\n        15,\n        9666,\n        11,\n        1246,\n        1293,\n        1558,\n        432,\n        1896,\n        30,\n        2055,\n        11,\n        421,\n        220,\n        20,\n        12645,\n        8193,\n        220,\n        20,\n        9666,\n        304,\n        220,\n        20,\n        4420,\n        11,\n        1221,\n        1817,\n        5662,\n        18644,\n        220,\n        16,\n        6573,\n        304,\n        220,\n        20,\n        4420,\n        13,\n        15277,\n        11,\n        220,\n        16,\n        15,\n        15,\n        12645,\n        1035,\n        8193,\n        220,\n        16,\n        15,\n        15,\n        9666,\n        304,\n        220,\n        20,\n        4420,\n        13,\n        2055,\n        279,\n        4226,\n        1035,\n        387,\n        220,\n        20,\n        4420,\n        1939,\n        3983,\n        3783,\n        11,\n        429,\n        4977,\n        1075,\n        279,\n        1852,\n        882,\n        438,\n        1573,\n        13,\n        1988,\n        7196,\n        1052,\n        594,\n        264,\n        14068,\n        1588,\n        13,\n        6771,\n        752,\n        1744,\n        1549,\n        13,\n        10696,\n        279,\n        3405,\n        374,\n        4460,\n        311,\n        1273,\n        279,\n        8660,\n        315,\n        2118,\n        21117,\n        2719,\n        13,\n        1416,\n        279,\n        1372,\n        315,\n        12645,\n        323,\n        279,\n        1372,\n        315,\n        9666,\n        525,\n        2176,\n        7703,\n        553,\n        279,\n        1852,\n        8168,\n        11,\n        1221,\n        279,\n        882,\n        1265,\n        7146,\n        279,\n        1852,\n        13,\n        9211,\n        421,\n        498,\n        614,\n        803,\n        12645,\n        11,\n        498,\n        646,\n        8193,\n        803,\n        9666,\n        304,\n        279,\n        1852,\n        882,\n        11,\n        714,\n        1588,\n        11,\n        279,\n        1372,\n        315,\n        9666,\n        374,\n        1083,\n        7703,\n        13,\n        2055,\n        11,\n        421,\n        498,\n        614,\n        220,\n        20,\n        12645,\n        17387,\n        220,\n        20,\n        9666,\n        304,\n        220,\n        20,\n        4420,\n        11,\n        1221,\n        220,\n        16,\n        15,\n        15,\n        12645,\n        17387,\n        220,\n        16,\n        15,\n        15,\n        9666,\n        1035,\n        1896,\n        279,\n        1852,\n        882,\n        11,\n        220,\n        20,\n        4420,\n        13,\n        9211,\n        279,\n        4379,\n        374,\n        220,\n        16,\n        6573,\n        817,\n        5662,\n        817,\n        220,\n        20,\n        4420,\n        13,\n        2055,\n        11,\n        220,\n        16,\n        15,\n        15,\n        12645,\n        1035,\n        8193,\n        220,\n        16,\n        15,\n        15,\n        9666,\n        304,\n        220,\n        20,\n        4420,\n        382,\n        92014,\n        11,\n        7196,\n        279,\n        3405,\n        374,\n        264,\n        14068,\n        3405,\n        1380,\n        432,\n        594,\n        72867,\n        429,\n        279,\n        882,\n        374,\n        279,\n        1852,\n        1576,\n        279,\n        1372,\n        315,\n        9666,\n        323,\n        12645,\n        525,\n        2176,\n        54916,\n        553,\n        279,\n        1852,\n        8168,\n        13,\n        2055,\n        11,\n        220,\n        20,\n        311,\n        220,\n        16,\n        15,\n        15,\n        374,\n        264,\n        46444,\n        553,\n        220,\n        17,\n        15,\n        11,\n        714,\n        279,\n        882,\n        374,\n        1083,\n        54916,\n        553,\n        220,\n        17,\n        15,\n        30,\n        13824,\n        11,\n        902,\n        13,\n        13824,\n        11,\n        279,\n        1372,\n        315,\n        12645,\n        5780,\n        504,\n        220,\n        20,\n        311,\n        220,\n        16,\n        15,\n        15,\n        11,\n        892,\n        374,\n        54916,\n        553,\n        220,\n        17,\n        15,\n        13,\n        576,\n        1372,\n        315,\n        9666,\n        5780,\n        504,\n        220,\n        20,\n        311,\n        220,\n        16,\n        15,\n        15,\n        11,\n        892,\n        374,\n        54916,\n        553,\n        220,\n        17,\n        15,\n        13,\n        2055,\n        11,\n        421,\n        279,\n        882,\n        374,\n        5961,\n        54172,\n        311,\n        279,\n        1372,\n        315,\n        9666,\n        323,\n        64583,\n        974,\n        54172,\n        311,\n        279,\n        1372,\n        315,\n        12645,\n        11,\n        1221,\n        279,\n        882,\n        1035,\n        387,\n        320,\n        20,\n        9666,\n        608,\n        220,\n        16,\n        15,\n        15,\n        12645,\n        8,\n        353,\n        320,\n        16,\n        15,\n        15,\n        12645,\n        8,\n        284,\n        220,\n        20,\n        4420,\n        13,\n        13824,\n        11,\n        429,\n        594,\n        279,\n        1852,\n        438,\n        1573,\n        382,\n        92014,\n        11,\n        1667,\n        279,\n        14806,\n        25,\n        882,\n        284,\n        320,\n        4082,\n        315,\n        9666,\n        608,\n        1372,\n        315,\n        12645,\n        8,\n        353,\n        4024,\n        882,\n        13,\n        2055,\n        11,\n        4024,\n        882,\n        374,\n        220,\n        20,\n        4420,\n        13,\n        5624,\n        315,\n        9666,\n        374,\n        220,\n        16,\n        15,\n        15,\n        11,\n        1372,\n        315,\n        12645,\n        374,\n        220,\n        16,\n        15,\n        15,\n        13,\n        2055,\n        11,\n        882,\n        284,\n        320,\n        16,\n        15,\n        15,\n        608,\n        220,\n        16,\n        15,\n        15,\n        8,\n        353,\n        220,\n        20,\n        284,\n        220,\n        20,\n        4420,\n        13,\n        2055,\n        9834,\n        11,\n        1852,\n        4226,\n        382,\n        3983,\n        7196,\n        279,\n        3405,\n        374,\n        4460,\n        311,\n        1273,\n        279,\n        8660,\n        429,\n        979,\n        279,\n        1372,\n        315,\n        12645,\n        323,\n        279,\n        1372,\n        315,\n        9666,\n        2176,\n        5263,\n        553,\n        279,\n        1852,\n        8168,\n        11,\n        279,\n        882,\n        8458,\n        279,\n        1852,\n        13,\n        2055,\n        11,\n        279,\n        4226,\n        374,\n        220,\n        20,\n        4420,\n        382,\n        3983,\n        1077,\n        752,\n        1779,\n        448,\n        2441,\n        5486,\n        13,\n        6771,\n        594,\n        11047,\n        279,\n        4379,\n        13,\n        576,\n        4379,\n        374,\n        9666,\n        817,\n        9383,\n        13,\n        2055,\n        11,\n        220,\n        20,\n        9666,\n        304,\n        220,\n        20,\n        4420,\n        374,\n        220,\n        16,\n        6573,\n        817,\n        9383,\n        13,\n        1988,\n        429,\n        594,\n        369,\n        220,\n        20,\n        12645,\n        13,\n        2055,\n        11,\n        279,\n        4379,\n        374,\n        220,\n        16,\n        6573,\n        817,\n        9383,\n        817,\n        220,\n        20,\n        12645,\n        30,\n        13824,\n        11,\n        902,\n        13,\n        13824,\n        11,\n        220,\n        20,\n        12645,\n        8193,\n        220,\n        20,\n        9666,\n        304,\n        220,\n        20,\n        4420,\n        13,\n        2055,\n        11,\n        279,\n        4379,\n        374,\n        220,\n        20,\n        9666,\n        608,\n        220,\n        20,\n        4420,\n        284,\n        220,\n        16,\n        6573,\n        817,\n        9383,\n        13,\n        1988,\n        429,\n        594,\n        369,\n        220,\n        20,\n        12645,\n        13,\n        2055,\n        11,\n        279,\n        4379,\n        374,\n        220,\n        16,\n        6573,\n        817,\n        9383,\n        817,\n        220,\n        20,\n        12645,\n        30,\n        13824,\n        11,\n        902,\n        13,\n        1416,\n        220,\n        20,\n        12645,\n        8193,\n        220,\n        16,\n        6573,\n        817,\n        9383,\n        11,\n        1221,\n        220,\n        16,\n        5662,\n        1035,\n        8193,\n        220,\n        16,\n        14,\n        20,\n        6573,\n        817,\n        9383,\n        13,\n        2055,\n        11,\n        220,\n        16,\n        15,\n        15,\n        12645,\n        1035,\n        8193,\n        220,\n        16,\n        15,\n        15,\n        6599,\n        16,\n        14,\n        20,\n        8,\n        284,\n        220,\n        17,\n        15,\n        9666,\n        817,\n        9383,\n        13,\n        2014,\n        8193,\n        220,\n        16,\n        15,\n        15,\n        9666,\n        11,\n        882,\n        374,\n        220,\n        16,\n        15,\n        15,\n        608,\n        220,\n        17,\n        15,\n        284,\n        220,\n        20,\n        4420,\n        13,\n        2055,\n        11,\n        1852,\n        4226,\n        382,\n        4416,\n        11,\n        15484,\n        315,\n        279,\n        5486,\n        11,\n        279,\n        4226,\n        374,\n        220,\n        20,\n        4420,\n        13,\n        15277,\n        11,\n        279,\n        882,\n        2567,\n        374,\n        220,\n        20,\n        4420,\n        382,\n        3983,\n        3783,\n        11,\n        7196,\n        1052,\n        594,\n        264,\n        2155,\n        1616,\n        311,\n        1744,\n        911,\n        432,\n        13,\n        82610,\n        279,\n        12645,\n        525,\n        3238,\n        304,\n        15279,\n        13,\n        1416,\n        1817,\n        5662,\n        646,\n        8193,\n        220,\n        16,\n        6573,\n        304,\n        220,\n        20,\n        4420,\n        11,\n        1221,\n        220,\n        16,\n        15,\n        15,\n        12645,\n        1035,\n        8193,\n        220,\n        16,\n        15,\n        15,\n        9666,\n        304,\n        220,\n        20,\n        4420,\n        13,\n        2055,\n        11,\n        9834,\n        11,\n        1852,\n        4226,\n        382,\n        92014,\n        11,\n        421,\n        279,\n        3491,\n        572,\n        911,\n        279,\n        882,\n        2567,\n        311,\n        8193,\n        264,\n        3654,\n        1372,\n        315,\n        9666,\n        11,\n        714,\n        279,\n        1372,\n        315,\n        12645,\n        323,\n        279,\n        1372,\n        315,\n        9666,\n        525,\n        2176,\n        7703,\n        13,\n        2055,\n        11,\n        421,\n        498,\n        614,\n        803,\n        12645,\n        11,\n        498,\n        646,\n        8193,\n        803,\n        9666,\n        304,\n        279,\n        1852,\n        882,\n        13,\n        1988,\n        1588,\n        11,\n        279,\n        1372,\n        315,\n        12645,\n        323,\n        279,\n        1372,\n        315,\n        9666,\n        525,\n        2176,\n        7172,\n        553,\n        279,\n        1852,\n        8168,\n        13,\n        2055,\n        11,\n        279,\n        882,\n        8458,\n        279,\n        1852,\n        382,\n        4416,\n        11,\n        304,\n        16688,\n        11,\n        279,\n        4226,\n        374,\n        220,\n        20,\n        4420,\n        624,\n        151668,\n        271,\n        124648,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        220,\n        20,\n        94482,\n        123886,\n        64684,\n        123824,\n        124396,\n        124722,\n        124375,\n        220,\n        20,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        124202,\n        125039,\n        220,\n        20,\n        220,\n        124318,\n        35884,\n        28319,\n        220,\n        126480,\n        37213,\n        64741,\n        220,\n        16,\n        94482,\n        123886,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        124625,\n        124396,\n        124722,\n        220,\n        16,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        124202,\n        125039,\n        220,\n        20,\n        220,\n        124318,\n        35884,\n        28319,\n        220,\n        37033,\n        123874,\n        20184,\n        23271,\n        19841,\n        20184,\n        220,\n        16,\n        15,\n        15,\n        94482,\n        123886,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        123972,\n        124396,\n        124722,\n        220,\n        16,\n        15,\n        15,\n        220,\n        48120,\n        30785,\n        19841,\n        20184,\n        124202,\n        125039,\n        124016,\n        97930,\n        124936,\n        66256,\n        220,\n        40327,\n        83581,\n        220,\n        20,\n        220,\n        124318,\n        35884,\n        28319,\n        220,\n        123885,\n        123883,\n        18625,\n        30434,\n        123900,\n        123909,\n        93874,\n        35648,\n        124441,\n        124358,\n        124010,\n        25200,\n        83546,\n        93874,\n        35648,\n        41586,\n        124094,\n        35884,\n        47171,\n        37213,\n        64741,\n        1447,\n        14085,\n        198,\n        59,\n        1318,\n        90,\n        125039,\n        92,\n        284,\n        1124,\n        37018,\n        35702,\n        1318,\n        90,\n        126709,\n        48120,\n        30785,\n        19841,\n        20184,\n        3417,\n        35702,\n        1318,\n        90,\n        126709,\n        124648,\n        64684,\n        123824,\n        60416,\n        23271,\n        89732,\n        3417,\n        1124,\n        15136,\n        1124,\n        1318,\n        90,\n        125039,\n        124016,\n        30785,\n        26283,\n        532,\n        14085,\n        271,\n        14085,\n        198,\n        59,\n        1318,\n        90,\n        125039,\n        92,\n        284,\n        1124,\n        37018,\n        90,\n        16,\n        15,\n        15,\n        15170,\n        16,\n        15,\n        15,\n        92,\n        1124,\n        15136,\n        220,\n        20,\n        284,\n        220,\n        20,\n        1124,\n        1318,\n        90,\n        220,\n        124318,\n        35884,\n        28319,\n        532,\n        14085,\n        271,\n        334,\n        140388,\n        66963,\n        220,\n        124207,\n        19841,\n        125039,\n        220,\n        20,\n        220,\n        124318,\n        35884,\n        28319,\n        220,\n        124618,\n        83581,\n        57960,\n        79075,\n        90,\n        20,\n        31716,\n        220,\n        124318,\n        35884,\n        28319\n    ],\n    \"total_duration\": 25174242791,\n    \"load_duration\": 39948250,\n    \"prompt_eval_count\": 88,\n    \"prompt_eval_duration\": 168859458,\n    \"eval_count\": 1720,\n    \"eval_duration\": 24964947292\n}"
+						}
+					]
+				},
+				{
+					"name": "Chat Completion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"gpt-oss\",\n    // Role: system, user, assistant, tool\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"You are a helpful assistant. You should response in Thai.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"Hello\"\n        }\n    ],\n    \"stream\": false,\n    \"think\": \"low\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/chat",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"chat"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Completion Intermediate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"qwen3:1.7b\",\n    \"prompt\": \"Why is the sky blue?\",\n    \"stream\": false,\n    \"options\": {\n        \"temperature\": 0.8,\n        \"repeat_penalty\": 1.05\n    },\n    \"keep_alive\": 10,\n    \"think\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/generate",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"generate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tool Calling Multiple Function 1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"qwen3:1.7b\",\n    // Role: system, user, assistant, tool\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"You are a helpful assistant. Your name is alice. You should response in Thai.\"\n        },\n        {\n            // เรียก function เดียวกัน 2 ครั้ง\n            \"role\": \"user\",\n            \"content\": \"Hello, Please tell me the weather at Bangkok and Paris\"\n        }\n    ],\n    \"options\": {\n        \"temperature\": 0.8,\n        \"repeat_penalty\": 1\n    },\n    \"stream\": false,\n    \"think\": true,\n    \"tools\": [\n        {\n            \"type\": \"function\",\n            \"function\": {\n                \"name\": \"get_current_weather\",\n                \"description\": \"Get the current weather for a city\",\n                \"parameters\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                        \"city\": {\n                            \"type\": \"string\",\n                            \"description\": \"name of city\"\n                        }\n                    },\n                    \"required\": [\n                        \"city\"\n                    ]\n                }\n            }\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/chat",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"chat"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tool Calling Multiple Function 2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"qwen3:1.7b\",\n    // Role: system, user, assistant, tool\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"You are a helpful assistant. Your name is alice. You should response in Thai.\"\n        },\n        {\n            // เรียกคนละ function\n            \"role\": \"user\",\n            \"content\": \"Hello, Please tell me the weather at Bangkok and get profile of 26700129\"\n        }\n    ],\n    \"options\": {\n        \"temperature\": 0.8,\n        \"repeat_penalty\": 1\n    },\n    \"stream\": false,\n    \"think\": true,\n    \"tools\": [\n        {\n            \"type\": \"function\",\n            \"function\": {\n                \"name\": \"get_current_weather\",\n                \"description\": \"Get the current weather for a city\",\n                \"parameters\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                        \"city\": {\n                            \"type\": \"string\",\n                            \"description\": \"name of city\"\n                        }\n                    },\n                    \"required\": [\n                        \"city\"\n                    ]\n                }\n            }\n        },\n        {\n            \"type\": \"function\",\n            \"function\": {\n                \"name\": \"get profile infomation\",\n                \"description\": \"Get the User profile details\",\n                \"parameters\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                        \"user\": {\n                            \"type\": \"string\",\n                            \"description\": \"user id or username\"\n                        }\n                    },\n                    \"required\": [\n                        \"user\"\n                    ]\n                }\n            }\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/chat",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"chat"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Embedding",
+			"item": [
+				{
+					"name": "Generate Embeddings",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    // bge-m3 , llama3.2 , qwen3:1.7b\n    \"model\": \"bge-m3\",\n    \"input\": \"Why is the sky blue?\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/embed",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"embed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Embeddings Multiple input",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    // bge-m3 , llama3.2 , qwen3:1.7b\n    \"model\": \"bge-m3\",\n    \"input\": [\"Why is the sky blue?\", \"Why is the grass green?\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/api/embed",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"api",
+								"embed"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OpenAI compatibility",
+			"item": [
+				{
+					"name": "List Local Models",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/v1/models",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"v1",
+								"models"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Completions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"gpt-oss:120b\",\n    \"prompt\": \"hello\",\n    \"stream\": false,\n    \"keep_alive\": \"24h\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/v1/completions",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"v1",
+								"completions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Chat Completions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"gpt-oss\",\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"You are a helpful assistant. You should response in Thai.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"Hello, qwen\"\n        }\n    ],\n    \"stream\": false,\n    \"keep_alive\": \"24h\",\n    \"reasoning\": {\n        \"effort\": \"low\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/v1/chat/completions",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"v1",
+								"chat",
+								"completions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Chat Completions Tool Calling",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"gpt-oss:120b\",\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": \"You are a helpful assistant. You should response in Thai.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"Hello\"\n        }\n    ],\n    \"stream\": false,\n    \"tools\": [\n        {\n            \"type\": \"function\",\n            \"function\": {\n                \"name\": \"get_current_weather\",\n                \"description\": \"Get the current weather for a city\",\n                \"parameters\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                        \"city\": {\n                            \"type\": \"string\",\n                            \"description\": \"name of city\"\n                        }\n                    },\n                    \"required\": [\n                        \"city\"\n                    ]\n                }\n            }\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/v1/chat/completions",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"v1",
+								"chat",
+								"completions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vision",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    // Require vision-language model\n    \"model\": \"qwen2.5vl\",\n    \"messages\": [\n        {\n            \"role\": \"system\",\n            \"content\": [\n                {\n                    \"type\": \"text\",\n                    \"text\": \"You are a helpful assistant. You should response in Thai.\"\n                }\n            ]\n        },\n        {\n            \"role\": \"user\",\n            \"content\": [\n                {\n                    \"type\": \"text\",\n                    \"text\": \"What's in this image?\"\n                },\n                {\n                    \"type\": \"image_url\",\n                    \"image_url\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG0AAABmCAYAAADBPx+VAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAA3VSURBVHgB7Z27r0zdG8fX743i1bi1ikMoFMQloXRpKFFIqI7LH4BEQ+NWIkjQuSWCRIEoULk0gsK1kCBI0IhrQVT7tz/7zZo888yz1r7MnDl7z5xvsjkzs2fP3uu71nNfa7lkAsm7d++Sffv2JbNmzUqcc8m0adOSzZs3Z+/XES4ZckAWJEGWPiCxjsQNLWmQsWjRIpMseaxcuTKpG/7HP27I8P79e7dq1ars/yL4/v27S0ejqwv+cUOGEGGpKHR37tzJCEpHV9tnT58+dXXCJDdECBE2Ojrqjh071hpNECjx4cMHVycM1Uhbv359B2F79+51586daxN/+pyRkRFXKyRDAqxEp4yMlDDzXG1NPnnyJKkThoK0VFd1ELZu3TrzXKxKfW7dMBQ6bcuWLW2v0VlHjx41z717927ba22U9APcw7Nnz1oGEPeL3m3p2mTAYYnFmMOMXybPPXv2bNIPpFZr1NHn4HMw0KRBjg9NuRw95s8PEcz/6DZELQd/09C9QGq5RsmSRybqkwHGjh07OsJSsYYm3ijPpyHzoiacg35MLdDSIS/O1yM778jOTwYUkKNHWUzUWaOsylE00MyI0fcnOwIdjvtNdW/HZwNLGg+sR1kMepSNJXmIwxBZiG8tDTpEZzKg0GItNsosY8USkxDhD0Rinuiko2gfL/RbiD2LZAjU9zKQJj8RDR0vJBR1/Phx9+PHj9Z7REF4nTZkxzX4LCXHrV271qXkBAPGfP/atWvu/PnzHe4C97F48eIsRLZ9+3a3f/9+87dwP1JxaF7/3r17ba+5l4EcaVo0lj3SBq5kGTJSQmLWMjgYNei2GPT1MuMqGTDEFHzeQSP2wi/jGnkmPJ/nhccs44jvDAxpVcxnq0F6eT8h4ni/iIWpR5lPyA6ETkNXoSukvpJAD3AsXLiwpZs49+fPn5ke4j10TqYvegSfn0OnafC+Tv9ooA/JPkgQysqQNBzagXY55nO/oa1F7qvIPWkRL12WRpMWUvpVDYmxAPehxWSe8ZEXL20sadYIozfmNch4QJPAfeJgW3rNsnzphBKNJM2KKODo1rVOMRYik5ETy3ix4qWNI81qAAirizgMIc+yhTytx0JWZuNI03qsrgWlGtwjoS9XwgUhWGyhUaRZZQNNIEwCiXD16tXcAHUs79co0vSD8rrJCIW98pzvxpAWyyo3HYwqS0+H0BjStClcZJT5coMm6D2LOF8TolGJtK9fvyZpyiC5ePFi9nc/oJU4eiEP0jVoAnHa9wyJycITMP78+eMeP37sXrx44d6+fdt6f82aNdkx1pg9e3Zb5W+RSRE+n+VjksQWifvVaTKFhn5O8my63K8Qabdv33b379/PiAP//vuvW7BggZszZ072/+TJk91YgkafPn166zXB1rQHFvouAWHq9z3SEevSUerqCn2/dDCeta2jxYbr69evk4MHDyY7d+7MjhMnTiTPnz9Pfv/+nfQT2ggpO2dMF8cghuoM7Ygj5iWCqRlGFml0QC/ftGmTmzt3rmsaKDsgBSPh0/8yPeLLBihLkOKJc0jp8H8vUzcxIA1k6QJ/c78tWEyj5P3o4u9+jywNPdJi5rAH9x0KHcl4Hg570eQp3+vHXGyrmEeigzQsQsjavXt38ujRo44LQuDDhw+TW7duRS1HGgMxhNXHgflaNTOsHyKvHK5Ijo2jbFjJBQK9YwFd6RVMzfgRBmEfP37suBBm/p49e1qjEP2mwTViNRo0VJWH1deMXcNK08uUjVUu7s/zRaL+oLNxz1bpANco4npUgX4G2eFbpDFyQoQxojBCpEGSytmOH8qrH5Q9vuzD6ofQylkCUmh8DBAr+q8JCyVNtWQIidKQE9wNtLSQnS4jDSsxNHogzFuQBw4cyM61UKVsjfr3ooBkPSqqQHesUPWVtzi9/vQi1T+rJj7WiTz4Pt/l3LxUkr5P2VYZaZ4URpsE+st/dujQoaBBYokbrz/8TJNQYLSonrPS9kUaSkPeZyj1AWSj+d+VBoy1pIWVNed8P0Ll/ee5HdGRhrHhR5GGN0r4LGZBaj8oFDJitBTJzIZgFcmU0Y8ytWMZMzJOaXUSrUs5RxKnrxmbb5YXO9VGUhtpXldhEUogFr3IzIsvlpmdosVcGVGXFWp2oU9kLFL3dEkSz6NHEY1sjSRdIuDFWEhd8KxFqsRi1uM/nz9/zpxnwlESONdg6dKlbsaMGS4EHFHtjFIDHwKOo46l4TxSuxgDzi+rE2jg+BaFruOX4HXa0Nnf1lwAPufZeF8/r6zD97WK2qFnGjBxTw5qNGPxT+5T/r7/7RawFC3j4vTp09koCxkeHjqbHJqArmH5UrFKKksnxrK7FuRIs8STfBZv+luugXZ2pR/pP9Ois4z+TiMzUUkUjD0iEi1fzX8GmXyuxUBRcaUfykV0YZnlJGKQpOiGB76x5GeWkWWJc3mOrK6S7xdND+W5N6XyaRgtWJFe13GkaZnKOsYqGdOVVVbGupsyA/l7emTLHi7vwTdirNEt0qxnzAvBFcnQF16xh/TMpUuXHDowhlA9vQVraQhkudRdzOnK+04ZSP3DUhVSP61YsaLtd/ks7ZgtPcXqPqEafHkdqa84X6aCeL7YWlv6edGFHb+ZFICPlljHhg0bKuk0CSvVznWsotRu433alNdFrqG45ejoaPCaUkWERpLXjzFL2Rpllp7PJU2a/v7Ab8N05/9t27Z16KUqoFGsxnI9EosS2niSYg9SpU6B4JgTrvVW1flt1sT+0ADIJU2maXzcUTraGCRaL1Wp9rUMk16PMom8QhruxzvZIegJjFU7LLCePfS8uaQdPny4jTTL0dbee5mYokQsXTIWNY46kuMbnt8Kmec+LGWtOVIl9cT1rCB0V8WqkjAsRwta93TbwNYoGKsUSChN44lgBNCoHLHzquYKrU6qZ8lolCIN0Rh6cP0Q3U6I6IXILYOQI513hJaSKAorFpuHXJNfVlpRtmYBk1Su1obZr5dnKAO+L10Hrj3WZW+E3qh6IszE37F6EB+68mGpvKm4eb9bFrlzrok7fvr0Kfv727dvWRmdVTJHw0qiiCUSZ6wCK+7XL/AcsgNyL74DQQ730sv78Su7+t/A36MdY0sW5o40ahslXr58aZ5HtZB8GH64m9EmMZ7FpYw4T6QnrZfgenrhFxaSiSGXtPnz57e9TkNZLvTjeqhr734CNtrK41L40sUQckmj1lGKQ0rC37x544r8eNXRpnVE3ZZY7zXo8NomiO0ZUCj2uHz58rbXoZ6gc0uA+F6ZeKS/jhRDUq8MKrTho9fEkihMmhxtBI1DxKFY9XLpVcSkfoi8JGnToZO5sU5aiDQIW716ddt7ZLYtMQlhECdBGXZZMWldY5BHm5xgAroWj4C0hbYkSc/jBmggIrXJWlZM6pSETsEPGqZOndr2uuuR5rF169a2HoHPdurUKZM4CO1WTPqaDaAd+GFGKdIQkxAn9RuEWcTRyN2KSUgiSgF5aWzPTeA/lN5rZubMmR2bE4SIC4nJoltgAV/dVefZm72AtctUCJU2CMJ327hxY9t7EHbkyJFseq+EJSY16RPo3Dkq1kkr7+q0bNmyDuLQcZBEPYmHVdOBiJyIlrRDq41YPWfXOxUysi5fvtyaj+2BpcnsUV/oSoEMOk2CQGlr4ckhBwaetBhjCwH0ZHtJROPJkyc7UjcYLDjmrH7ADTEBXFfOYmB0k9oYBOjJ8b4aOYSe7QkKcYhFlq3QYLQhSidNmtS2RATwy8YOM3EQJsUjKiaWZ+vZToUQgzhkHXudb/PW5YMHD9yZM2faPsMwoc7RciYJXbGuBqJ1UIGKKLv915jsvgtJxCZDubdXr165mzdvtr1Hz5LONA8jrUwKPqsmVesKa49S3Q4WxmRPUEYdTjgiUcfUwLx589ySJUva3oMkP6IYddq6HMS4o55xBJBUeRjzfa4Zdeg56QZ43LhxoyPo7Lf1kNt7oO8wWAbNwaYjIv5lhyS7kRf96dvm5Jah8vfvX3flyhX35cuX6HfzFHOToS1H4BenCaHvO8pr8iDuwoUL7tevX+b5ZdbBair0xkFIlFDlW4ZknEClsp/TzXyAKVOmmHWFVSbDNw1l1+4f90U6IY/q4V27dpnE9bJ+v87QEydjqx/UamVVPRG+mwkNTYN+9tjkwzEx+atCm/X9WvWtDtAb68Wy9LXa1UmvCDDIpPkyOQ5ZwSzJ4jMrvFcr0rSjOUh+GcT4LSg5ugkW1Io0/SCDQBojh0hPlaJdah+tkVYrnTZowP8iq1F1TgMBBauufyB33x1v+NWFYmT5KmppgHC+NkAgbmRkpD3yn9QIseXymoTQFGQmIOKTxiZIWpvAatenVqRVXf2nTrAWMsPnKrMZHz6bJq5jvce6QK8J1cQNgKxlJapMPdZSR64/UivS9NztpkVEdKcrs5alhhWP9NeqlfWopzhZScI6QxseegZRGeg5a8C3Re1Mfl1ScP36ddcUaMuv24iOJtz7sbUjTS4qBvKmstYJoUauiuD3k5qhyr7QdUHMeCgLa1Ear9NquemdXgmum4fvJ6w1lqsuDhNrg1qSpleJK7K3TF0Q2jSd94uSZ60kK1e3qyVpQK6PVWXp2/FC3mp6jBhKKOiY2h3gtUV64TWM6wDETRPLDfSakXmH3w8g9Jlug8ZtTt4kVF0kLUYYmCCtD/DrQ5YhMGbA9L3ucdjh0y8kOHW5gU/VEEmJTcL4Pz/f7mgoAbYkAAAAAElFTkSuQmCC\"\n                }\n            ]\n        }\n    ],\n    \"stream\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{OLLAMA_HOST}}/v1/chat/completions",
+							"host": [
+								"{{OLLAMA_HOST}}"
+							],
+							"path": [
+								"v1",
+								"chat",
+								"completions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "OLLAMA_HOST",
+			"value": "http://203.113.71.134:11434",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "OLLAMA_HOST",
+			"value": "http://localhost:11434",
+			"type": "string"
+		},
+		{
+			"key": "OLLAMA_HOST",
+			"value": "http://118.174.9.189:11434",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "OLLAMA_HOST",
+			"value": "http://118.174.9.226:11434",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}

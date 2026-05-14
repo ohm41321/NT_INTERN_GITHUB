@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Health Status</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <div x-data="{ sidebarOpen: false }">
+        <div class="flex h-screen bg-gray-200">
+            <!-- Sidebar -->
+            <div :class="{'hidden': !sidebarOpen}" class="fixed inset-0 flex z-40 lg:hidden">
+                <div @click="sidebarOpen = false" class="absolute inset-0 bg-black opacity-50"></div>
+                <div class="relative flex-1 flex flex-col w-64 bg-gray-800">
+                    <div class="px-8 py-4 border-b border-gray-700">
+                        <h2 class="text-2xl font-semibold text-white">Admin Dashboard</h2>
+                    </div>
+                    <nav class="flex-1 px-4 py-4 space-y-2">
+                        <a href="/" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-gray-100 rounded-lg">
+                            <i class="fas fa-arrow-left mr-3"></i>
+                            Back to Main Site
+                        </a>
+                        <a href="/admin/dashboard" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-gray-100 rounded-lg">
+                            <i class="fas fa-tachometer-alt mr-3"></i>
+                            Feedback and Issues
+                        </a>
+                        <a href="/admin/api-status-page" class="flex items-center px-4 py-2 text-gray-100 bg-gray-700 rounded-lg">
+                            <i class="fas fa-network-wired mr-3"></i>
+                            API Status
+                        </a>
+                        <a href="/admin/users" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-gray-100 rounded-lg">
+                            <i class="fas fa-users-cog mr-3"></i>
+                            User Management
+                        </a>
+                        <a href="/admin/chat-analytics" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-gray-100 rounded-lg">
+                            <i class="fas fa-chart-line mr-3"></i>
+                            Chat Analytics
+                        </a>
+                        <a href="/admin/review-analysis" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-gray-100 rounded-lg">
+                            <i class="fas fa-star-half-alt mr-3"></i>
+                            Review Analysis
+                        </a>
+                        <a href="/admin/user-analytics" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-gray-100 rounded-lg">
+                            <i class="fas fa-user-friends mr-3"></i>
+                            User Analytics
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Static sidebar for desktop -->
+            <div class="hidden lg:flex lg:flex-shrink-0">
+                <div class="flex flex-col w-64">
+                    <div class="px-8 py-4 border-b border-gray-700 bg-gray-800">
+                        <h2 class="text-2xl font-semibold text-white">Admin</h2>
+                    </div>
+                    <nav class="flex-1 px-4 py-4 space-y-2 bg-gray-800 text-white">
+                        <a href="/" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-gray-100 rounded-lg">
+                            <i class="fas fa-arrow-left mr-3"></i>
+                            Back to Main Site
+                        </a>
+                        <a href="/admin/dashboard" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-gray-100 rounded-lg">
+                            <i class="fas fa-tachometer-alt mr-3"></i>
+                            Feedback and Issues
+                        </a>
+                        <a href="/admin/api-status-page" class="flex items-center px-4 py-2 text-gray-100 bg-gray-700 rounded-lg">
+                            <i class="fas fa-network-wired mr-3"></i>
+                            API Status
+                        </a>
+                        <a href="/admin/users" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-gray-100 rounded-lg">
+                            <i class="fas fa-users-cog mr-3"></i>
+                            User Management
+                        </a>
+                        <a href="/admin/chat-analytics" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-gray-100 rounded-lg">
+                            <i class="fas fa-chart-line mr-3"></i>
+                            Chat Analytics
+                        </a>
+                        <a href="/admin/review-analysis" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-gray-100 rounded-lg">
+                            <i class="fas fa-star-half-alt mr-3"></i>
+                            Review Analysis
+                        </a>
+                        <a href="/admin/user-analytics" class="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-gray-100 rounded-lg">
+                            <i class="fas fa-user-friends mr-3"></i>
+                            User Analytics
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Main content -->
+            <div class="flex-1 flex flex-col overflow-hidden">
+                <!-- Header -->
+                <header class="flex justify-between items-center p-4 md:p-6 bg-white border-b">
+                    <div class="flex items-center">
+                        <button @click="sidebarOpen = true" class="text-gray-500 hover:text-gray-600 lg:hidden mr-4">
+                            <i class="fas fa-bars fa-lg"></i>
+                        </button>
+                        <h1 class="text-xl md:text-2xl font-semibold text-gray-800">System Health Dashboard</h1>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="hidden md:inline mr-4">Welcome, {{ user.username }}</span>
+                        <form action="/logout" method="post">
+                            <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">Logout</button>
+                        </form>
+                    </div>
+                </header>
+
+                <!-- Content -->
+                <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-4 md:p-6">
+                    <div class="container mx-auto space-y-8">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-2xl font-semibold text-gray-700">System Status</h2>
+                            <button id="refresh-all-btn" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 shadow-md transition-transform transform hover:scale-105">
+                                <i class="fas fa-sync-alt mr-2"></i>Refresh All
+                            </button>
+                        </div>
+
+                        <!-- External Services -->
+                        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                            <div class="p-4 border-b">
+                                <h3 class="text-lg font-semibold text-gray-800">External Service Status</h3>
+                                <p class="text-sm text-gray-600">Critical third-party services the application depends on.</p>
+                            </div>
+                            <div id="external-status-container">
+                                <!-- JS will populate this -->
+                            </div>
+                        </div>
+
+                        <!-- Internal Endpoints -->
+                        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                            <div class="p-4 border-b">
+                                <h3 class="text-lg font-semibold text-gray-800">Key Internal Endpoint Status</h3>
+                                <p class="text-sm text-gray-600">A quick check of the application's own public-facing endpoints.</p>
+                            </div>
+                            <div id="internal-status-container">
+                                <!-- JS will populate this -->
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const externalContainer = document.getElementById('external-status-container');
+            const internalContainer = document.getElementById('internal-status-container');
+            const refreshBtn = document.getElementById('refresh-all-btn');
+
+            const statusColors = {
+                ONLINE: { text: 'text-green-600', bg: 'bg-green-100' },
+                OFFLINE: { text: 'text-red-600', bg: 'bg-red-100' },
+                ERROR: { text: 'text-yellow-600', bg: 'bg-yellow-100' }
+            };
+
+            const getSkeletonLoader = (rows = 3) => {
+                let html = '<div class="p-4 space-y-3">';
+                for (let i = 0; i < rows; i++) {
+                    html += `<div class="h-10 bg-gray-200 rounded-lg animate-pulse" style="animation-delay: ${i * 0.1}s;"></div>`;
+                }
+                html += '</div>';
+                return html;
+            };
+
+            const fetchExternalStatus = async () => {
+                externalContainer.innerHTML = getSkeletonLoader(3);
+                try {
+                    const response = await fetch('/api/health');
+                    if (!response.ok) throw new Error(`Server responded with status: ${response.status}`);
+                    const data = await response.json();
+                    
+                    let tableHtml = '<table class="min-w-full leading-normal"><thead><tr><th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Service Name</th><th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th><th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Details</th></tr></thead><tbody id="external-tbody"></tbody></table>';
+                    externalContainer.innerHTML = tableHtml;
+                    const tbody = document.getElementById('external-tbody');
+
+                    for (const serviceName in data) {
+                        const details = data[serviceName];
+                        const row = document.createElement('tr');
+                        const status = details.status || 'UNKNOWN';
+                        const colorInfo = statusColors[status] || { text: 'text-gray-600', bg: 'bg-gray-100' };
+                        row.innerHTML = `
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <p class="text-gray-900 whitespace-no-wrap font-semibold">${serviceName.replace(/_/g, " ").replace("service", "").trim().toUpperCase()}</p>
+                                <a href="${details.url || '#'}" target="_blank" class="text-xs text-blue-500 hover:underline">${details.url || 'No URL'}</a>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <span class="relative inline-block px-3 py-1 font-semibold ${colorInfo.text} leading-tight">
+                                    <span aria-hidden class="absolute inset-0 ${colorInfo.bg} opacity-50 rounded-full"></span>
+                                    <span class="relative">${status}</span>
+                                </span>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <p class="text-gray-700 whitespace-normal">${details.details || 'No details provided'}</p>
+                            </td>
+                        `;
+                        tbody.appendChild(row);
+                    }
+                } catch (error) {
+                    externalContainer.innerHTML = `<div class="p-4 text-red-600 text-center">Error fetching external service status: ${error.message}</div>`;
+                }
+            };
+
+            const fetchInternalStatus = async () => {
+                internalContainer.innerHTML = getSkeletonLoader(3);
+                try {
+                    const response = await fetch('/admin/internal-status');
+                    if (!response.ok) throw new Error(`Server responded with status: ${response.status}`);
+                    const data = await response.json();
+
+                    let tableHtml = '<table class="min-w-full leading-normal"><thead><tr><th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Endpoint Path</th><th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status Code</th><th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Response Time</th></tr></thead><tbody id="internal-tbody"></tbody></table>';
+                    internalContainer.innerHTML = tableHtml;
+                    const tbody = document.getElementById('internal-tbody');
+
+                    data.forEach(result => {
+                        const row = document.createElement('tr');
+                        const statusCode = result.status_code;
+                        let colorClass = 'text-gray-600';
+                        if (statusCode >= 200 && statusCode < 300) colorClass = 'text-green-600';
+                        else if (statusCode >= 400) colorClass = 'text-red-600';
+                        else if (statusCode !== 'Error') colorClass = 'text-yellow-600';
+
+                        row.innerHTML = `
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm font-mono">${result.path}</td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm font-semibold ${colorClass}">${statusCode}</td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">${result.response_time} ms</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                } catch (error) {
+                    internalContainer.innerHTML = `<div class="p-4 text-red-600 text-center">Error fetching internal endpoint status: ${error.message}</div>`;
+                }
+            };
+
+            const fetchAllStatus = () => {
+                fetchExternalStatus();
+                fetchInternalStatus();
+            };
+
+            refreshBtn.addEventListener('click', fetchAllStatus);
+
+            // Fetch all statuses on page load
+            fetchAllStatus();
+        });
+    </script>
+</body>
+</html>

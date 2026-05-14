@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ - NT Package Internet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <script src="/static/js/theme-switcher.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+        
+        /* NT Corporate Colors */
+        .nt-orange { background-color: #ffc800; }
+        .nt-blue { background-color: #003b7a; }
+        .nt-light-blue { background-color: #4a90e2; }
+        .nt-gray { background-color: #f5f5f5; }
+        
+        .text-nt-orange { color: #ffc800; }
+        .text-nt-blue { color: #003b7a; }
+        .text-nt-light-blue { color: #4a90e2; }
+        
+        .border-nt-orange { border-color: #ffc800; }
+        .border-nt-blue { border-color: #003b7a; }
+        
+        .gradient-nt {
+            background: linear-gradient(135deg, #003b7a 0%, #4a90e2 50%, #ffc800 100%);
+        }
+        
+        .hero-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(74, 144, 226, 0.1) 0%, transparent 50%);
+        }
+        
+        .promotion-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid #ffc800;
+        }
+        
+        .promotion-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 59, 122, 0.15);
+            border-left-color: #003b7a;
+        }
+        
+        .service-icon {
+            background: linear-gradient(45deg, #ffc800, #4a90e2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Chat Widget Styles (if needed, though this page doesn't have it) */
+        .chat-toggle-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: linear-gradient(135deg, #ffc800, #003b7a);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .chat-toggle-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6);
+        }
+        
+        .chat-toggle-button.hidden-button {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            z-index: 1000;
+            width: 380px;
+            height: 520px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 59, 122, 0.15);
+            border: 2px solid #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: translateY(calc(100% + 20px));
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-out;
+        }
+        
+        .chat-window.open {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, #003b7a, #4a90e2);
+            color: white;
+            padding: 1.25rem;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-messages {
+            flex-grow: 1;
+            padding: 1.25rem;
+            overflow-y: auto;
+            background-color: #fafafa;
+        }
+        
+        .chat-input-area {
+            padding: 1.25rem;
+            background-color: white;
+            border-bottom-left-radius: 14px;
+            border-bottom-right-radius: 14px;
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #e5e5e5;
+        }
+        
+        .chat-message-user {
+            background: linear-gradient(135deg, #ffc800, #ff8c61);
+            color: white;
+            padding: 0.875rem 1rem;
+            border-radius: 18px 18px 4px 18px;
+            margin-left: auto;
+            max-width: 80%;
+            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.2);
+        }
+        
+        .chat-message-bot {
+            background-color: white;
+            color: #333;
+            padding: 0.875rem 1rem;
+            border-radius: 18px 18px 18px 4px;
+            margin-right: auto;
+            max-width: 80%;
+            border: 1px solid #e5e5e5;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chat-message-wrapper {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        
+        .chat-message-wrapper.user {
+            justify-content: flex-end;
+        }
+        
+        .chat-message-wrapper.bot {
+            justify-content: flex-start;
+        }
+        
+        /* Custom scrollbar */
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        @keyframes fade-in-right {
+            from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fade-out-right {
+            from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(100%); }
+        }
+        .animate-fade-in-right { animation: fade-in-right 0.5s ease-out forwards; }
+        .animate-fade-out-right { animation: fade-out-right 0.5s ease-in forwards; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 flex items-center justify-center min-h-screen dark:bg-gray-900 dark:text-gray-300">
+    <div class="w-full max-w-md p-8 space-y-8 bg-white rounded-2xl shadow-2xl relative dark:bg-gray-800">
+        <a href="/" class="absolute top-4 left-4 text-gray-400 hover:text-nt-blue transition-colors dark:hover:text-white" aria-label="Back to home">
+            <i class="fas fa-arrow-left fa-lg"></i>
+        </a>
+        
+        <div id="alert-container" class="fixed top-5 right-5 z-50"></div>
+
+        <div class="text-center">
+            <h1 class="text-3xl font-bold text-nt-blue dark:text-white">ยินดีต้อนรับกลับ!</h1>
+            <p class="text-gray-600 dark:text-gray-400">เข้าสู่ระบบเพื่อเข้าถึงบัญชีของคุณ</p>
+        </div>
+        
+        {% if error %}
+        <div id="initial-error-alert" class="flex items-center p-4 text-white bg-red-500 rounded-lg shadow-lg animate-fade-in-right">
+            <i class="fas fa-exclamation-circle mr-3"></i>
+            <span>{{ error }}</span>
+        </div>
+        {% endif %}
+
+        <form action="/login" method="post" class="space-y-6">
+            <div class="relative">
+                <input type="text" id="username" name="username" required value="{{ username | default('') }}"
+                       class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-nt-orange peer dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:placeholder-gray-400">
+                <label for="username"
+                       class="absolute left-4 -top-3.5 text-white-400 text-sm transition-all 
+                              peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 
+                              peer-focus:-top-3.5 peer-focus:text-nt-orange peer-focus:text-sm dark:peer-focus:text-white">
+                    ชื่อผู้ใช้
+                </label>
+            </div>
+            <div class="relative">
+                <input type="password" id="password" name="password" required
+                       class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-nt-orange peer dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:placeholder-gray-400">
+                <label for="password"
+                       class="absolute left-4 -top-3.5 text-white-400 text-sm transition-all
+                              peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5
+                              peer-focus:-top-3.5 peer-focus:text-nt-orange peer-focus:text-sm dark:peer-focus:text-white">
+                    รหัสผ่าน
+                </label>
+            </div>
+            <div class="flex items-center justify-between">
+                <a href="/forgot-password" class="text-sm text-blue-300 hover:underline">ลืมรหัสผ่าน?</a>
+            </div>
+            <div>
+                <button type="submit"
+                        class="w-full px-4 py-3 font-semibold text-black nt-orange rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-nt-orange transition-all duration-300 ease-in-out">
+                    เข้าสู่ระบบ
+                </button>
+            </div>
+        </form>
+        
+        <div class="relative flex py-5 items-center">
+            <div class="flex-grow border-t border-gray-400"></div>
+            <span class="flex-shrink mx-4 text-gray-400">Or continue with</span>
+            <div class="flex-grow border-t border-gray-400"></div>
+        </div>
+
+        <div>
+            <button onclick="handleGoogleLogin()" class="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 dark:border-gray-600 dark:hover:bg-gray-700 transition-colors">
+                <svg class="w-5 h-5 mr-3" viewBox="0 0 48 48">
+                    <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path>
+                    <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path>
+                    <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path>
+                    <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571l6.19,5.238C42.021,35.596,44,30.138,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
+                </svg>
+                <span>เข้าสู่ระบบด้วย Google</span>
+            </button>
+        </div>
+        <div class="mt-4">
+            <button onclick="handleLineLogin()" class="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 dark:border-gray-600 dark:hover:bg-gray-700 transition-colors" style="background-color: #00B900; color: white;">
+                <i class="fab fa-line fa-lg mr-3"></i>
+                <span>เข้าสู่ระบบด้วย Line</span>
+            </button>
+        </div>
+
+        <div class="text-center text-white-600">
+            <p>ยังไม่มีบัญชี? <a href="/register" class="font-medium text-blue-300 hover:underline">สมัครสมาชิกที่นี่</a></p>
+        </div>
+    </div>
+
+    <script>
+        function showAlert(message, type = 'success') {
+            const alertContainer = document.getElementById('alert-container');
+            
+            const alertColors = {
+                success: { bg: 'bg-green-500', icon: 'fa-check-circle' },
+                error: { bg: 'bg-red-500', icon: 'fa-exclamation-circle' },
+                warning: { bg: 'bg-yellow-500', icon: 'fa-exclamation-triangle' },
+                info: { bg: 'bg-blue-500', icon: 'fa-info-circle' }
+            };
+
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `flex items-center p-4 mb-4 text-white ${alertColors[type].bg} rounded-lg shadow-lg animate-fade-in-right`;
+            alertDiv.innerHTML = `<i class="fas ${alertColors[type].icon} mr-3"></i><span>${message}</span>`;
+            
+            alertContainer.appendChild(alertDiv);
+            alertContainer.classList.remove('hidden');
+
+            setTimeout(() => {
+                alertDiv.classList.add('animate-fade-out-right');
+                setTimeout(() => {
+                    alertDiv.remove();
+                    if (alertContainer.childElementCount === 0) {
+                        alertContainer.classList.add('hidden');
+                    }
+                }, 500);
+            }, 5000);
+        }
+
+        const initialErrorAlert = document.getElementById('initial-error-alert');
+        if (initialErrorAlert) {
+            setTimeout(() => {
+                initialErrorAlert.style.transition = 'opacity 0.5s ease';
+                initialErrorAlert.style.opacity = '0';
+                setTimeout(() => initialErrorAlert.remove(), 500);
+            }, 5000);
+        }
+
+        // --- Persist username on failed login ---
+        const usernameInput = document.getElementById('username');
+        const loginForm = document.querySelector('form');
+
+        // On form submission, save username to sessionStorage
+        loginForm.addEventListener('submit', () => {
+            sessionStorage.setItem('lastUsername', usernameInput.value);
+        });
+
+        // On page load, check for saved username and restore it
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedUsername = sessionStorage.getItem('lastUsername');
+            if (savedUsername) {
+                usernameInput.value = savedUsername;
+                sessionStorage.removeItem('lastUsername'); // Clear it after use
+            }
+        });
+
+        function handleGoogleLogin() {
+            window.location.href = '/login/google';
+        }
+
+        function handleLineLogin() {
+            window.location.href = '/login/line';
+        }
+    </script>
+</body>
+</html>

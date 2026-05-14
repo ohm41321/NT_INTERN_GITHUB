@@ -1,0 +1,29 @@
+
+/* --- Premium Typing Cursor --- */
+.typing-cursor::after {
+    content: '▋';
+    display: inline-block;
+    vertical-align: middle;
+    width: 6px;
+    height: 1.2em;
+    background-color: var(--accent-color); /* Use accent color for consistency */
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+    opacity: 0.8;
+}
+
+/* Ensure cursor matches text color in dark mode */
+html.dark .typing-cursor::after {
+    background-color: var(--text-primary);
+}
+
+@keyframes blink {
+    100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Smooth out the container height changes */
+.message-text-content {
+    min-height: 24px; /* Prevent collapse on empty */
+    will-change: contents; /* Hint to browser */
+}

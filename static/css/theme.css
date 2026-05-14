@@ -1,0 +1,15 @@
+.light-logo {
+    display: inline-block;
+}
+
+.dark-logo {
+    display: none;
+}
+
+/* When dark mode is active, hide the light logo and show the dark one */
+.dark .light-logo {
+    display: none;
+}
+.dark .dark-logo {
+    display: inline-block; /* Or 'block', depending on your layout */
+}

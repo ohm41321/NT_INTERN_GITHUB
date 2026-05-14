@@ -1,0 +1,112 @@
+<!-- Profile Modal -->
+<div id="profile-modal" class="fixed inset-0 z-[9999] flex items-center justify-center hidden" style="background-color: rgba(0,0,0,0.5);">
+    <div id="profile-modal-content" class="p-6 rounded-lg shadow-xl w-full max-w-2xl m-4 transform transition-all scale-95 opacity-0" style="background-color: var(--bg-secondary);">
+        <div class="flex justify-between items-center mb-4 border-b pb-3" style="border-color: var(--border-color);">
+            <h3 class="text-2xl font-bold" style="color: var(--text-primary);">
+                <i class="fas fa-user-cog mr-3"></i>Profile Settings
+            </h3>
+            <button id="close-profile-modal-btn" class="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white text-2xl">&times;</button>
+        </div>
+
+        <div class="flex space-x-6">
+            <!-- Tabs -->
+            <div class="w-1/4">
+                <div class="space-y-2">
+                    <button data-tab="profile" class="profile-tab-button w-full text-left p-3 rounded-lg flex items-center active">
+                        <i class="fas fa-user-circle w-6 mr-3"></i> Profile
+                    </button>
+                    <button data-tab="password" class="profile-tab-button w-full text-left p-3 rounded-lg flex items-center">
+                        <i class="fas fa-lock w-6 mr-3"></i> Password
+                    </button>
+                    <button data-tab="2fa" class="profile-tab-button w-full text-left p-3 rounded-lg flex items-center">
+                        <i class="fas fa-shield-alt w-6 mr-3"></i> Security
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="w-3/4 pl-6 border-l" style="border-color: var(--border-color);">
+                <!-- Profile Info Tab -->
+                <div id="profile-tab-content" class="profile-tab-pane">
+                    <h4 class="text-xl font-semibold mb-4">User Information</h4>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500">Username</label>
+                            <p class="text-lg" style="color: var(--text-primary);">{{ user.username }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500">Email</label>
+                            <p class="text-lg" style="color: var(--text-primary);">{{ user.email }}</p>
+                        </div>
+                         <div>
+                            <label class="block text-sm font-medium text-gray-500">Role</label>
+                            <span class="px-3 py-1 text-sm font-semibold rounded-full {% if user.is_admin %}bg-green-100 text-green-800{% else %}bg-gray-100 text-gray-800{% endif %}">
+                                {% if user.is_admin %}Administrator{% else %}User{% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Change Password Tab -->
+                <div id="password-tab-content" class="profile-tab-pane hidden">
+                    <h4 class="text-xl font-semibold mb-4">Change Password</h4>
+                    <form id="changePasswordForm">
+                        <div class="space-y-4">
+                            <div>
+                                <label for="current_password" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">Current Password</label>
+                                <input type="password" id="current_password" name="current_password" required class="w-full p-2 border rounded-md" style="background-color: var(--input-bg); color: var(--input-text); border-color: var(--input-border);">
+                            </div>
+                            <div>
+                                <label for="new_password" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">New Password</label>
+                                <input type="password" id="new_password" name="new_password" required class="w-full p-2 border rounded-md" style="background-color: var(--input-bg); color: var(--input-text); border-color: var(--input-border);">
+                            </div>
+                            <div id="password-feedback" class="text-sm"></div>
+                        </div>
+                        <div class="mt-6 flex justify-end">
+                            <button type="submit" class="py-2 px-4 bg-yellow-500 text-white rounded-md font-semibold">Update Password</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 2FA Tab -->
+                <div id="2fa-tab-content" class="profile-tab-pane hidden">
+                     <h4 class="text-xl font-semibold mb-4">Two-Factor Authentication (2FA)</h4>
+                     {% if not user.is_google_2fa_enabled %}
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">Enhance your account security. You will be redirected to a new page to complete the setup.</p>
+                        <a href="/2fa/setup" class="inline-block py-2 px-4 bg-green-600 text-white rounded-md font-semibold hover:bg-green-700">Enable 2FA</a>
+                     {% else %}
+                        <p class="text-green-600 dark:text-green-400 mb-4">2FA is currently enabled on your account.</p>
+                         <form action="/disable-2fa" method="post">
+                             <button type="submit" class="py-2 px-4 bg-red-600 text-white rounded-md font-semibold hover:bg-red-700">Disable 2FA</button>
+                        </form>
+                     {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .profile-tab-button {
+        transition: background-color 0.2s, color 0.2s;
+        color: var(--text-secondary);
+    }
+    .profile-tab-button:hover {
+        background-color: var(--accent-color);
+        color: var(--button-text);
+    }
+    html.dark .profile-tab-button:hover {
+        color: #000;
+    }
+    .profile-tab-button.active {
+        background-color: var(--button-bg);
+        color: var(--button-text);
+        font-weight: 600;
+    }
+    html.dark .profile-tab-button.active {
+        color: #000;
+    }
+    #profile-modal-content.show {
+        transform: scale(1);
+        opacity: 1;
+    }
+</style>

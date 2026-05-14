@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="th" class="transition-colors duration-2000">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NT - Promo Recommend</title>
+    <link rel="icon" href="/static/icon/nt_icon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@tailwindcss/typography@0.5.2/dist/typography.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <link rel="stylesheet" href="/static/css/welcome_main.css?v=1.2">
+
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-300 transition-colors duration-500">
+    <div>
+        <!-- Header -->
+         <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 dark:bg-gray-800 dark:border-gray-700 transition-colors duration-500 relative">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <!-- Left: Logo -->
+                <div class="flex items-center space-x-3">
+                    <a href="/"><img src="/static/img/NT_Logo.png" alt="NT Logo" class="h-8 w-auto light-logo"></a>
+                    <a href="/"><img src="/static/img/NT_Logo_White.png" alt="NT Logo" class="h-8 w-auto dark-logo"></a>
+                    <a href="/"><div class="text-sm text-gray-600 dark:text-gray-200 hidden md:block">โทรคมนาคมแห่งชาติ จำกัด (มหาชน) <br> National Telecom Public Company Limited</div></a>
+                </div>
+
+                <!-- Center: Navigation Links (Desktop) -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="#chatbot" class="text-gray-600 dark:text-gray-300 hover:text-nt-orange dark:hover:text-nt-orange transition-colors duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">AI Assistant</a>
+                    <a href="#faq-section" class="text-gray-600 dark:text-gray-300 hover:text-nt-orange dark:hover:text-nt-orange transition-colors duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">คำถามที่พบบ่อย</a>
+                    <a href="#how-it-works-section" class="text-gray-600 dark:text-gray-300 hover:text-nt-orange dark:hover:text-nt-orange transition-colors duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">วิธีการทำงาน</a>
+                    <a href="#cta-section" class="text-gray-600 dark:text-gray-300 hover:text-nt-orange dark:hover:text-nt-orange transition-colors duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">ติดต่อเรา</a>
+                </nav>
+
+                <!-- Right: Actions -->
+                <div class="flex items-center space-x-3">
+                    <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                        <i id="theme-toggle-dark-icon" class="fas fa-moon hidden"></i>
+                        <i id="theme-toggle-light-icon" class="fas fa-sun"></i>
+                    </button>
+                    <div class="hidden md:flex items-center space-x-3">
+                        {% if not user %}
+                        <a href="/login"><button class="login-button px-4 py-2 text-nt-blue border border-nt-blue rounded-lg hover:bg-nt-blue hover:text-white transition-all dark:text-gray-300 dark:border-gray-500 dark:hover:bg-gray-700 dark:hover:text-white">เข้าสู่ระบบ</button></a>
+                        <a href="/register"><button class="register-button px-4 py-2 text-white nt-orange rounded-lg hover:opacity-90 transition-all">สมัครสมาชิก</button></a>
+                        {% else %}
+                        {% if user.is_admin %}
+                        <a href="/admin/dashboard" class="login-button px-4 py-2 text-nt-blue border border-nt-blue rounded-lg hover:bg-nt-blue hover:text-white transition-all dark:text-gray-300 dark:border-gray-500 dark:hover:bg-gray-700 dark:hover:text-white">แดชบอร์ด</a>
+                        {% endif %}
+                        <a href="/profile" class="login-button px-4 py-2 text-nt-blue border border-nt-blue rounded-lg hover:bg-nt-blue hover:text-white transition-all dark:text-gray-300 dark:border-gray-500 dark:hover:bg-gray-700 dark:hover:text-white">โปรไฟล์</a>
+                        <form action="/logout" method="post">
+                            <button type="submit" class="register-button w-full px-4 py-2 text-white nt-orange rounded-lg hover:opacity-90 transition-all">ออกจากระบบ</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    <div class="md:hidden">
+                        <button id="mobile-menu-button" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                            <i class="fas fa-bars"></i>
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden absolute top-full left-0 w-full bg-white dark:bg-gray-800 shadow-md overflow-hidden max-h-0 transition-all duration-500 ease-in-out">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="#chatbot" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">AI Assistant</a>
+                    <a href="#faq-section" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">คำถามที่พบบ่อย</a>
+                    <a href="#how-it-works-section" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">วิธีการทำงาน</a>
+                    <a href="#cta-section" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">ติดต่อเรา</a>
+                </div>
+                <div class="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
+                    <div class="px-2 space-y-2">
+                        {% if not user %}
+                        <a href="/login"><button class="login-button w-full text-left px-3 py-2 text-nt-blue border border-nt-blue rounded-lg hover:bg-nt-blue hover:text-white transition-all dark:text-gray-300 dark:border-gray-500 dark:hover:bg-gray-700 dark:hover:text-white">เข้าสู่ระบบ</button></a>
+                        <a href="/register"><button class="register-button w-full text-left mt-2 px-3 py-2 text-white nt-orange rounded-lg hover:opacity-90 transition-all">สมัครสมาชิก</button></a>
+                        {% else %}
+                        {% if user.is_admin %}
+                        <a href="/admin/dashboard" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">แดชบอร์ด</a>
+                        {% endif %}
+                        <a href="/profile" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">โปรไฟล์</a>
+                        <form action="/logout" method="post">
+                            <button type="submit" class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-red-600 dark:text-red-400 hover:bg-gray-50 dark:hover:bg-gray-700">ออกจากระบบ</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </header>
+
+            <main>
+               <section id="hero-section" class="snap-section relative hero-pattern bg-gradient-to-br from-blue-100 to-orange-100 overflow-hidden dark:from-blue-900/50 dark:to-orange-900/50 flex items-center justify-center h-screen"> 
+                    <canvas id="particle-canvas" class="absolute top-0 left-0 w-full h-full z-0"></canvas>
+                    <div id="stars"></div>
+
+                    <!-- Abstract Shapes -->
+                    <div class="absolute top-1/4 left-1/4 w-24 h-24 bg-nt-blue rounded-full opacity-10 floating-animation z-0"></div>
+                    <div class="absolute bottom-1/4 right-1/4 w-32 h-32 bg-nt-orange rounded-lg opacity-10 floating-animation z-0" style="animation-delay: 1s;"></div>
+                    <div class="absolute top-1/2 right-1/3 w-16 h-16 bg-nt-light-blue rounded-full opacity-10 floating-animation z-0" style="animation-delay: 0.5s;"></div>
+
+                    <!-- Subtle Icons -->
+                    <i class="fas fa-wifi absolute top-1/3 left-1/3 text-nt-light-blue text-4xl opacity-20 floating-animation z-0" style="animation-delay: 0.2s;"></i>
+                    <i class="fas fa-cloud absolute bottom-1/3 left-1/4 text-nt-orange text-3xl opacity-20 floating-animation z-0" style="animation-delay: 0.8s;"></i>
+                    <i class="fas fa-robot absolute top-1/4 right-1/4 text-nt-blue text-5xl opacity-20 floating-animation z-0" style="animation-delay: 1.5s;"></i>
+
+                    <div class="container mx-auto px-4 text-center relative z-10">
+                        <div class="max-w-3xl mx-auto">
+                            <h1 id="hero-headline" class="scroll-animate-left text-3xl md:text-5xl font-bold text-nt-blue dark:text-white leading-tight mb-6">
+                                ค้นหาโปรโมชั่นอินเทอร์เน็ตที่ใช่ด้วย <br> <span class="text-nt-orange">AI อัจฉริยะ</span>
+                            </h1>
+                            <p class="scroll-animate-left text-lg md:text-xl text-gray-600 dark:text-gray-400 mx-auto mb-10" style="transition-delay: 150ms;">
+                                ให้ผู้ช่วยของเราวิเคราะห์ความต้องการของคุณ<br>
+                                และแนะนำแพ็กเกจอินเทอร์เน็ตที่ตรงใจที่สุด
+                            </p>
+                            <div class="scroll-animate-up" style="transition-delay: 300ms;">
+                                <a href="/chat" class="cta-button px-8 py-4 md:px-10 md:py-5 text-lg md:text-xl font-semibold text-nt-blue bg-white rounded-full hover:bg-gray-100 transition-all transform hover:scale-105 inline-flex items-center justify-center shadow-lg pulse-glow-animation">
+                                    <i class="fas fa-comments mr-3"></i>
+                                    เริ่มแชทกับ AI
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section><section id="chatbot"></section>
+
+            <section class="snap-section hero-pattern bg-gradient-to-br from-blue-50 to-orange-50 dark:from-blue-900/30 dark:to-orange-900/30 flex items-center justify-center min-h-screen py-12">
+                <div class="container mx-auto px-4">
+                    <div class="grid lg:grid-cols-2 gap-12 items-center">
+                        <!-- Left Content -->
+                        <div class="text-center lg:text-left">
+                            <h1 class="scroll-animate-up text-4xl md:text-6xl font-bold text-nt-blue dark:text-white leading-tight mb-6">
+                                <span class="chatbot-highlight">ผู้ช่วย AI</span><br>
+                                แนะนำแพ็กเกจเน็ต<br>
+                                <span class="text-nt-orange">ที่ใช่สำหรับคุณ</span>
+                            </h1>
+                            <p class="scroll-animate-up text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 leading-relaxed" style="transition-delay: 150ms;">
+                                - ให้คำแนะนำแพ็กเกจเน็ตที่เหมาะกับการใช้งานและงบประมาณของคุณ<br>
+                                - ระบบ AI ที่เข้าใจความต้องการและให้คำแนะนำที่ตรงใจ<br>
+                                - ตอบทันที 24/7 ไม่ต้องรอคิว
+                            </p>
+                            
+                            <div class="scroll-animate-up flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start" style="transition-delay: 300ms;">
+                                <a href="/chat">
+                                <button class="cta-button px-12 py-4 text-lg font-semibold text-white nt-orange rounded-full hover:opacity-90 transition-all transform hover:scale-105 pulse-glow">
+                                    <i class="fas fa-robot mr-3"></i>
+                                    คุยผู้ช่วย AI เเบบเต็มรูปเเบบ!!
+                                </button></a>
+                            </div>
+                            
+                            <!-- Feature highlights -->
+                            <div class="scroll-animate-up grid sm:grid-cols-3 gap-4 text-center" style="transition-delay: 450ms;">
+                                <div class="p-4 bg-white/80 dark:bg-gray-800/80 rounded-lg feature-card">
+                                    <div class="font-semibold text-nt-blue dark:text-white">แนะนำตรงใจ</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400">วิเคราะห์ความต้องการ</div>
+                                </div>
+                                <div class="p-4 bg-white/80 dark:bg-gray-800/80 rounded-lg feature-card">
+                                    <div class="font-semibold text-nt-blue dark:text-white">ตอบทันที</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400">ไม่ต้องรอคิว</div>
+                                </div>
+                                <div class="p-4 bg-white/80 dark:bg-gray-800/80 rounded-lg feature-card">
+                                    <div class="font-semibold text-nt-blue dark:text-white">ประหยัด</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400">เลือกแพ็กที่คุ้ม</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Right Content - Guest Chat Box -->
+                        <div class="bg-white rounded-3xl shadow-2xl flex flex-col h-[80vh] md:h-[70vh] border border-gray-200/80 dark:bg-gray-800 dark:border-gray-700 floating-animation ">
+                            <div class="p-4 md:p-6 border-b border-gray-200 dark:border-gray-700">
+                                <div class="flex justify-between items-center mb-4">
+                                    <div class="flex items-center space-x-4">
+                                        <img src="/static/img/NT_Logo.png" alt="NT Logo" class="h-12 w-auto light-logo">
+                                        <img src="/static/img/NT_Logo_White.png" alt="NT Logo" class="h-12 w-auto dark-logo">
+                                        <div>
+                                            <h3 class="text-xl md:text-2xl font-bold text-nt-blue dark:text-white">ผู้ช่วยเเนะนำโปรที่ใช่สำหรับคุณ</h3>
+                                            <p class="text-sm md:text-base text-gray-600 dark:text-gray-400">ให้ผู้ช่วยของเราวิเคราะห์ความต้องการของคุณเลย!</p>
+                                        </div>
+                                    </div>
+                                    <button id="openChatPopup" class="text-gray-500 hover:text-nt-blue transition-colors dark:text-gray-400 dark:hover:text-white">
+                                        <i class="fas fa-solid fa-expand fa-lg"></i>
+                                    </button>
+                                </div>
+                                
+                            </div>
+                            <div id="chatMessages" class="flex-1 p-4 md:p-6 overflow-y-auto space-y-4">
+                                <!-- Initial bot message will be added dynamically -->
+                            </div>
+                            <div id="suggestionButtons" class="p-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <!-- Suggestion 1 -->
+                                    <div id="suggestion1" class="suggestion-card group flex items-center gap-x-4 p-3 cursor-pointer">
+                                        <div class="bg-yellow-100 dark:bg-yellow-900/50 p-3 rounded-full">
+                                            <i class="fas fa-box-open text-yellow-500 dark:text-yellow-400 text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-semibold text-sm text-gray-800 dark:text-gray-100">แนะนำแพ็กเกจ</h3>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">เน็ตบ้าน / มือถือ</p>
+                                        </div>
+                                    </div>
+                                    <!-- Suggestion 2 -->
+                                    <div id="suggestion2" class="suggestion-card group flex items-center gap-x-4 p-3 cursor-pointer">
+                                        <div class="bg-red-100 dark:bg-red-900/50 p-3 rounded-full">
+                                            <i class="fas fa-gamepad text-red-500 dark:text-red-400 text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-semibold text-sm text-gray-800 dark:text-gray-100">แพ็กเกจสำหรับเล่นเกม</h3>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">ความเร็วสูง, ping ต่ำ</p>
+                                        </div>
+                                    </div>
+                                    <!-- Suggestion 3 -->
+                                    <div id="suggestion3" class="suggestion-card group flex items-center gap-x-4 p-3 cursor-pointer">
+                                        <div class="bg-blue-100 dark:bg-blue-900/50 p-3 rounded-full">
+                                            <i class="fas fa-tv text-blue-500 dark:text-blue-400 text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-semibold text-sm text-gray-800 dark:text-gray-100">เน็ตบ้านพร้อมทีวี</h3>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">ดูหนัง ฟังเพลง</p>
+                                        </div>
+                                    </div>
+                                    <!-- Suggestion 4 -->
+                                    <div id="suggestion4" class="suggestion-card group flex items-center gap-x-4 p-3 cursor-pointer">
+                                        <div class="bg-purple-100 dark:bg-purple-900/50 p-3 rounded-full">
+                                            <i class="fas fa-fire text-purple-500 dark:text-purple-400 text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-semibold text-sm text-gray-800 dark:text-gray-100">โปรโมชั่นล่าสุด</h3>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">อัปเดตใหม่</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="p-4 md:p-6 border-t border-gray-200 dark:border-gray-700">
+                                <div class="relative">
+                                    <input type="text" id="messageInput" placeholder="พิมพ์คำถาม..." class="w-full py-3 pl-5 pr-14 text-gray-800 bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-nt-orange transition-shadow dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400">
+                                    <button id="sendButton" class="absolute right-1.5 top-1/2 -translate-y-1/2 w-10 h-10 nt-orange text-white rounded-full flex items-center justify-center hover:opacity-90 transition-all transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nt-orange">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div><section id="faq-section"></section>
+                </div>
+            </section>
+            
+            <!-- FAQ Section -->
+            <section class="normal-section bg-gray-50 py-16 dark:bg-gray-800/50">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12 scroll-animate-up">
+                        <h2 class="text-3xl md:text-4xl font-bold text-nt-blue mb-4 dark:text-white">คำถามที่พบบ่อย</h2>
+                        <p class="text-lg text-gray-600 dark:text-gray-400">คำถามที่ผู้ใช้งานส่วนใหญ่มักจะสอบถามเข้ามา</p>
+                    </div> 
+                    <div id="faq-container" class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto scroll-animate-up" style="transition-delay: 150ms;">
+                        <!-- FAQ items will be injected here by JavaScript -->
+                    </div> <section id="how-it-works-section"></section>
+                </div>
+            </section>
+
+            <!-- How It Works / Benefits Section -->
+            <section class="normal-section bg-white py-16 dark:bg-gray-800">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12 scroll-animate-down">
+                        <h2 class="text-3xl md:text-4xl font-bold text-nt-blue mb-4 dark:text-white">AI Assistant ช่วยคุณได้อย่างไร?</h2>
+                        <p class="text-lg text-gray-600 dark:text-gray-400">ค้นหาโปรโมชั่นที่เหมาะกับคุณได้ง่ายๆ ใน 3 ขั้นตอน</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <!-- Step 1 -->
+                        <div class="text-center p-6 md:p-8 rounded-2xl bg-gray-50 shadow-md feature-card dark:bg-gray-700 scroll-animate-up" style="transition-delay: 150ms;">
+                            <div class="service-icon text-4xl md:text-5xl mb-4 text-nt-orange">
+                                <svg class="drawing-icon inline-block" width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- พื้นหลังโปร่งใสมีสี -->
+                                    <path d="M4 4C4 3.45 4.45 3 5 3H19C19.55 3 20 3.45 20 4V14C20 14.55 19.55 15 19 15H8L5 18V15H5C4.45 15 4 14.55 4 14V4Z" 
+                                            fill="#ffc800"/>
+                                    
+                                    <!-- เส้นขอบ chat -->
+                                    <path d="M5 3H19C19.55 3 20 3.45 20 4V14C20 14.55 19.55 15 19 15H8L5 18V15H5C4.45 15 4 14.55 4 14V4C4 3.45 4.45 3 5 3Z" 
+                                            stroke="#003b7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    
+                                    <!-- เส้นบรรทัดในกล่องข้อความ -->
+                                    <path d="M8 7H16" stroke="#003b7a" stroke-width="1.5" stroke-linecap="round"/>
+                                    <path d="M8 11H13" stroke="#003b7a" stroke-width="1.5" stroke-linecap="round"/>
+                                    </svg>
+
+                            </div>
+                            <h3 class="text-xl md:text-2xl font-bold text-nt-blue mb-3 dark:text-white">1. บอกความต้องการ</h3>
+                            <p class="text-base text-gray-600 dark:text-gray-300">เพียงพิมพ์หรือพูดคุยกับ AI ของเรา</p>
+                        </div>
+                        
+                        <!-- Step 2 -->
+                        <div class="text-center p-6 md:p-8 rounded-2xl bg-gray-50 shadow-md feature-card dark:bg-gray-700 scroll-animate-up" style="transition-delay: 300ms;">
+                            <div class="service-icon text-4xl md:text-5xl mb-4 text-nt-orange">
+                                <!-- Chat Icon -->
+                                <svg class="drawing-icon inline-block" width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- วงกลมพื้นหลัง -->
+                                <circle cx="12" cy="12" r="9" fill="#ffc800"/>
+                                <!-- สมอง/วิเคราะห์ -->
+                                <path d="M9 8C7.5 8 6.5 9 6.5 10.5C6.5 11.3 7 12 7.5 12.5C7 13 6.5 13.7 6.5 14.5C6.5 16 7.5 17 9 17H10.5V8H9Z" 
+                                        stroke="#003b7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M15 8C16.5 8 17.5 9 17.5 10.5C17.5 11.3 17 12 16.5 12.5C17 13 17.5 13.7 17.5 14.5C17.5 16 16.5 17 15 17H13.5V8H15Z" 
+                                        stroke="#003b7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+
+                            </div>
+                            <h3 class="text-xl md:text-2xl font-bold text-nt-blue mb-3 dark:text-white">2. AI วิเคราะห์</h3>
+                            <p class="text-base text-gray-600 dark:text-gray-300">ระบบจะค้นหาโปรโมชั่นที่ตรงใจคุณ</p>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="text-center p-6 md:p-8 rounded-2xl bg-gray-50 shadow-md feature-card dark:bg-gray-700 scroll-animate-up" style="transition-delay: 450ms;">
+                            <div class="service-icon text-4xl md:text-5xl mb-4 text-nt-orange">
+                                <!-- Chat Icon -->
+                                <svg class="drawing-icon inline-block" width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- วงกลมพื้นหลัง -->
+                                <circle cx="12" cy="12" r="9" fill="#ffc800"/>
+                                
+                                <!-- หลอดไฟ -->
+                                <path d="M9 10C9 8.34 10.34 7 12 7C13.66 7 15 8.34 15 10C15 11.2 14.2 12.2 13.2 12.6C13 13.2 13 14 13 14H11C11 14 11 13.2 10.8 12.6C9.8 12.2 9 11.2 9 10Z" 
+                                        stroke="#003b7a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                
+                                <!-- ฐานหลอดไฟ -->
+                                <path d="M11 15H13V16H11V15ZM11 17H13V18H11V17Z" fill="#003b7a"/>
+                                </svg>
+
+                            </div>
+                            <h3 class="text-xl md:text-2xl font-bold text-nt-blue mb-3 dark:text-white">3. รับคำแนะนำ</h3>
+                            <p class="text-base text-gray-600 dark:text-gray-300">คุณจะได้รับคำแนะนำที่ดีที่สุด</p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- User Reviews Section -->
+            <section id="reviews-section" class="normal-section bg-gray-50 py-16 dark:bg-gray-800/50">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12 scroll-animate-zoom-in">
+                        <h2 class="text-3xl md:text-4xl font-bold text-nt-blue mb-2 dark:text-white">เสียงตอบรับจากผู้ใช้งานของเรา</h2>
+                    </div>
+
+                    <div id="satisfaction-summary" class="text-center mb-12 scroll-animate-up" style="transition-delay: 150ms; display: none;">
+                        <div class="inline-block bg-white dark:bg-gray-800 p-6 rounded-full shadow-lg">
+                            <p id="satisfaction-percentage" class="text-5xl md:text-6xl font-bold text-green-500">0%</p>
+                        </div>
+                        <p class="text-lg text-gray-600 dark:text-gray-400 mt-4">ของผู้ใช้งานพึงพอใจกับคำตอบโดยรวม</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-500 mt-2" id="feedback-total-count">(จาก 0 ฟีดแบ็ก)</p>
+                    </div>
+
+                    <div id="testimonials-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto scroll-animate-up" style="transition-delay: 300ms;">
+                        <div class="text-center text-gray-500 dark:text-gray-400 col-span-full">กำลังโหลดรีวิว...</div>
+                    </div>
+
+                    {% if user %}
+                        <div class="text-center mt-12">
+                            <button id="open-review-modal-btn" class="cta-button px-8 py-3 text-lg font-semibold text-white nt-orange rounded-full hover:opacity-90 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nt-orange">
+                                <i class="fas fa-pen-alt mr-2"></i> เขียนรีวิวของคุณ
+                            </button>
+                        </div>
+                    {% else %}
+                        <div class="text-center mt-12 scroll-animate-up" style="transition-delay: 450ms;">
+                            <p class="text-gray-600 dark:text-gray-400">อยากแบ่งปันความคิดเห็นใช่ไหม? <a href="/login" class="text-nt-orange hover:underline font-semibold">เข้าสู่ระบบ</a> เพื่อเขียนรีวิว</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </section>
+
+            <!-- Final Call to Action -->
+            <section id="cta-section" class="normal-section gradient-nt text-white text-center py-16">
+                <div class="container mx-auto px-4 scroll-animate-zoom-in">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">พร้อมค้นหาโปรโมชั่นที่ใช่แล้วหรือยัง?</h2>
+                    <p class="text-lg mb-8 md:mb-10">เริ่มต้นประสบการณ์ใหม่ในการเลือกโปรโมชั่นอินเทอร์เน็ต</p>
+                    <a href="/chat" class="cta-button px-8 py-4 md:px-10 md:py-5 text-lg md:text-xl font-semibold text-nt-blue bg-white rounded-full hover:bg-gray-100 transition-all transform hover:scale-105 inline-flex items-center justify-center shadow-lg pulse-glow-animation">
+                        <i class="fas fa-comments mr-3"></i>
+                        เริ่มแชทกับ AI
+                    </a>
+                </div>
+            </section>
+        
+
+        <!-- Footer -->
+        <footer class="normal-section bg-white border-t border-gray-200 py-12 dark:bg-gray-800 dark:border-gray-700">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-3 gap-8 text-center md:text-left">
+                    <div class="mb-6 md:mb-0">
+                        <div class="flex items-center justify-center md:justify-start space-x-3 mb-4">
+                            <img src="/static/img/NT_Logo.png" alt="NT Logo" class="h-8 w-auto light-logo">
+                            <img src="/static/img/NT_Logo_White.png" alt="NT Logo" class="h-8 w-auto dark-logo">
+                            <div class="text-sm text-gray-600 dark:text-gray-400">โทรคมนาคมแห่งชาติ จำกัด (มหาชน) <br> National Telecom Public Company Limited</div>
+
+                        </div>
+                        <p class="text-gray-600 text-sm dark:text-gray-400">
+                            <i class="fa-solid fa-location-dot text-red-500"></i>&nbsp;
+                            บริษัท โทรคมนาคมแห่งชาติ จำกัด (มหาชน)<br>
+                            &nbsp;99 ถนนแจ้งวัฒนะ แขวงทุ่งสองห้อง
+                            เขตหลักสี่ กรุงเทพ 10210
+                        </p>
+                    </div>
+                    <div class="mb-6 md:mb-0">
+                        <h4 class="font-semibold text-nt-blue mb-4 dark:text-white">ติดต่อเรา</h4>
+                        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <li><i class="fas fa-phone mr-2 text-red-500"></i> 1888 </li>
+                            <li><i class="fas fa-envelope mr-2 text-indigo-500"></i> 1888@ntplc.co.th</li>
+                            <li><i class="fas fa-map-marker-alt mr-2 text-yellow-300"></i>&nbsp;<a href="https://ntplc.co.th/servicecenter" class="hover:text-yellow-300 underline">ค้นหาสาขาใกล้บ้าน</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-nt-blue mb-4 dark:text-white">ติดตามเรา</h4>
+                        <div class="flex space-x-4 justify-center md:justify-start">
+                            <a href="https://www.facebook.com/NTplc" class="text-gray-400 hover:text-blue-300 transition-colors">
+                                <i class="fab fa-facebook-f text-xl text-blue-500"></i>
+                            </a>
+                            <a href="https://line.me/ti/p/@ntplc" class="text-gray-400 hover:text-green-300 transition-colors">
+                                <i class="fab fa-line text-xl text-green-500"></i>
+                            </a>
+                            <a href="https://www.youtube.com/c/NTplc" class="text-gray-400 hover:text-red-300 transition-colors">
+                                <i class="fab fa-youtube text-xl text-red-500"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-t border-grey-600 mt-8 pt-8 text-center text-sm text-grey-600 dark:border-yellow-200/50 dark:text-grey-200/70">
+                    <p>&copy; 2025 National Telecom Public Company Limited Copyright.</p>
+                    <div class="mt-4 space-x-4">
+                        <a href="/privacy-policy" class="hover:underline">นโยบายความเป็นส่วนตัว</a>
+                        <a href="/terms-of-service" class="hover:underline">ข้อกำหนดการให้บริการ</a>
+                        <a href="#" id="open-feedback-modal-btn" class="hover:underline">เสนอแนะ / แจ้งปัญหา</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Review Modal -->
+        <div id="review-modal" class="modal hidden">
+            <div class="modal-content bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-nt-blue dark:text-white">แบ่งปันความคิดเห็นของคุณ</h3>
+                    <button id="close-review-modal-btn" class="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">&times;</button>
+                </div>
+                <form id="review-form">
+                    <textarea id="review-comment" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-nt-orange focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white" rows="5" placeholder="บอกเล่าประสบการณ์ของคุณ..." required></textarea>
+                    <div id="review-form-feedback" class="text-sm mt-2 h-5"></div>
+                    <button type="submit" class="mt-4 w-full px-6 py-3 text-lg font-semibold text-white nt-orange rounded-lg hover:opacity-90 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nt-orange">ส่งความคิดเห็น</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Custom Alert Modal -->
+        <div id="custom-alert-modal" class="modal hidden">
+            <div class="modal-content bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 text-center">
+                <div id="custom-alert-icon" class="mb-4 text-5xl"></div>
+                <h3 id="custom-alert-title" class="text-xl font-bold text-nt-blue dark:text-white mb-2"></h3>
+                <p id="custom-alert-message" class="text-gray-600 dark:text-gray-300 mb-6"></p>
+                <button id="custom-alert-close-btn" class="px-8 py-2 bg-nt-blue text-white rounded-lg hover:opacity-90 transition-all">ปิด</button>
+            </div>
+        </div>
+
+        <!-- Feedback Modal -->
+        <div id="feedback-modal" class="modal hidden">
+            <div class="modal-content bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-nt-blue dark:text-white">เสนอแนะ / แจ้งปัญหา</h3>
+                    <button id="close-feedback-modal-btn" class="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">&times;</button>
+                </div>
+                <form id="feedback-form">
+                    <div class="mb-4">
+                        <label for="feedback-type" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">ประเภท</label>
+                        <select id="feedback-type" name="feedback_type" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-nt-orange focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                            <option value="suggestion">ข้อเสนอแนะ</option>
+                            <option value="bug_report">แจ้งปัญหา (Bug)</option>
+                            <option value="other">อื่นๆ</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="feedback-message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">ข้อความ</label>
+                        <textarea id="feedback-message" name="message" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-nt-orange focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white" rows="5" placeholder="กรุณาอธิบายรายละเอียด..." required></textarea>
+                    </div>
+                    <button type="submit" class="mt-4 w-full px-6 py-3 text-lg font-semibold text-white nt-orange rounded-lg hover:opacity-90 transition-all">ส่งข้อมูล</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Cookie Consent Banner -->
+        <div id="cookie-consent-banner" class="hidden fixed bottom-0 left-0 right-0 w-full bg-white dark:bg-gray-800 p-4 shadow-2xl z-[60] border-t border-gray-200 dark:border-gray-700 transition-transform duration-500 transform translate-y-full">
+            <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-sm text-gray-700 dark:text-gray-300 text-center md:text-left">
+                    เว็บไซต์นี้ใช้คุกกี้เพื่อปรับปรุงประสบการณ์การใช้งานของคุณ การใช้งานเว็บไซต์ต่อถือว่าคุณยอมรับ <a href="/privacy-policy" class="text-nt-light-blue hover:underline font-semibold">นโยบายความเป็นส่วนตัว</a> ของเรา
+                </p>
+                <button id="accept-cookie-consent" class="px-6 py-2 bg-yellow-400 text-black rounded-full font-semibold flex-shrink-0 shadow-md hover:bg-yellow-500 dark:bg-yellow-400/80 dark:text-white dark:hover:bg-yellow-500 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nt-orange focus:ring-offset-white dark:focus:ring-offset-gray-800 transition-all duration-300 ease-in-out">
+                    ยอมรับ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Popup -->
+    <div id="chatPopup" class="hidden">
+        <div id="chatPopupContent" class="bg-white rounded-3xl shadow-2xl flex flex-col border border-gray-200/80 dark:bg-gray-800 dark:border-gray-700">
+            <!-- Popup Header -->
+            <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-[#ffc800] to-[#003b7a] rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                            NT
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-nt-blue dark:text-white">ผู้ช่วยอัจฉริยะของคุณ</h3>
+                            <p class="text-gray-600 dark:text-gray-400">พร้อมช่วยหาแพ็กเกจที่ใช่!</p>
+                        </div>
+                    </div>
+                    <button id="closeChatPopup" class="text-gray-500 hover:text-nt-blue transition-colors dark:text-gray-400 dark:hover:text-white">
+                        <i class="fas fa-times fa-lg"></i>
+                    </button>
+                </div>
+                
+            </div>
+            <!-- Popup Body -->
+            <div id="popupChatMessages" class="flex-1 p-6 overflow-y-auto space-y-4">
+                 <!-- Messages will be cloned here -->
+            </div>
+            <!-- Popup Footer -->
+            <div class="p-6 border-t border-gray-200 dark:border-gray-700">
+                <div id="popupSuggestionButtons" class="relative mb-4"></div>
+                <div class="relative">
+                    <input type="text" id="popupMessageInput" placeholder="พิมพ์คำถามของคุณที่นี่..." class="w-full py-3 pl-5 pr-16 text-gray-800 bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-nt-orange transition-shadow dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400">
+                    <button id="popupSendButton" class="absolute right-2 top-1/2 -translate-y-1/2 w-11 h-11 nt-orange text-white  rounded-full flex items-center justify-center hover:opacity-90 transition-all transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nt-orange">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" class="w-12 h-12 nt-orange text-white rounded-full flex items-center justify-center hover:opacity-90 transition-all transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nt-orange">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="/static/js/welcome_main.js"></script>
+</body>
+</html>

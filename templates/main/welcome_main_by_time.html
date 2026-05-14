@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="th" class="transition-colors duration-2000"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NT - บริการโทรคมนาคมและอินเทอร์เน็ต</title>
+    <link rel="icon" href="/static/icon/nt_icon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@tailwindcss/typography@0.5.2/dist/typography.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/theme.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        .prose ul {
+            list-style-type: disc;
+            padding-left: 1.5em;
+        }
+        .prose ol {
+            list-style-type: decimal;
+            padding-left: 1.5em;
+        }
+        .prose li {
+            margin-top: 0.25em;
+            margin-bottom: 0.25em;
+        }
+        
+        /* NT Corporate Colors */
+        .nt-orange { background-color: #ffc800; }
+        .nt-blue { background-color: #003b7a; }
+        .nt-light-blue { background-color: #4a90e2; }
+        .nt-gray { background-color: #f5f5f5; }
+        
+        .text-nt-orange { color: #ffc800; }
+        .text-nt-blue { color: #003b7a; }
+        .text-nt-light-blue { color: #4a90e2; }
+        
+        .border-nt-orange { border-color: #ffc800; }
+        .border-nt-blue { border-color: #003b7a; }
+        
+        .gradient-nt {
+            background: linear-gradient(135deg, #003b7a 0%, #4a90e2 50%, #ffc800 100%);
+        }
+        
+        .hero-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(74, 144, 226, 0.1) 0%, transparent 50%);
+        }
+        
+        .service-icon {
+            background: linear-gradient(45deg, #ffc800, #4a90e2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        #chatMessages::-webkit-scrollbar { width: 8px; }
+        #chatMessages::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        #chatMessages::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
+        #chatMessages::-webkit-scrollbar-thumb:hover { background: #555; }
+        .message-fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Time-based Sky Backgrounds */
+        .morning-sky {
+            background: linear-gradient(to bottom, #87CEEB, #B0E0E6); /* Sky Blue to Powder Blue */
+        }
+        .day-sky {
+            background: linear-gradient(to bottom, #64B5F6, #90CAF9); /* Blue to Light Blue */
+        }
+        .evening-sky {
+            background: linear-gradient(to bottom, #FF7043, #FFAB91); /* Deep Orange to Peach */
+        }
+        .night-sky {
+            background: linear-gradient(to bottom, #1A237E, #3F51B5); /* Dark Indigo to Indigo */
+        }
+
+        /* Dark Mode Time-based Sky Backgrounds */
+        html.dark .morning-sky {
+            background: linear-gradient(to bottom, #003b7a, #4a90e2); /* Darker Blue */
+        }
+        html.dark .day-sky {
+            background: linear-gradient(to bottom, #003b7a, #4a90e2); /* Darker Blue */
+        }
+        html.dark .evening-sky {
+            background: linear-gradient(to bottom, #421a00, #8b4513); /* Darker Orange/Brown */
+        }
+        html.dark .night-sky {
+            background: linear-gradient(to bottom, #000000, #1A237E); /* Black to Dark Indigo */
+        }
+
+        /* Enhanced Hover Effects */
+        .feature-card, .cta-button, .login-button, .register-button {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover, .cta-button:hover, .login-button:hover, .register-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .pulse-glow-animation {
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 200, 0, 0.7); }
+            50% { box-shadow: 0 0 0 12px rgba(255, 200, 0, 0); }
+        }
+
+        /* Animation: Slide in from left */
+        .scroll-animate-left {
+            opacity: 0;
+            transform: translateX(-80px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .scroll-animate-left.is-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Animation: Fade in up */
+        .scroll-animate-up {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .scroll-animate-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Chat Popup Styles */
+        #chatPopup.hidden {
+            display: none;
+        }
+        #chatPopup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+        #chatPopupContent {
+            width: 90%;
+            max-width: 800px;
+            height: 85vh;
+        }
+        /* Back to Top Button */
+        #backToTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            z-index: 999;
+        }
+        /* Typing Animation */
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .typing-cursor {
+            animation: blink 1s step-end infinite;
+        }
+        .dark .hero-pattern {
+             background-image: radial-gradient(circle at 25% 25%, rgba(255, 107, 53, 0.05) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(74, 144, 226, 0.05) 0%, transparent 50%);
+        }
+        .dark #chatMessages::-webkit-scrollbar-track { background: #374151; }
+        .dark #chatMessages::-webkit-scrollbar-thumb { background: #6b7280; }
+        .dark #chatMessages::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+        /* Starry Sky for Dark Mode */
+        #stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: none; /* Hidden by default, shown in dark mode via JS */
+        }
+
+        .dark #stars {
+            display: block;
+        }
+
+        .star {
+            position: absolute;
+            background-color: #90c5ff; /* Light blue star color */
+            border-radius: 50%;
+            animation: twinkle 1.5s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-300 transition-colors duration-500">
+    <div>
+        <!-- Header -->
+         <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 dark:bg-gray-800 dark:border-gray-700 transition-colors duration-500"> 
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <!-- Left: Logo -->
+                <div class="flex items-center space-x-3">
+                    <img src="/static/img/NT_Logo.png" alt="NT Logo" class="h-8 w-auto light-logo">
+                    <img src="/static/img/NT_Logo_White.png" alt="NT Logo" class="h-8 w-auto dark-logo">
+                    <div class="text-sm text-gray-600 dark:text-gray-200 hidden md:block">โทรคมนาคมแห่งชาติ</div>
+                </div>
+
+                <!-- Center: Navigation Links (Desktop) -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="#chatbot" class="text-gray-600 dark:text-gray-300 hover:text-nt-orange dark:hover:text-nt-orange transition-colors duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">AI Assistant</a>
+                    <a href="#faq-section" class="text-gray-600 dark:text-gray-300 hover:text-nt-orange dark:hover:text-nt-orange transition-colors duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">คำถามที่พบบ่อย</a>
+                    <a href="#how-it-works-section" class="text-gray-600 dark:text-gray-300 hover:text-nt-orange dark:hover:text-nt-orange transition-colors duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">วิธีการทำงาน</a>
+                    <a href="#cta-section" class="text-gray-600 dark:text-gray-300 hover:text-nt-orange dark:hover:text-nt-orange transition-colors duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">ติดต่อเรา</a>
+                </nav>
+
+                <!-- Right: Actions -->
+                <div class="flex items-center space-x-3">
+                    <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                        <i id="theme-toggle-dark-icon" class="fas fa-moon hidden"></i>
+                        <i id="theme-toggle-light-icon" class="fas fa-sun"></i>
+                    </button>
+                    <div class="hidden md:flex items-center space-x-3">
+                        {% if not user %}
+                        <a href="/login"><button class="login-button px-4 py-2 text-nt-blue border border-nt-blue rounded-lg hover:bg-nt-blue hover:text-white transition-all dark:text-gray-300 dark:border-gray-500 dark:hover:bg-gray-700 dark:hover:text-white">เข้าสู่ระบบ</button></a>
+                        <a href="/register"><button class="register-button px-4 py-2 text-white nt-orange rounded-lg hover:opacity-90 transition-all">สมัครสมาชิก</button></a>
+                        {% else %}
+                        <a href="/profile" class="login-button px-4 py-2 text-nt-blue border border-nt-blue rounded-lg hover:bg-nt-blue hover:text-white transition-all dark:text-gray-300 dark:border-gray-500 dark:hover:bg-gray-700 dark:hover:text-white">โปรไฟล์</a>
+                        <form action="/logout" method="post">
+                            <button type="submit" class="register-button w-full px-4 py-2 text-white nt-orange rounded-lg hover:opacity-90 transition-all">ออกจากระบบ</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    <div class="md:hidden">
+                        <button id="menu-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="menu" class="hidden md:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="#chatbot" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">AI Assistant</a>
+                    <a href="#faq-section" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">คำถามที่พบบ่อย</a>
+                    <a href="#how-it-works-section" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">วิธีการทำงาน</a>
+                    <a href="#cta-section" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">ติดต่อเรา</a>
+                </div>
+                <div class="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
+                    <div class="px-2 space-y-2">
+                        {% if not user %}
+                        <a href="/login"><button class="login-button w-full text-left px-3 py-2 text-nt-blue border border-nt-blue rounded-lg hover:bg-nt-blue hover:text-white transition-all dark:text-gray-300 dark:border-gray-500 dark:hover:bg-gray-700 dark:hover:text-white">เข้าสู่ระบบ</button></a>
+                        <a href="/register"><button class="register-button w-full text-left mt-2 px-3 py-2 text-white nt-orange rounded-lg hover:opacity-90 transition-all">สมัครสมาชิก</button></a>
+                        {% else %}
+                        <a href="/profile" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">โปรไฟล์</a>
+                        <form action="/logout" method="post">
+                            <button type="submit" class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-red-600 dark:text-red-400 hover:bg-gray-50 dark:hover:bg-gray-700">ออกจากระบบ</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section id="hero-section" class="snap-section relative overflow-hidden flex items-center justify-center h-screen">
+                <canvas id="particle-canvas" class="absolute top-0 left-0 w-full h-full z-0"></canvas>
+                <div id="stars"></div>
+
+                <!-- Abstract Shapes -->
+                <div class="absolute top-1/4 left-1/4 w-24 h-24 bg-nt-blue rounded-full opacity-10 floating-animation z-0"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-32 h-32 bg-nt-orange rounded-lg opacity-10 floating-animation z-0" style="animation-delay: 1s;"></div>
+                <div class="absolute top-1/2 right-1/3 w-16 h-16 bg-nt-light-blue rounded-full opacity-10 floating-animation z-0" style="animation-delay: 0.5s;"></div>
+
+                <!-- Subtle Icons -->
+                <i class="fas fa-wifi absolute top-1/3 left-1/3 text-nt-light-blue text-4xl opacity-20 floating-animation z-0" style="animation-delay: 0.2s;"></i>
+                <i class="fas fa-cloud absolute bottom-1/3 left-1/4 text-nt-orange text-3xl opacity-20 floating-animation z-0" style="animation-delay: 0.8s;"></i>
+                <i class="fas fa-robot absolute top-1/4 right-1/4 text-nt-blue text-5xl opacity-20 floating-animation z-0" style="animation-delay: 1.5s;"></i>
+
+                <div class="container mx-auto px-4 text-center relative z-10">
+                    <div class="max-w-3xl mx-auto">
+                        <h1 id="hero-headline" class="scroll-animate-left text-3xl md:text-5xl font-bold text-nt-blue dark:text-white leading-tight mb-6">
+                            ค้นหาโปรโมชั่นอินเทอร์เน็ตที่ใช่ด้วย <br> <span class="text-nt-orange">AI อัจฉริยะ</span>
+                        </h1>
+                        <p class="scroll-animate-left text-lg md:text-xl text-gray-600 dark:text-gray-400 mx-auto mb-10" style="transition-delay: 150ms;">
+                            ให้ผู้ช่วยของเราวิเคราะห์ความต้องการของคุณ<br>
+                            และแนะนำแพ็กเกจอินเทอร์เน็ตที่ตรงใจที่สุด
+                        </p>
+                        <div class="scroll-animate-up" style="transition-delay: 300ms;">
+                            <a href="/chat" class="cta-button px-8 py-4 md:px-10 md:py-5 text-lg md:text-xl font-semibold text-nt-blue bg-white rounded-full hover:bg-gray-100 transition-all transform hover:scale-105 inline-flex items-center justify-center shadow-lg pulse-glow-animation">
+                                <i class="fas fa-comments mr-3"></i>
+                                เริ่มแชทกับ AI
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section><section id="chatbot"></section>
+
+            <section class="snap-section hero-pattern bg-gradient-to-br from-blue-50 to-orange-50 dark:from-blue-900/30 dark:to-orange-900/30 flex items-center justify-center min-h-screen py-12">
+                <div class="container mx-auto px-4">
+                    <div class="grid lg:grid-cols-2 gap-12 items-center">
+                        <!-- Left Content -->
+                        <div class="text-center lg:text-left">
+                            <h1 class="scroll-animate-up text-4xl md:text-6xl font-bold text-nt-blue dark:text-white leading-tight mb-6">
+                                <span class="chatbot-highlight">ผู้ช่วย AI</span><br>
+                                แนะนำแพ็กเกจเน็ต<br>
+                                <span class="text-nt-orange">ที่ใช่สำหรับคุณ</span>
+                            </h1>
+                            <p class="scroll-animate-up text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 leading-relaxed" style="transition-delay: 150ms;">
+                                - ให้คำแนะนำแพ็กเกจเน็ตที่เหมาะกับการใช้งานและงบประมาณของคุณ<br>
+                                - ระบบ AI ที่เข้าใจความต้องการและให้คำแนะนำที่ตรงใจ<br>
+                                - ตอบทันที 24/7 ไม่ต้องรอคิว
+                            </p>
+                            
+                            <div class="scroll-animate-up flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start" style="transition-delay: 300ms;">
+                                <a href="/chat">
+                                <button class="cta-button px-12 py-4 text-lg font-semibold text-white nt-orange rounded-full hover:opacity-90 transition-all transform hover:scale-105 pulse-glow">
+                                    <i class="fas fa-robot mr-3"></i>
+                                    คุยผู้ช่วย AI เเบบเต็มรูปเเบบ!!
+                                </button></a>
+                            </div>
+                            
+                            <!-- Feature highlights -->
+                            <div class="scroll-animate-up grid sm:grid-cols-3 gap-4 text-center" style="transition-delay: 450ms;">
+                                <div class="p-4 bg-white/80 dark:bg-gray-800/80 rounded-lg feature-card">
+                                    <div class="font-semibold text-nt-blue dark:text-white">แนะนำตรงใจ</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400">วิเคราะห์ความต้องการ</div>
+                                </div>
+                                <div class="p-4 bg-white/80 dark:bg-gray-800/80 rounded-lg feature-card">
+                                    <div class="font-semibold text-nt-blue dark:text-white">ตอบทันที</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400">ไม่ต้องรอคิว</div>
+                                </div>
+                                <div class="p-4 bg-white/80 dark:bg-gray-800/80 rounded-lg feature-card">
+                                    <div class="font-semibold text-nt-blue dark:text-white">ประหยัด</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400">เลือกแพ็กที่คุ้ม</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Right Content - Guest Chat Box -->
+                        <div class="bg-white rounded-3xl shadow-2xl flex flex-col h-[80vh] md:h-[70vh] border border-gray-200/80 dark:bg-gray-800 dark:border-gray-700 floating-animation">
+                            <div class="p-4 md:p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                                <div class="flex items-center space-x-4">
+                                    <img src="/static/img/NT_Logo.png" alt="NT Logo" class="h-12 w-auto light-logo">
+                                    <img src="/static/img/NT_Logo_White.png" alt="NT Logo" class="h-12 w-auto dark-logo">
+                                    <div>
+                                        <h3 class="text-xl md:text-2xl font-bold text-nt-blue dark:text-white">ผู้ช่วยอัจฉริยะ</h3>
+                                        <p class="text-sm md:text-base text-gray-600 dark:text-gray-400">พร้อมช่วยคุณ!</p>
+                                    </div>
+                                </div>
+                                <button id="openChatPopup" class="text-gray-500 hover:text-nt-blue transition-colors dark:text-gray-400 dark:hover:text-white">
+                                    <i class="fas fa-solid fa-expand fa-lg"></i>
+                                </button>
+                            </div>
+                            <div id="chatMessages" class="flex-1 p-4 md:p-6 overflow-y-auto space-y-4">
+                                <!-- Initial bot message will be added dynamically -->
+                            </div>
+                            <div id="suggestionButtons" class="flex flex-wrap gap-2 p-4 md:p-6 pt-0"></div> 
+                            <div class="p-4 md:p-6 border-t border-gray-200 dark:border-gray-700">
+                                <div class="relative">
+                                    <input type="text" id="messageInput" placeholder="พิมพ์คำถาม..." class="w-full py-3 pl-5 pr-14 text-gray-800 bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-nt-orange transition-shadow dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400">
+                                    <button id="sendButton" class="absolute right-1.5 top-1/2 -translate-y-1/2 w-10 h-10 nt-orange text-white rounded-full flex items-center justify-center hover:opacity-90 transition-all transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nt-orange">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div><section id="faq-section"></section>
+                </div>
+            </section>
+            
+            <!-- FAQ Section -->
+            <section class="normal-section bg-gray-50 py-16 dark:bg-gray-800/50">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12 scroll-animate-up">
+                        <h2 class="text-3xl md:text-4xl font-bold text-nt-blue mb-4 dark:text-white">คำถามที่พบบ่อย</h2>
+                        <p class="text-lg text-gray-600 dark:text-gray-400">คำถามที่ผู้ใช้งานส่วนใหญ่มักจะสอบถามเข้ามา</p>
+                    </div> 
+                    <div id="faq-container" class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto scroll-animate-up" style="transition-delay: 150ms;">
+                        <!-- FAQ items will be injected here by JavaScript -->
+                    </div> <section id="how-it-works-section"></section>
+                </div>
+            </section>
+
+            <!-- How It Works / Benefits Section -->
+            <section class="normal-section bg-white py-16 dark:bg-gray-800">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12 scroll-animate-up">
+                        <h2 class="text-3xl md:text-4xl font-bold text-nt-blue mb-4 dark:text-white">AI Assistant ช่วยคุณได้อย่างไร?</h2>
+                        <p class="text-lg text-gray-600 dark:text-gray-400">ค้นหาโปรโมชั่นที่เหมาะกับคุณได้ง่ายๆ ใน 3 ขั้นตอน</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <!-- Step 1 -->
+                        <div class="text-center p-6 md:p-8 rounded-2xl bg-gray-50 shadow-md feature-card dark:bg-gray-700 scroll-animate-up" style="transition-delay: 150ms;">
+                            <div class="service-icon text-4xl md:text-5xl mb-4 text-nt-orange">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h3 class="text-xl md:text-2xl font-bold text-nt-blue mb-3 dark:text-white">1. บอกความต้องการ</h3>
+                            <p class="text-base text-gray-600 dark:text-gray-300">เพียงพิมพ์หรือพูดคุยกับ AI ของเรา</p>
+                        </div>
+                        
+                        <!-- Step 2 -->
+                        <div class="text-center p-6 md:p-8 rounded-2xl bg-gray-50 shadow-md feature-card dark:bg-gray-700 scroll-animate-up" style="transition-delay: 300ms;">
+                            <div class="service-icon text-4xl md:text-5xl mb-4 text-nt-orange">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3 class="text-xl md:text-2xl font-bold text-nt-blue mb-3 dark:text-white">2. AI วิเคราะห์</h3>
+                            <p class="text-base text-gray-600 dark:text-gray-300">ระบบจะค้นหาโปรโมชั่นที่ตรงใจคุณ</p>
+                        </div>
+                        
+                        <!-- Step 3 -->
+                        <div class="text-center p-6 md:p-8 rounded-2xl bg-gray-50 shadow-md feature-card dark:bg-gray-700 scroll-animate-up" style="transition-delay: 450ms;">
+                            <div class="service-icon text-4xl md:text-5xl mb-4 text-nt-orange">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h3 class="text-xl md:text-2xl font-bold text-nt-blue mb-3 dark:text-white">3. รับคำแนะนำ</h3>
+                            <p class="text-base text-gray-600 dark:text-gray-300">คุณจะได้รับคำแนะนำที่ดีที่สุด</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- User Reviews Section -->
+            <section id="reviews-section" class="normal-section bg-gray-50 py-16 dark:bg-gray-800/50">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12 scroll-animate-up">
+                        <h2 class="text-3xl md:text-4xl font-bold text-nt-blue mb-4 dark:text-white">รีวิวจากผู้ใช้งานจริง</h2>
+                        <p class="text-lg text-gray-600 dark:text-gray-400">ความพึงพอใจของผู้ใช้งาน</p>
+                    </div>
+                    <div class="flex justify-center items-center space-x-8 mb-12 scroll-animate-up" style="transition-delay: 150ms;">
+                        <div class="text-center">
+                            <p class="text-4xl font-bold text-green-500" id="likes-count">0</p>
+                            <p class="text-lg text-gray-600 dark:text-gray-400">พอใจ</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-4xl font-bold text-red-500" id="dislikes-count">0</p>
+                            <p class="text-lg text-gray-600 dark:text-gray-400">ไม่พอใจ</p>
+                        </div>
+                    </div>
+                    <div id="testimonials-container" class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto scroll-animate-up" style="transition-delay: 300ms;">
+                        <!-- Testimonials will be injected here by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Final Call to Action -->
+            <section id="cta-section" class="normal-section gradient-nt text-white text-center py-16">
+                <div class="container mx-auto px-4 scroll-animate-up">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">พร้อมค้นหาโปรโมชั่นที่ใช่แล้วหรือยัง?</h2>
+                    <p class="text-lg mb-8 md:mb-10">เริ่มต้นประสบการณ์ใหม่ในการเลือกโปรโมชั่นอินเทอร์เน็ต</p>
+                    <a href="/chat" class="cta-button px-8 py-4 md:px-10 md:py-5 text-lg md:text-xl font-semibold text-nt-blue bg-white rounded-full hover:bg-gray-100 transition-all transform hover:scale-105 inline-flex items-center justify-center shadow-lg pulse-glow-animation">
+                        <i class="fas fa-comments mr-3"></i>
+                        เริ่มแชทกับ AI
+                    </a>
+                </div>
+            </section>
+        
+
+        <!-- Footer -->
+        <footer class="normal-section bg-white border-t border-gray-200 py-12 dark:bg-gray-800 dark:border-gray-700">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-3 gap-8 text-center md:text-left">
+                    <div class="mb-6 md:mb-0">
+                        <div class="flex items-center justify-center md:justify-start space-x-3 mb-4">
+                            <img src="/static/img/NT_Logo.png" alt="NT Logo" class="h-8 w-auto light-logo">
+                            <img src="/static/img/NT_Logo_White.png" alt="NT Logo" class="h-8 w-auto dark-logo">
+                            <div class="text-sm text-gray-600 dark:text-gray-400">โทรคมนาคมแห่งชาติ</div>
+                        </div>
+                        <p class="text-gray-600 text-sm dark:text-gray-400">
+                            บริษัท โทรคมนาคมแห่งชาติ จำกัด (มหาชน)<br>
+                            99 ถนนแจ้งวัฒนะ แขวงทุ่งสองห้อง
+                            เขตหลักสี่ กรุงเทพ 10210
+                        </p>
+                    </div>
+                    <div class="mb-6 md:mb-0">
+                        <h4 class="font-semibold text-nt-blue mb-4 dark:text-white">ติดต่อเรา</h4>
+                        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <li><i class="fas fa-phone mr-2 text-green-500"></i> 1888 </li>
+                            <li><i class="fas fa-envelope mr-2 text-sky-300"></i> 1888@ntplc.co.th</li>
+                            <li><a href="https://ntplc.co.th/servicecenter" class=" hover:text-yellow-300"><i class="fas fa-map-marker-alt mr-2 text-yellow-300"></i>ค้นหาสาขาใกล้บ้าน</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-nt-blue mb-4 dark:text-white">ติดตามเรา</h4>
+                        <div class="flex space-x-4 justify-center md:justify-start">
+                            <a href="" class="text-gray-400 hover:text-blue-300 transition-colors">
+                                <i class="fab fa-facebook-f text-xl text-blue-500"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-green-300 transition-colors">
+                                <i class="fab fa-line text-xl text-green-500"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-red-300 transition-colors">
+                                <i class="fab fa-youtube text-xl text-red-500"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-t border-gray-200 mt-8 pt-8 text-center text-sm text-gray-600 dark:border-gray-700 dark:text-gray-400">
+                    <p>&copy; 2024 บริษัท โทรคมนาคมแห่งชาติ จำกัด (มหาชน) สงวนลิขสิทธิ์</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Chat Popup -->
+    <div id="chatPopup" class="hidden">
+        <div id="chatPopupContent" class="bg-white rounded-3xl shadow-2xl flex flex-col border border-gray-200/80 dark:bg-gray-800 dark:border-gray-700">
+            <!-- Popup Header -->
+            <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-gradient-to-br from-[#ffc800] to-[#003b7a] rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                        NT
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-nt-blue dark:text-white">ผู้ช่วยอัจฉริยะของคุณ</h3>
+                        <p class="text-gray-600 dark:text-gray-400">พร้อมช่วยคุณหาแพ็กเกจที่ใช่!</p>
+                    </div>
+                </div>
+                <button id="closeChatPopup" class="text-gray-500 hover:text-nt-blue transition-colors dark:text-gray-400 dark:hover:text-white">
+                    <i class="fas fa-times fa-lg"></i>
+                </button>
+            </div>
+            <!-- Popup Body -->
+            <div id="popupChatMessages" class="flex-1 p-6 overflow-y-auto space-y-4">
+                 <!-- Messages will be cloned here -->
+            </div>
+            <!-- Popup Footer -->
+            <div class="p-6 border-t border-gray-200 dark:border-gray-700">
+                <div id="popupSuggestionButtons" class="flex flex-wrap gap-2 mb-4"></div>
+                <div class="relative">
+                    <input type="text" id="popupMessageInput" placeholder="พิมพ์คำถามของคุณที่นี่..." class="w-full py-3 pl-5 pr-16 text-gray-800 bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-nt-orange transition-shadow dark:bg-gray-700 dark:text-gray-200 dark:placeholder-gray-400">
+                    <button id="popupSendButton" class="absolute right-2 top-1/2 -translate-y-1/2 w-11 h-11 nt-orange text-white rounded-full flex items-center justify-center hover:opacity-90 transition-all transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nt-orange">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" class="w-12 h-12 nt-orange text-white rounded-full flex items-center justify-center hover:opacity-90 transition-all transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-nt-orange">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        const suggestionButtonsContainer = document.getElementById('suggestionButtons');
+
+        const popup = document.getElementById('chatPopup');
+        const openPopupButton = document.getElementById('openChatPopup');
+        const closePopupButton = document.getElementById('closeChatPopup');
+        const popupChatMessages = document.getElementById('popupChatMessages');
+        const popupMessageInput = document.getElementById('popupMessageInput');
+        const popupSendButton = document.getElementById('popupSendButton');
+        const popupSuggestionButtons = document.getElementById('popupSuggestionButtons');
+        const backToTopBtn = document.getElementById('backToTopBtn');
+
+        // --- Popup Control --- 
+        const openPopup = () => {
+            popup.classList.remove('hidden');
+            suggestionButtonsContainer.style.display = 'none'; // Hide suggestions in main chat
+
+            // Clear previous popup messages and clone from main chat
+            popupChatMessages.innerHTML = '';
+            Array.from(chatMessages.children).forEach(child => {
+                // Clone only message elements, not the suggestion buttons container
+                if (child.id !== 'suggestionButtons') {
+                    const clone = child.cloneNode(true);
+                    // Adjust message styles for dark mode if necessary
+                    if(document.documentElement.classList.contains('dark')) {
+                        const userBubble = clone.querySelector('.bg-nt-blue');
+                        if(userBubble) {
+                            // Already has dark mode styles via tailwind
+                        }
+                        const botBubble = clone.querySelector('.bg-gray-100');
+                        if(botBubble) {
+                            botBubble.classList.remove('bg-gray-100');
+                            botBubble.classList.add('dark:bg-gray-700');
+                        }
+                    }
+                    popupChatMessages.appendChild(clone);
+                }
+            });
+            popupChatMessages.scrollTop = popupChatMessages.scrollHeight;
+        };
+
+        const closePopup = () => {
+            popup.classList.add('hidden');
+            suggestionButtonsContainer.style.display = 'flex'; // Show suggestions in main chat
+        };
+
+        openPopupButton.addEventListener('click', openPopup);
+        closePopupButton.addEventListener('click', closePopup);
+        popup.addEventListener('click', (event) => {
+            if (event.target === popup) { // Close if the overlay is clicked
+                closePopup();
+            }
+        });
+
+        const initialSuggestions = [
+            "อยากได้เน็ตบ้านราคาประหยัด",
+            "โปรโมชั่นเน็ตมือถือมีอะไรบ้าง?",
+            "เน็ตไฟเบอร์สำหรับเล่นเกม",
+            "แพ็กเกจสำหรับธุรกิจขนาดเล็ก"
+        ];
+
+        function renderSuggestions(suggestions, container) {
+            container.innerHTML = ''; // Clear previous suggestions
+            suggestions.forEach(suggestion => {
+                const button = document.createElement('button');
+                button.className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm hover:bg-gray-300 transition-colors feature-card dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600';
+                button.textContent = suggestion;
+                button.onclick = () => {
+                    messageInput.value = suggestion;
+                    popupMessageInput.value = suggestion;
+                    sendMessage();
+                    suggestionButtonsContainer.style.display = 'none'; // Hide initial suggestions
+                };
+                container.appendChild(button);
+            });
+            container.style.display = 'flex'; // Show the container
+        }
+
+        function addMessage(content, sender, target) {
+            const messageWrapper = document.createElement('div');
+            messageWrapper.classList.add('message-fade-in', 'flex', 'items-end', 'max-w-xl', 'w-full');
+
+            if (sender === 'user') {
+                messageWrapper.classList.add('justify-end', 'ml-auto');
+                messageWrapper.innerHTML = `
+                    <div class="bg-blue-100 text-nt-blue p-4 rounded-2xl rounded-br-none shadow-md dark:bg-nt-blue dark:text-black">
+                        <p>${content}</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-bold flex-shrink-0 ml-3 dark:bg-gray-600 dark:text-gray-300">
+                        คุณ
+                    </div>
+                `;
+            } else { // Bot
+                messageWrapper.classList.add('justify-start', 'mr-auto');
+                messageWrapper.innerHTML = `
+                    <img src="/static/img/NT_Logo.png" alt="NT Logo" class="h-6 w-auto mr-4 light-logo">
+                    <img src="/static/img/NT_Logo_White.png" alt="NT Logo" class="h-6 w-auto mr-4 dark-logo">
+                    <div class="bg-gray-100 p-4 rounded-2xl rounded-bl-none shadow-md dark:bg-gray-700">
+                        <div class="prose prose-sm max-w-none text-gray-800 dark:text-gray-300">${marked.parse(content)}</div>
+                    </div>
+                `;
+            }
+            target.appendChild(messageWrapper);
+            target.scrollTop = target.scrollHeight;
+            return messageWrapper;
+        }
+
+        function showTypingIndicator(target) {
+            const html = `
+                <div class="flex items-center space-x-2">
+                    <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                    <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+                    <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.4s;"></div>
+                </div>
+            `;
+            const messageWrapper = addMessage(html, 'bot', target);
+            return messageWrapper.querySelector('.prose');
+        }
+
+        async function sendMessage() {
+            const message = messageInput.value.trim() || popupMessageInput.value.trim();
+            if (!message) return;
+
+            suggestionButtonsContainer.style.display = 'none'; // Hide initial suggestions
+
+            addMessage(message, 'user', chatMessages);
+            addMessage(message, 'user', popupChatMessages);
+            
+            messageInput.value = '';
+            popupMessageInput.value = '';
+            messageInput.disabled = true;
+            sendButton.disabled = true;
+            popupMessageInput.disabled = true;
+            popupSendButton.disabled = true;
+
+            const typingIndicator = showTypingIndicator(chatMessages);
+            const popupTypingIndicator = showTypingIndicator(popupChatMessages);
+
+            try {
+                const response = await fetch("/ask_guest", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ 
+                        question: message
+                    })
+                });
+
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let fullResponse = '';
+                
+                typingIndicator.parentElement.parentElement.remove();
+                popupTypingIndicator.parentElement.parentElement.remove();
+
+                const botMessageWrapper = addMessage('', 'bot', chatMessages);
+                const botMessageContent = botMessageWrapper.querySelector('.prose');
+                const popupBotMessageWrapper = addMessage('', 'bot', popupChatMessages);
+                const popupBotMessageContent = popupBotMessageWrapper.querySelector('.prose');
+
+
+                while (true) {
+                    const { value, done } = await reader.read();
+                    if (done) break;
+                    const chunk = decoder.decode(value, { stream: true });
+                    fullResponse += chunk;
+                    const htmlContent = marked.parse(fullResponse);
+                    botMessageContent.innerHTML = htmlContent;
+                    popupBotMessageContent.innerHTML = htmlContent;
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    popupChatMessages.scrollTop = popupChatMessages.scrollHeight;
+                }
+
+            } catch (error) {
+                const errorMessage = `<p class="text-red-500">ขออภัย, เกิดข้อผิดพลาด: ${error.message}</p>`;
+                typingIndicator.innerHTML = errorMessage;
+                popupTypingIndicator.innerHTML = errorMessage;
+            } finally {
+                messageInput.disabled = false;
+                sendButton.disabled = false;
+                popupMessageInput.disabled = false;
+                popupSendButton.disabled = false;
+                messageInput.focus();
+            }
+        }
+
+        sendButton.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+        popupSendButton.addEventListener('click', sendMessage);
+        popupMessageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // --- Initial Load and Animations ---
+        const typeWelcomeMessage = () => {
+            const welcomeText = "สวัสดีครับ! สนใจโปรโมชั่นอินเทอร์เน็ตแบบไหนดีครับ? บอกความต้องการของคุณได้เลย";
+            const botMessageWrapper = addMessage('<p class="text-gray-800 dark:text-gray-300"></p>', 'bot', chatMessages);
+            const messageParagraph = botMessageWrapper.querySelector('.prose p');
+            
+            messageParagraph.innerHTML = '<span class="typed-text"></span><span class="typing-cursor">|</span>';
+            const typedTextSpan = messageParagraph.querySelector('.typed-text');
+            const cursorSpan = messageParagraph.querySelector('.typing-cursor');
+
+            let charIndex = 0;
+            const typeCharacter = () => {
+                if (charIndex < welcomeText.length) {
+                    typedTextSpan.textContent += welcomeText.charAt(charIndex);
+                    charIndex++;
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    setTimeout(typeCharacter, 50); // Typing speed (ms)
+                } else {
+                    cursorSpan.style.display = 'none'; // Hide cursor when done
+                    renderSuggestions(initialSuggestions, suggestionButtonsContainer);
+                    renderSuggestions(initialSuggestions, popupSuggestionButtons);
+                }
+            };
+            setTimeout(typeCharacter, 500); // Initial delay before typing starts
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Scroll-based Animations ---
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        if (entry.target.id === 'chatbot' && !window.welcomeMessagePlayed) {
+                            typeWelcomeMessage();
+                            window.welcomeMessagePlayed = true;
+                        }
+                    } else {
+                        entry.target.classList.remove('is-visible');
+                    }
+                });
+            }, { 
+                threshold: 0.2
+            });
+
+            const elementsToAnimate = document.querySelectorAll('.scroll-animate-left, .scroll-animate-up');
+            elementsToAnimate.forEach(el => scrollObserver.observe(el));
+
+            const chatbotSection = document.getElementById('chatbot');
+            if (chatbotSection) {
+                scrollObserver.observe(chatbotSection);
+            }
+
+            // --- Back to Top Button ---
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 100) {
+                    backToTopBtn.style.display = "block";
+                } else {
+                    backToTopBtn.style.display = "none";
+                }
+            });
+
+            backToTopBtn.addEventListener("click", () => {
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            });
+
+            // --- Fetch FAQs ---
+            const fetchFAQs = async () => {
+                try {
+                    const response = await fetch('/chat/faq');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    const faqs = await response.json();
+                    const faqContainer = document.getElementById('faq-container');
+                    if (faqContainer && faqs.length > 0) {
+                        faqContainer.innerHTML = faqs.map(faq => `
+                            <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md cursor-pointer feature-card" onclick="setChatQuestion('${faq}')">
+                                <p class="font-semibold text-nt-blue dark:text-white">${faq}</p>
+                            </div>
+                        `).join('');
+                    } else if (faqContainer) {
+                        document.getElementById('faq-section').style.display = 'none';
+                    }
+                } catch (error) {
+                    console.error("Could not fetch FAQs:", error);
+                    const faqSection = document.getElementById('faq-section');
+                    if (faqSection) {
+                        faqSection.style.display = 'none';
+                    }
+                }
+            };
+
+            const fetchFeedbackStats = async () => {
+                try {
+                    const response = await fetch('/chat/feedback_stats');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    const stats = await response.json();
+                    document.getElementById('likes-count').textContent = stats.likes;
+                    document.getElementById('dislikes-count').textContent = stats.dislikes;
+                } catch (error) {
+                    console.error("Could not fetch feedback stats:", error);
+                }
+            };
+
+            fetchFAQs();
+            fetchFeedbackStats();
+
+            // --- Hamburger Menu Toggle ---
+            const menuToggle = document.getElementById('menu-toggle');
+            const menu = document.getElementById('menu');
+            menuToggle.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+        });
+
+        // Function to set question in chatbox
+        function setChatQuestion(question) {
+            const messageInput = document.getElementById('messageInput');
+            messageInput.value = question;
+            messageInput.focus();
+            document.getElementById('chatbot').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Particle Canvas
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = canvas.parentElement.offsetHeight;
+
+        let particlesArray;
+
+        const mouse = {
+            x: null,
+            y: null,
+            radius: (canvas.height/100) * (canvas.width/100)
+        }
+
+        window.addEventListener('mousemove', 
+            function(event) {
+                let rect = canvas.getBoundingClientRect();
+                mouse.x = event.clientX - rect.left;
+                mouse.y = event.clientY - rect.top;
+            }
+        );
+
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+            update() {
+                if (this.x > canvas.width || this.x < 0) {
+                    this.directionX = -this.directionX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.directionY = -this.directionY;
+                }
+
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx*dx + dy*dy);
+                if (distance < mouse.radius + this.size){
+                    if(mouse.x < this.x && this.x < canvas.width - this.size * 10) {
+                        this.x += 5;
+                    }
+                    if(mouse.x > this.x && this.x > this.size * 10) {
+                        this.x -= 5;
+                    }
+                    if(mouse.y < this.y && this.y < canvas.height - this.size * 10) {
+                        this.y += 5;
+                    }
+                    if(mouse.y > this.y && this.y > this.size * 10) {
+                        this.y -= 5;
+                    }
+                }
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            let colors = document.documentElement.classList.contains('dark') 
+                ? ['#4a90e2', '#ffc800', '#f5f5f5'] 
+                : ['#003b7a', '#4a90e2', '#ffc800'];
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * .4) - 0.2;
+                let directionY = (Math.random() * .4) - 0.2;
+                let color = colors[Math.floor(Math.random() * colors.length)];
+
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        function connect(){
+            let opacityValue = 1;
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
+                    + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+
+                    if (distance < (canvas.width/7) * (canvas.height/7)) {
+                        opacityValue = 1 - (distance/20000);
+                        let strokeStyle = document.documentElement.classList.contains('dark') ? 'rgba(74,144,226,' + opacityValue + ')' : 'rgba(0,59,122,' + opacityValue + ')';
+                        ctx.strokeStyle = strokeStyle;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connect();
+        }
+
+        window.addEventListener('resize', 
+            function(){
+                canvas.width = window.innerWidth;
+                canvas.height = canvas.parentElement.offsetHeight;
+                mouse.radius = (canvas.height/100) * (canvas.width/100);
+                init();
+            }
+        )
+
+        window.addEventListener('mouseout', 
+            function(){
+                mouse.x = undefined;
+                mouse.y = undefined;
+            }
+        )
+
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            if (!starsContainer) return;
+            const starCount = 300; // Increased star count for a fuller sky
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star', 'floating-animation'); // Added floating-animation
+                const size = Math.random() * 3 + 1; // Random size between 1px and 4px
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 4}s`; // Random delay for twinkling (0 to 4s)
+                starsContainer.appendChild(star);
+            }
+        }
+
+        init();
+        animate();
+        createStars();
+
+        // Function to set dynamic sky background based on time of day
+        function setDynamicSkyBackground() {
+            const heroSection = document.getElementById('hero-section');
+            const currentHour = new Date().getHours();
+
+            // Remove existing sky classes
+            heroSection.classList.remove('morning-sky', 'day-sky', 'evening-sky', 'night-sky');
+
+            if (currentHour >= 5 && currentHour < 12) {
+                heroSection.classList.add('morning-sky');
+            } else if (currentHour >= 12 && currentHour < 18) {
+                heroSection.classList.add('day-sky');
+            } else if (currentHour >= 18 && currentHour < 22) {
+                heroSection.classList.add('evening-sky');
+            } else {
+                heroSection.classList.add('night-sky');
+            }
+        }
+
+        // Call the function on load and every hour to update
+        setDynamicSkyBackground();
+        setInterval(setDynamicSkyBackground, 3600000); // Update every hour (3600000 ms)
+
+        // --- Theme Toggle ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Change the icons inside the button based on previous settings
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            themeToggleLightIcon.classList.remove('hidden');
+            themeToggleDarkIcon.classList.add('hidden');
+        } else {
+            themeToggleDarkIcon.classList.remove('hidden');
+            themeToggleLightIcon.classList.add('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+
+            // toggle icons inside button
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            // if set via local storage previously
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+
+            // if NOT set via local storage previously
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+            // re-initialize particles with new colors
+            init();
+            // Toggle starry sky
+            const stars = document.getElementById('stars');
+            if (document.documentElement.classList.contains('dark')) {
+                stars.style.display = 'block';
+            } else {
+                stars.style.display = 'none';
+            }
+        });
+
+    </script>
+</body>
+</html>

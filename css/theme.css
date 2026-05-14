@@ -1,0 +1,70 @@
+/* Resetting to a clean state and re-implementing snap scroll correctly */
+
+html {
+}
+
+body {
+    margin: 0; /* Remove default body margin */
+    font-family: 'Sarabun', sans-serif;
+    overflow: hidden; /* Prevent the body from scrolling */
+}
+
+/* 1. Create a grid container for the whole page */
+.site-container {
+    display: grid;
+    /* Header gets its natural height, main content takes the rest */
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+}
+
+/* 2. The header stays as it is (sticky is fine within this structure) */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+/* 3. The main element is now the scroll container */
+main {
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
+/* 4. Snap sections are direct children of the scroll container (main) */
+.snap-section {
+    scroll-snap-align: start;
+    height: 100vh; /* Each section is a full viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* For absolute positioned children like canvas */
+}
+
+/* 5. Normal sections for content flow */
+.normal-section {
+    /* No height or snap-align, will take content height */
+    /* Padding will be applied directly in HTML for flexibility */
+}
+
+/* 6. Animation for both section types */
+.snap-section,
+.normal-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: transform, opacity;
+}
+
+.snap-section.is-visible,
+.normal-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Footer is the last snap section */
+footer.snap-section {
+    height: auto; /* Let it have its own content height */
+    min-height: 50vh;
+}
